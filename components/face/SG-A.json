@@ -1,18 +1,26 @@
 {
     "subject": {
-        "face_anchor": "SG-A-ANCHOR",
+        "face_anchor": "soft_goddess",
         "do_not_change": [
             "eye color",
             "bone structure",
-            "facial proportions"
+            "facial proportions",
+            "no exaggerated expressions",
+            "no fear or horror emotion",
+            "no cartoon stylization"
         ],
         "facial_features": {
-            "eyes": "almond eyes with warm expressive gaze, naturally defined brows with elegant arch",
-            "nose": "straight nose with delicate bridge and soft tip",
-            "lips": "full balanced lips with natural cupid's bow",
-            "cheekbones": "high sculpted cheekbones with natural definition",
-            "jawline": "soft oval face shape with gentle jawline and refined chin",
-            "overall": "soft goddess beauty with harmonious proportions, gentle feminine features, naturally elegant and photogenic"
+            "face_shape": "soft oval-to-heart hybrid with gentle taper toward the chin",
+            "jawline": "smooth, elegant, softly defined",
+            "cheekbones": "high and softly rounded, naturally light-catching",
+            "eyes": {
+                "shape": "large almond-shaped eyes with slight upward outer tilt",
+                "lids": "softly hooded upper lids",
+                "expression": "calm, confident, serene, inviting, never fearful or surprised"
+            },
+            "nose": "refined bridge with softly rounded, slightly upturned tip",
+            "lips": "full, plush lips with defined cupid's bow and hydrated sheen",
+            "overall": "soft goddess beauty with harmonious proportions, gentle feminine features, naturally elegant and photogenic, high-end editorial presence"
         }
     }
 }

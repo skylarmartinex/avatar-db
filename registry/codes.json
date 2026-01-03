@@ -1,4 +1,48 @@
 {
+    "PH_REGION": {
+        "ILOCOS": {
+            "label": "Ilocos & Cordillera",
+            "short_label": "Ilocos",
+            "description": "Northern Luzon - slightly lighter tan, angular features, high cheekbones",
+            "region": "Northern Luzon",
+            "status": "active"
+        },
+        "TAGALOG": {
+            "label": "Tagalog",
+            "short_label": "Tagalog",
+            "description": "Central Luzon & Metro Manila - medium golden tan, balanced oval features",
+            "region": "Central Luzon",
+            "status": "active"
+        },
+        "BICOL": {
+            "label": "Bicol",
+            "short_label": "Bicol",
+            "description": "Southeastern Luzon - warm golden tan, heart-shaped face, expressive eyes",
+            "region": "Southeastern Luzon",
+            "status": "active"
+        },
+        "VISAYAS": {
+            "label": "Visayas",
+            "short_label": "Visayas",
+            "description": "Central Philippines - honey tan, soft oval features, warm inviting gaze",
+            "region": "Central Philippines",
+            "status": "active"
+        },
+        "MINDANAO": {
+            "label": "Mindanao Lowland",
+            "short_label": "Mindanao",
+            "description": "Southern Philippines - rich golden tan, balanced proportions, natural warmth",
+            "region": "Southern Philippines",
+            "status": "active"
+        },
+        "BANGSAMORO": {
+            "label": "Bangsamoro",
+            "short_label": "Bangsamoro",
+            "description": "Southwestern Mindanao - deep golden tan, refined features, elegant structure",
+            "region": "Southwestern Mindanao",
+            "status": "active"
+        }
+    },
     "FA": {
         "SG-A": {
             "label": "Soft Goddess (A)",

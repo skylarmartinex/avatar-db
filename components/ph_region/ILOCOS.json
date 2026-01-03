@@ -1,0 +1,23 @@
+{
+    "subject": {
+        "regional_modifier": "Ilocos & Cordillera (Northern Luzon)",
+        "facial_nuance": {
+            "skin": {
+                "tone_adjustment": "slightly lighter tan with cool undertones",
+                "texture": "smooth with natural matte finish"
+            },
+            "facial_structure": {
+                "face_shape": "slightly angular with defined bone structure",
+                "cheekbones": "high and prominent with subtle angularity",
+                "jawline": "defined with slight squareness",
+                "forehead": "slightly broader"
+            },
+            "features": {
+                "eyes": "almond-shaped with slight epicanthic fold, deep-set",
+                "nose": "straight bridge with slightly broader base",
+                "lips": "medium fullness with natural definition"
+            }
+        },
+        "scope": "facial features and skin nuance only - does not affect body, posture, mood, camera, lighting, or outfit"
+    }
+}

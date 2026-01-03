@@ -1,9 +1,20 @@
 {
-    "setting": "standing in lush tropical jungle clearing",
-    "surrounding": "dense green foliage, tropical plants, filtered sunlight through canopy, natural wilderness atmosphere",
-    "lighting": "dappled natural light filtering through leaves, soft green ambient glow, dramatic light rays",
-    "composition": "environmental portrait with jungle backdrop, subject framed by natural greenery",
-    "overall_mood": "adventurous exotic, wild natural beauty, tropical mystery",
-    "aspect_ratio": "3:4 portrait",
-    "image_quality": "high resolution nature photography, rich green tones, atmospheric depth"
+    "setting": "lush tropical jungle",
+    "surrounding": {
+        "environment_style": "editorial, controlled, cinematic",
+        "mood": "cinematic, controlled, editorial with filtered natural light creating depth",
+        "elements": [
+            "dense greenery",
+            "filtered sunlight",
+            "subtle depth"
+        ],
+        "visual_priority": "background remains secondary to subject",
+        "guardrails": [
+            "no chaotic foliage crossing body",
+            "no survival or crouching poses",
+            "no fear or tension",
+            "no environmental clutter intersecting subject",
+            "subject clearly separated from background"
+        ]
+    }
 }

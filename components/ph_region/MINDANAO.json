@@ -1,0 +1,23 @@
+{
+    "subject": {
+        "regional_modifier": "Mindanao Lowland (Southern Philippines)",
+        "facial_nuance": {
+            "skin": {
+                "tone_adjustment": "rich golden tan with warm bronze undertones",
+                "texture": "smooth with natural warmth and healthy radiance"
+            },
+            "facial_structure": {
+                "face_shape": "oval with soft contours and balanced proportions",
+                "cheekbones": "moderately high with gentle definition",
+                "jawline": "softly rounded with feminine grace",
+                "forehead": "balanced with smooth curve"
+            },
+            "features": {
+                "eyes": "expressive almond eyes with warm depth and natural brightness",
+                "nose": "soft bridge with gently rounded tip",
+                "lips": "full and soft with natural warmth"
+            }
+        },
+        "scope": "facial features and skin nuance only - does not affect body, posture, mood, camera, lighting, or outfit"
+    }
+}

@@ -1,8 +1,16 @@
 {
   "subject": {
-    "ethnicity": "Filipino"
-  },
-  "skin": {
-    "tone": "warm tan"
+    "ethnicity": "Filipina",
+    "skin": {
+      "tone": "golden tan",
+      "undertone": "warm",
+      "texture": "smooth, luminous, healthy glow"
+    },
+    "aesthetic_bias": [
+      "warmth",
+      "natural elegance",
+      "approachability"
+    ],
+    "overall": "Filipina beauty with warm golden tan skin, natural elegance, and approachable sophistication"
   }
 }
