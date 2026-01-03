@@ -43,6 +43,43 @@
             "status": "active"
         }
     },
+    "VN_REGION": {
+        "NORTHERN": {
+            "label": "Northern Vietnam",
+            "short_label": "Northern",
+            "description": "Hanoi / Red River Delta - fair to light golden, refined oval features, porcelain-like skin",
+            "region": "Northern Vietnam",
+            "status": "active"
+        },
+        "HIGHLANDS": {
+            "label": "Northern Highlands",
+            "short_label": "Highlands",
+            "description": "Mountainous regions - light tan with peachy undertones, soft round features",
+            "region": "Northern Highlands",
+            "status": "active"
+        },
+        "CENTRAL": {
+            "label": "Central Vietnam",
+            "short_label": "Central",
+            "description": "Coastal central - medium golden tan, balanced oval, sun-kissed luminosity",
+            "region": "Central Vietnam",
+            "status": "active"
+        },
+        "SOUTHERN": {
+            "label": "Southern Vietnam",
+            "short_label": "Southern",
+            "description": "Urban HCMC/Saigon - warm golden tan, heart-shaped face, expressive eyes",
+            "region": "Southern Vietnam",
+            "status": "active"
+        },
+        "MEKONG": {
+            "label": "Mekong Delta",
+            "short_label": "Mekong",
+            "description": "Rural south - honey tan with bronze undertones, soft natural features",
+            "region": "Mekong Delta",
+            "status": "active"
+        }
+    },
     "FA": {
         "SG-A": {
             "label": "Soft Goddess (A)",
