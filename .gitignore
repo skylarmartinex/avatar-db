@@ -45,3 +45,6 @@ ui/node_modules/
 # Track builds/ for Netlify deployment (prompts, runs, manifests)
 # Only ignore system files within builds/
 builds/**/.DS_Store
+
+# Local Netlify folder
+.netlify
