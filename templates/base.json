@@ -1,0 +1,14 @@
+{
+    "setting": "indoor studio",
+    "viewing_angle": "eye level, medium shot",
+    "lighting": "soft cinematic lighting",
+    "aspect_ratio": "2:3",
+    "composition": "centered, rule of thirds",
+    "image_quality": "photorealistic, 8k, highly detailed",
+    "overall_mood": "neutral, professional",
+    "subject": {
+        "do_not_change": [
+            "human proportions"
+        ]
+    }
+}

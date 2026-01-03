@@ -1,0 +1,18 @@
+{
+  "timestamp": "2026-01-02T16:55:26.703371",
+  "selection_codes": {
+    "FA": "SG-PH-A",
+    "BT": "AL",
+    "ET": "EA",
+    "HR": "ST",
+    "SC": "DOOR",
+    "ST": "POCA",
+    "NB": "NB"
+  },
+  "prompt_version": "01",
+  "run_id": "03",
+  "prompt_json_path": "/Users/skylarmartinez/.gemini/antigravity/scratch/avatar-db/builds/prompts/FA-SG-PH-A__BT-AL__ET-EA__HR-ST__SC-DOOR__ST-POCA__v01.json",
+  "image_path": "",
+  "rating": "",
+  "notes": ""
+}

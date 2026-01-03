@@ -1,0 +1,83 @@
+import os
+import json
+import sys
+from typing import Dict, Any, List
+from .utils import load_json
+from .registry import get_all_codes, get_component_path
+
+ALLOWED_TOP_LEVEL_KEYS = {
+    "setting", "viewing_angle", "subject", "lighting", "skin", "clothing", 
+    "pose", "surrounding", "aspect_ratio", "composition", "image_quality", 
+    "overall_mood", "negative_prompt"
+}
+
+BOUNDARY_RULES = {
+    "FA": ["subject"],
+    "BT": ["subject"],
+    "HR": ["subject"],
+    "ET": ["subject", "skin"],
+    "SC": ["setting", "lighting", "clothing", "pose", "surrounding", "overall_mood", "composition", "aspect_ratio", "image_quality", "subject"],
+    "ST": ["setting", "lighting", "clothing", "pose", "surrounding", "overall_mood", "composition", "aspect_ratio", "image_quality", "subject"],
+    "NB": ["negative_prompt"]
+}
+
+PROHIBITED_STYLE_SUBKEYS = ["facial_features", "face_anchor", "do_not_change"]
+
+def validate_component(dim: str, code: str, content: Dict[str, Any]) -> List[str]:
+    errors = []
+    # Top level keys
+    for key in content.keys():
+        if key not in ALLOWED_TOP_LEVEL_KEYS:
+            errors.append(f"[{dim}-{code}] Invalid top-level key: {key}")
+
+    # Boundary rules
+    allowed_keys = BOUNDARY_RULES.get(dim, [])
+    for key in content.keys():
+        if key not in allowed_keys:
+            errors.append(f"[{dim}-{code}] Dimension {dim} not allowed to write to top-level key: {key}")
+
+    # Style boundary check
+    if dim in ["SC", "ST"]:
+        if "subject" in content:
+            for subkey in content["subject"].keys():
+                if subkey in PROHIBITED_STYLE_SUBKEYS:
+                    errors.append(f"[{dim}-{code}] Style dimension {dim} prohibited from writing to subject.{subkey}")
+
+    # Required keys
+    if dim == "FA":
+        subject = content.get("subject", {})
+        if "face_anchor" not in subject:
+            errors.append(f"[{dim}-{code}] Missing required key: subject.face_anchor")
+        if "do_not_change" not in subject:
+            errors.append(f"[{dim}-{code}] Missing required key: subject.do_not_change")
+    
+    if dim == "NB":
+        if "negative_prompt" not in content:
+            errors.append(f"[{dim}-{code}] Missing required key: negative_prompt")
+
+    return errors
+
+def run_lint():
+    codes = get_all_codes()
+    all_errors = []
+    
+    # Lint registry
+    for dim, code_list in codes.items():
+        for code in code_list:
+            path = get_component_path(dim, code)
+            try:
+                content = load_json(path)
+                errors = validate_component(dim, code, content)
+                all_errors.extend(errors)
+            except Exception as e:
+                all_errors.append(f"Failed to load {path}: {e}")
+
+    # Lint bundles/packs? (Optional based on requirements, but let's stick to core)
+    
+    if all_errors:
+        for err in all_errors:
+            print(f"ERROR: {err}")
+        return 1
+    else:
+        print("Lint passed!")
+        return 0

@@ -1,0 +1,84 @@
+{
+    "FA": {
+        "SG-PH-A": {
+            "label": "Soft Goddess — Filipina (A)",
+            "short_label": "Soft Goddess",
+            "description": "Soft, feminine goddess-like beauty with warm expressive features and gentle harmony",
+            "ethnicity": "Filipina",
+            "archetype": "Soft Goddess",
+            "status": "winner"
+        },
+        "SG-PH-B": {
+            "label": "Soft Goddess — Filipina (B)",
+            "short_label": "Soft Goddess B",
+            "description": "Alternative soft goddess with rounder features",
+            "ethnicity": "Filipina",
+            "archetype": "Soft Goddess",
+            "status": "active"
+        },
+        "MB-PH-A": {
+            "label": "Modern Bombshell — Filipina (A)",
+            "short_label": "Modern Bombshell",
+            "description": "Sexy, confident modern glam with sultry eyes and balanced feminine structure",
+            "ethnicity": "Filipina",
+            "archetype": "Modern Bombshell",
+            "status": "winner"
+        },
+        "MB-PH-B": {
+            "label": "Modern Bombshell — Filipina (B)",
+            "short_label": "Modern Bombshell B",
+            "description": "Sultry look with broader features",
+            "ethnicity": "Filipina",
+            "archetype": "Modern Bombshell",
+            "status": "active"
+        }
+    },
+    "BT": {
+        "FR": {
+            "label": "Fitness Ripped",
+            "description": "Extremely lean, stage-ready physique with sharply defined abs and muscle separation"
+        },
+        "AL": {
+            "label": "Athletic Lean",
+            "description": "Lean athletic build with visible tone but softer overall definition"
+        }
+    },
+    "ET": {
+        "PH": {
+            "label": "Filipina Heritage",
+            "description": "Warm tan skin tones and Southeast Asian features"
+        },
+        "EA": {
+            "label": "East Asian",
+            "description": "Fair skin tones and East Asian features"
+        }
+    },
+    "HR": {
+        "ST": {
+            "label": "Straight Hair",
+            "description": "Mostly straight, smooth hair with natural body and gloss"
+        },
+        "WV": {
+            "label": "Soft Waves",
+            "description": "Loose, natural waves with movement and softness"
+        }
+    },
+    "SC": {
+        "DOOR": {
+            "label": "Doorway Editorial",
+            "description": "Outdoor residential or urban doorway with textured stone and dark wooden door"
+        }
+    },
+    "ST": {
+        "POCA": {
+            "label": "Pocahontas-Inspired Tribal Bikini",
+            "description": "Earth-toned tribal fashion bikini with fringe and beadwork"
+        }
+    },
+    "NB": {
+        "NB": {
+            "label": "Negative Baseline",
+            "description": "Standard quality-focused negative prompt"
+        }
+    }
+}

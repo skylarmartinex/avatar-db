@@ -1,0 +1,29 @@
+{
+  "setting": "standing in a wooden doorway",
+  "viewing_angle": "eye level, medium shot",
+  "lighting": "soft cinematic lighting",
+  "aspect_ratio": "2:3",
+  "composition": "centered, rule of thirds",
+  "image_quality": "photorealistic, 8k, highly detailed",
+  "overall_mood": "neutral, professional",
+  "subject": {
+    "do_not_change": [
+      "eye color"
+    ],
+    "ethnicity": "East Asian",
+    "face_anchor": "SG-PH-B-ANCHOR",
+    "facial_features": {
+      "eyes": "round",
+      "nose": "button"
+    },
+    "body_type": "average, lean",
+    "hair_style": "wavy, dark brown hair"
+  },
+  "surrounding": "vintage hallway",
+  "skin": {
+    "tone": "fair"
+  },
+  "clothing": "white polka dot sundress",
+  "pose": "standing still",
+  "negative_prompt": "blurry, distorted, low quality, cartoon, drawing, illustration"
+}
