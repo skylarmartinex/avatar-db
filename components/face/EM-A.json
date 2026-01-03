@@ -1,0 +1,18 @@
+{
+    "subject": {
+        "face_anchor": "EM-A-ANCHOR",
+        "do_not_change": [
+            "eye color",
+            "bone structure",
+            "facial proportions"
+        ],
+        "facial_features": {
+            "eyes": "striking almond eyes with editorial intensity, sleek defined brows",
+            "nose": "refined aquiline nose with elegant bridge and sharp tip",
+            "lips": "sculpted lips with precise cupid's bow and editorial definition",
+            "cheekbones": "razor-sharp cheekbones with dramatic angles",
+            "jawline": "angular defined jawline with sharp chin and high-fashion structure",
+            "overall": "editorial model beauty with refined high-fashion features, runway-ready elegance, avant-garde sophistication"
+        }
+    }
+}

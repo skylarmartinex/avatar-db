@@ -1,0 +1,18 @@
+{
+    "subject": {
+        "face_anchor": "EM-B-ANCHOR",
+        "do_not_change": [
+            "eye color",
+            "bone structure",
+            "facial proportions"
+        ],
+        "facial_features": {
+            "eyes": "intense cat-like eyes with runway gaze, bold angular brows",
+            "nose": "strong sculptural nose with prominent bridge",
+            "lips": "thin precise lips with editorial sharpness",
+            "cheekbones": "extreme high cheekbones with avant-garde definition",
+            "jawline": "strong angular jawline with powerful chin and runway structure",
+            "overall": "editorial model beauty with angular runway features, fierce high-fashion presence, couture sophistication"
+        }
+    }
+}

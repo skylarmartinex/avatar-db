@@ -1,84 +1,154 @@
 {
     "FA": {
+        "SG-A": {
+            "label": "Soft Goddess (A)",
+            "short_label": "Soft Goddess A",
+            "description": "Soft, feminine goddess-like beauty with warm expressive features and gentle harmony",
+            "archetype": "Soft Goddess",
+            "status": "active"
+        },
+        "SG-B": {
+            "label": "Soft Goddess (B)",
+            "short_label": "Soft Goddess B",
+            "description": "Alternative soft goddess with rounder features",
+            "archetype": "Soft Goddess",
+            "status": "active"
+        },
+        "MB-A": {
+            "label": "Modern Bombshell (A)",
+            "short_label": "Modern Bombshell A",
+            "description": "Sexy, confident modern glam with sultry eyes and balanced feminine structure",
+            "archetype": "Modern Bombshell",
+            "status": "active"
+        },
+        "MB-B": {
+            "label": "Modern Bombshell (B)",
+            "short_label": "Modern Bombshell B",
+            "description": "Sultry look with broader features",
+            "archetype": "Modern Bombshell",
+            "status": "active"
+        },
+        "EM-A": {
+            "label": "Editorial Model (A)",
+            "short_label": "Editorial Model A",
+            "description": "Refined high-fashion beauty with harmonious editorial proportions",
+            "archetype": "Editorial Model",
+            "status": "active"
+        },
+        "EM-B": {
+            "label": "Editorial Model (B)",
+            "short_label": "Editorial Model B",
+            "description": "Striking editorial beauty with bold angular features",
+            "archetype": "Editorial Model",
+            "status": "active"
+        },
+        "RS-A": {
+            "label": "Romantic Sweet (A)",
+            "short_label": "Romantic Sweet A",
+            "description": "Fresh romantic sweetness with approachable natural beauty",
+            "archetype": "Romantic Sweet",
+            "status": "active"
+        },
+        "RS-B": {
+            "label": "Romantic Sweet (B)",
+            "short_label": "Romantic Sweet B",
+            "description": "Sweet romantic beauty with youthful innocent features",
+            "archetype": "Romantic Sweet",
+            "status": "active"
+        },
+        "FD-A": {
+            "label": "Fitness Defined (A)",
+            "short_label": "Fitness Defined A",
+            "description": "Athletic fitness beauty with strong defined features",
+            "archetype": "Fitness Defined",
+            "status": "active"
+        },
+        "FD-B": {
+            "label": "Fitness Defined (B)",
+            "short_label": "Fitness Defined B",
+            "description": "Powerful competition-ready fitness beauty",
+            "archetype": "Fitness Defined",
+            "status": "active"
+        },
         "SG-PH-A": {
             "label": "Soft Goddess — Filipina (A)",
             "short_label": "Soft Goddess",
-            "description": "Soft, feminine goddess-like beauty with warm expressive features and gentle harmony",
+            "description": "DEPRECATED: Use SG-A + ET-PH instead",
             "ethnicity": "Filipina",
             "archetype": "Soft Goddess",
-            "status": "winner"
+            "status": "deprecated"
         },
         "SG-PH-B": {
             "label": "Soft Goddess — Filipina (B)",
             "short_label": "Soft Goddess B",
-            "description": "Alternative soft goddess with rounder features",
+            "description": "DEPRECATED: Use SG-B + ET-PH instead",
             "ethnicity": "Filipina",
             "archetype": "Soft Goddess",
-            "status": "active"
+            "status": "deprecated"
         },
         "MB-PH-A": {
             "label": "Modern Bombshell — Filipina (A)",
             "short_label": "Modern Bombshell",
-            "description": "Sexy, confident modern glam with sultry eyes and balanced feminine structure",
+            "description": "DEPRECATED: Use MB-A + ET-PH instead",
             "ethnicity": "Filipina",
             "archetype": "Modern Bombshell",
-            "status": "winner"
+            "status": "deprecated"
         },
         "MB-PH-B": {
             "label": "Modern Bombshell — Filipina (B)",
             "short_label": "Modern Bombshell B",
-            "description": "Sultry look with broader features",
+            "description": "DEPRECATED: Use MB-B + ET-PH instead",
             "ethnicity": "Filipina",
             "archetype": "Modern Bombshell",
-            "status": "active"
+            "status": "deprecated"
         },
         "EM-PH-A": {
             "label": "Editorial Model — Filipina (A)",
             "short_label": "Editorial Model",
-            "description": "Refined high-fashion beauty with harmonious editorial proportions",
+            "description": "DEPRECATED: Use EM-A + ET-PH instead",
             "ethnicity": "Filipina",
             "archetype": "Editorial Model",
-            "status": "winner"
+            "status": "deprecated"
         },
         "EM-PH-B": {
             "label": "Editorial Model — Filipina (B)",
             "short_label": "Editorial Model B",
-            "description": "Striking editorial beauty with bold angular features",
+            "description": "DEPRECATED: Use EM-B + ET-PH instead",
             "ethnicity": "Filipina",
             "archetype": "Editorial Model",
-            "status": "active"
+            "status": "deprecated"
         },
         "RS-PH-A": {
             "label": "Romantic Sweet — Filipina (A)",
             "short_label": "Romantic Sweet",
-            "description": "Fresh romantic sweetness with approachable natural beauty",
+            "description": "DEPRECATED: Use RS-A + ET-PH instead",
             "ethnicity": "Filipina",
             "archetype": "Romantic Sweet",
-            "status": "winner"
+            "status": "deprecated"
         },
         "RS-PH-B": {
             "label": "Romantic Sweet — Filipina (B)",
             "short_label": "Romantic Sweet B",
-            "description": "Sweet romantic beauty with youthful innocent features",
+            "description": "DEPRECATED: Use RS-B + ET-PH instead",
             "ethnicity": "Filipina",
             "archetype": "Romantic Sweet",
-            "status": "active"
+            "status": "deprecated"
         },
         "FD-PH-A": {
             "label": "Fitness Defined — Filipina (A)",
             "short_label": "Fitness Defined",
-            "description": "Athletic fitness beauty with strong defined features",
+            "description": "DEPRECATED: Use FD-A + ET-PH instead",
             "ethnicity": "Filipina",
             "archetype": "Fitness Defined",
-            "status": "winner"
+            "status": "deprecated"
         },
         "FD-PH-B": {
             "label": "Fitness Defined — Filipina (B)",
             "short_label": "Fitness Defined B",
-            "description": "Powerful competition-ready fitness beauty",
+            "description": "DEPRECATED: Use FD-B + ET-PH instead",
             "ethnicity": "Filipina",
             "archetype": "Fitness Defined",
-            "status": "active"
+            "status": "deprecated"
         }
     },
     "BT": {
@@ -135,7 +205,7 @@
     },
     "ET": {
         "PH": {
-            "label": "Filipina Heritage",
+            "label": "Filipina",
             "short_label": "Filipina",
             "description": "Warm tan skin tones and Southeast Asian features",
             "tags": [

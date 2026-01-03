@@ -1,0 +1,18 @@
+{
+    "subject": {
+        "face_anchor": "SG-B-ANCHOR",
+        "do_not_change": [
+            "eye color",
+            "bone structure",
+            "facial proportions"
+        ],
+        "facial_features": {
+            "eyes": "round almond eyes with soft expressive gaze, gently curved brows",
+            "nose": "softly rounded nose with gentle bridge",
+            "lips": "full soft lips with pronounced cupid's bow",
+            "cheekbones": "rounded cheeks with soft definition and natural glow",
+            "jawline": "round oval face with soft contours and gentle chin",
+            "overall": "soft goddess beauty with rounder features, warm feminine charm, naturally radiant"
+        }
+    }
+}
