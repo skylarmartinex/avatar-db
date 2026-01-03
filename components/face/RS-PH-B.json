@@ -1,0 +1,18 @@
+{
+    "subject": {
+        "face_anchor": "RS-PH-B-ANCHOR",
+        "do_not_change": [
+            "eye color",
+            "facial symmetry",
+            "natural features"
+        ],
+        "facial_features": {
+            "eyes": "doe-like round eyes with innocent appeal, deep brown irises with natural shine, gently curved brows",
+            "nose": "petite upturned nose with soft bridge and rounded tip",
+            "lips": "plump heart-shaped lips with pronounced cupid's bow and coral undertone",
+            "cheekbones": "full rounded cheeks with dimple potential and healthy flush",
+            "jawline": "soft round face shape with gentle contours and rounded chin",
+            "overall": "sweet romantic beauty with youthful innocence, endearing Filipina features, naturally charming and photogenic"
+        }
+    }
+}

@@ -31,54 +31,278 @@
             "ethnicity": "Filipina",
             "archetype": "Modern Bombshell",
             "status": "active"
+        },
+        "EM-PH-A": {
+            "label": "Editorial Model — Filipina (A)",
+            "short_label": "Editorial Model",
+            "description": "Refined high-fashion beauty with harmonious editorial proportions",
+            "ethnicity": "Filipina",
+            "archetype": "Editorial Model",
+            "status": "winner"
+        },
+        "EM-PH-B": {
+            "label": "Editorial Model — Filipina (B)",
+            "short_label": "Editorial Model B",
+            "description": "Striking editorial beauty with bold angular features",
+            "ethnicity": "Filipina",
+            "archetype": "Editorial Model",
+            "status": "active"
+        },
+        "RS-PH-A": {
+            "label": "Romantic Sweet — Filipina (A)",
+            "short_label": "Romantic Sweet",
+            "description": "Fresh romantic sweetness with approachable natural beauty",
+            "ethnicity": "Filipina",
+            "archetype": "Romantic Sweet",
+            "status": "winner"
+        },
+        "RS-PH-B": {
+            "label": "Romantic Sweet — Filipina (B)",
+            "short_label": "Romantic Sweet B",
+            "description": "Sweet romantic beauty with youthful innocent features",
+            "ethnicity": "Filipina",
+            "archetype": "Romantic Sweet",
+            "status": "active"
+        },
+        "FD-PH-A": {
+            "label": "Fitness Defined — Filipina (A)",
+            "short_label": "Fitness Defined",
+            "description": "Athletic fitness beauty with strong defined features",
+            "ethnicity": "Filipina",
+            "archetype": "Fitness Defined",
+            "status": "winner"
+        },
+        "FD-PH-B": {
+            "label": "Fitness Defined — Filipina (B)",
+            "short_label": "Fitness Defined B",
+            "description": "Powerful competition-ready fitness beauty",
+            "ethnicity": "Filipina",
+            "archetype": "Fitness Defined",
+            "status": "active"
         }
     },
     "BT": {
         "FR": {
             "label": "Fitness Ripped",
-            "description": "Extremely lean, stage-ready physique with sharply defined abs and muscle separation"
+            "short_label": "Ripped",
+            "description": "Extremely lean, stage-ready physique with sharply defined abs and muscle separation",
+            "tags": [
+                "athletic",
+                "lean",
+                "competition"
+            ]
         },
         "AL": {
             "label": "Athletic Lean",
-            "description": "Lean athletic build with visible tone but softer overall definition"
+            "short_label": "Athletic",
+            "description": "Lean athletic build with visible tone but softer overall definition",
+            "tags": [
+                "athletic",
+                "toned",
+                "balanced"
+            ]
+        },
+        "CF": {
+            "label": "Curvy Fit",
+            "short_label": "Curvy Fit",
+            "description": "Athletic curvy feminine physique with balanced hourglass proportions",
+            "tags": [
+                "curvy",
+                "athletic",
+                "hourglass"
+            ]
+        },
+        "SM": {
+            "label": "Slender Model",
+            "short_label": "Slender",
+            "description": "Slender model physique with elongated runway-ready proportions",
+            "tags": [
+                "slender",
+                "model",
+                "runway"
+            ]
+        },
+        "SC": {
+            "label": "Soft Curvy",
+            "short_label": "Soft Curvy",
+            "description": "Soft curvy feminine physique with voluptuous proportions",
+            "tags": [
+                "curvy",
+                "voluptuous",
+                "feminine"
+            ]
         }
     },
     "ET": {
         "PH": {
             "label": "Filipina Heritage",
-            "description": "Warm tan skin tones and Southeast Asian features"
+            "short_label": "Filipina",
+            "description": "Warm tan skin tones and Southeast Asian features",
+            "tags": [
+                "Southeast Asian",
+                "warm"
+            ]
         },
         "EA": {
             "label": "East Asian",
-            "description": "Fair skin tones and East Asian features"
+            "short_label": "East Asian",
+            "description": "Fair skin tones and East Asian features",
+            "tags": [
+                "East Asian",
+                "fair"
+            ]
+        },
+        "LA": {
+            "label": "Latina",
+            "short_label": "Latina",
+            "description": "Warm olive to tan skin tones and Latin American features",
+            "tags": [
+                "Latin American",
+                "warm"
+            ]
+        },
+        "ME": {
+            "label": "Middle Eastern",
+            "short_label": "Middle Eastern",
+            "description": "Warm golden skin tones and Middle Eastern features",
+            "tags": [
+                "Middle Eastern",
+                "golden"
+            ]
+        },
+        "NE": {
+            "label": "Northern European",
+            "short_label": "Northern European",
+            "description": "Fair porcelain skin tones and Northern European features",
+            "tags": [
+                "European",
+                "fair"
+            ]
         }
     },
     "HR": {
         "ST": {
             "label": "Straight Hair",
-            "description": "Mostly straight, smooth hair with natural body and gloss"
+            "short_label": "Straight",
+            "description": "Mostly straight, smooth hair with natural body and gloss",
+            "tags": [
+                "straight",
+                "sleek"
+            ]
         },
         "WV": {
             "label": "Soft Waves",
-            "description": "Loose, natural waves with movement and softness"
+            "short_label": "Waves",
+            "description": "Loose, natural waves with movement and softness",
+            "tags": [
+                "wavy",
+                "natural"
+            ]
+        },
+        "PK": {
+            "label": "Ponytail",
+            "short_label": "Ponytail",
+            "description": "Playful high ponytail with sleek styling and volume",
+            "tags": [
+                "ponytail",
+                "sporty",
+                "playful"
+            ]
         }
     },
     "SC": {
         "DOOR": {
             "label": "Doorway Editorial",
-            "description": "Outdoor residential or urban doorway with textured stone and dark wooden door"
+            "short_label": "Doorway",
+            "description": "Outdoor residential or urban doorway with textured stone and dark wooden door",
+            "tags": [
+                "editorial",
+                "urban",
+                "architectural"
+            ]
+        },
+        "BEACH": {
+            "label": "Tropical Beach",
+            "short_label": "Beach",
+            "description": "Pristine tropical beach with turquoise water and white sand",
+            "tags": [
+                "beach",
+                "tropical",
+                "outdoor"
+            ]
+        },
+        "JUNGLE": {
+            "label": "Tropical Jungle",
+            "short_label": "Jungle",
+            "description": "Lush tropical jungle clearing with dense green foliage",
+            "tags": [
+                "jungle",
+                "tropical",
+                "nature"
+            ]
         }
     },
     "ST": {
         "POCA": {
             "label": "Pocahontas-Inspired Tribal Bikini",
-            "description": "Earth-toned tribal fashion bikini with fringe and beadwork"
+            "short_label": "Tribal Bikini",
+            "description": "Earth-toned tribal fashion bikini with fringe and beadwork",
+            "tags": [
+                "tribal",
+                "bikini",
+                "bohemian"
+            ]
+        },
+        "SPORT": {
+            "label": "Athletic Sportswear",
+            "short_label": "Sportswear",
+            "description": "Athletic sportswear set with sports bra and leggings",
+            "tags": [
+                "athletic",
+                "sporty",
+                "fitness"
+            ]
+        },
+        "STREET": {
+            "label": "Casual Streetwear",
+            "short_label": "Streetwear",
+            "description": "Casual urban streetwear with cropped tee and denim shorts",
+            "tags": [
+                "casual",
+                "urban",
+                "street"
+            ]
+        },
+        "RESORT": {
+            "label": "Elegant Resort Wear",
+            "short_label": "Resort",
+            "description": "Elegant resort wear with flowing dress or sophisticated cover-up",
+            "tags": [
+                "elegant",
+                "resort",
+                "vacation"
+            ]
+        },
+        "ACTIVE": {
+            "label": "Performance Activewear",
+            "short_label": "Activewear",
+            "description": "Performance activewear with fitted tank and athletic shorts",
+            "tags": [
+                "active",
+                "performance",
+                "workout"
+            ]
         }
     },
     "NB": {
         "NB": {
             "label": "Negative Baseline",
-            "description": "Standard quality-focused negative prompt"
+            "short_label": "Negative",
+            "description": "Comprehensive quality-focused negative prompt for image generation",
+            "tags": [
+                "quality",
+                "baseline"
+            ]
         }
     }
 }

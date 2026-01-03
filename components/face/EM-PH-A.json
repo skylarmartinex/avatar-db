@@ -1,0 +1,18 @@
+{
+    "subject": {
+        "face_anchor": "EM-PH-A-ANCHOR",
+        "do_not_change": [
+            "eye color",
+            "bone structure",
+            "facial proportions"
+        ],
+        "facial_features": {
+            "eyes": "deep-set almond eyes with intense gaze, dark brown irises with subtle gold flecks, naturally defined brows with elegant arch",
+            "nose": "refined straight nose with delicate bridge and soft tip",
+            "lips": "full balanced lips with natural cupid's bow, warm rose undertone",
+            "cheekbones": "high sculpted cheekbones with natural definition",
+            "jawline": "soft oval face shape with gentle jawline and refined chin",
+            "overall": "editorial model beauty with harmonious proportions, warm Filipina features, naturally elegant and photogenic"
+        }
+    }
+}
