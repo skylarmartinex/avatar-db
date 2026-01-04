@@ -13,7 +13,9 @@ export default function BuilderPage() {
     });
     const [result, setResult] = useState<any>(null);
     const [loading, setLoading] = useState(false);
-    const [copied, setCopied] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    const [copiedJson, setCopiedJson] = useState(false);
+    const [copiedText, setCopiedText] = useState(false);
 
     useEffect(() => {
         fetch('/api/registry').then(res => res.json()).then(setRegistry);
@@ -21,6 +23,7 @@ export default function BuilderPage() {
 
     async function handleBuild() {
         setLoading(true);
+        setError(null);
         try {
             const res = await fetch('/api/build', {
                 method: 'POST',
@@ -28,20 +31,53 @@ export default function BuilderPage() {
                 body: JSON.stringify(selections)
             });
             const data = await res.json();
-            setResult(data);
+
+            if (data.error) {
+                setError(data.error);
+                setResult(null);
+            } else {
+                setResult(data);
+            }
         } catch (e) {
             console.error(e);
+            setError('Failed to assemble prompt. Please try again.');
+            setResult(null);
         } finally {
             setLoading(false);
         }
     }
 
-    function copyToClipboard() {
+    function copyJsonToClipboard() {
         if (result?.promptContent) {
             navigator.clipboard.writeText(JSON.stringify(result.promptContent, null, 2));
-            setCopied(true);
-            setTimeout(() => setCopied(false), 2000);
+            setCopiedJson(true);
+            setTimeout(() => setCopiedJson(false), 2000);
         }
+    }
+
+    function copyTextToClipboard() {
+        if (result?.promptContent) {
+            // Flatten the prompt into readable text
+            const flattenedText = flattenPromptToText(result.promptContent);
+            navigator.clipboard.writeText(flattenedText);
+            setCopiedText(true);
+            setTimeout(() => setCopiedText(false), 2000);
+        }
+    }
+
+    function flattenPromptToText(prompt: any): string {
+        // Convert the structured prompt into a readable text format
+        const parts = [];
+
+        if (prompt.subject) parts.push(`Subject: ${prompt.subject}`);
+        if (prompt.identity) parts.push(`Identity: ${prompt.identity}`);
+        if (prompt.body) parts.push(`Body: ${prompt.body}`);
+        if (prompt.hair) parts.push(`Hair: ${prompt.hair}`);
+        if (prompt.background) parts.push(`Background: ${prompt.background}`);
+        if (prompt.outfit) parts.push(`Outfit: ${prompt.outfit}`);
+        if (prompt.negative) parts.push(`Negative: ${prompt.negative}`);
+
+        return parts.join('\n');
     }
 
     if (!registry) return (
@@ -209,22 +245,36 @@ export default function BuilderPage() {
 
                             <div className="p-12 border-b border-white/5 flex items-center justify-between">
                                 <div className="flex items-center gap-6">
-                                    <div className={cn("w-3 h-3 rounded-full", result ? "bg-blue-500 shadow-[0_0_20px_rgba(59,130,246,0.8)]" : "bg-zinc-900")} />
+                                    <div className={cn("w-3 h-3 rounded-full", result ? "bg-blue-500 shadow-[0_0_20px_rgba(59,130,246,0.8)]" : error ? "bg-red-500 shadow-[0_0_20px_rgba(239,68,68,0.8)]" : "bg-zinc-900")} />
                                     <h2 className="text-xs font-black uppercase tracking-[0.3em] text-zinc-500 flex items-center gap-4">
                                         <Terminal size={14} className="text-zinc-700" />
-                                        Manifest Feed
+                                        Assembled Prompt
                                     </h2>
                                 </div>
                                 {result && (
                                     <div className="px-4 py-1 rounded-full bg-blue-500 group-hover:bg-blue-400 transition-colors text-[9px] font-black text-white uppercase tracking-widest shadow-2xl">
-                                        Live Stream
+                                        Ready
                                     </div>
                                 )}
                             </div>
 
                             <div className="flex-1 p-12 overflow-hidden flex flex-col gap-12">
                                 <AnimatePresence mode="wait">
-                                    {result ? (
+                                    {error ? (
+                                        <motion.div
+                                            initial={{ opacity: 0, scale: 0.98 }}
+                                            animate={{ opacity: 1, scale: 1 }}
+                                            className="flex-1 flex flex-col items-center justify-center gap-8 py-20"
+                                        >
+                                            <div className="w-32 h-32 rounded-[3.5rem] bg-red-500/10 border border-red-500/20 flex items-center justify-center">
+                                                <Info size={48} className="text-red-500" />
+                                            </div>
+                                            <div className="text-center space-y-4 max-w-md">
+                                                <h3 className="font-black text-xs uppercase tracking-[0.6em] text-red-500">Assembly Failed</h3>
+                                                <p className="text-sm leading-relaxed text-zinc-500 font-medium">{error}</p>
+                                            </div>
+                                        </motion.div>
+                                    ) : result ? (
                                         <motion.div
                                             initial={{ opacity: 0, scale: 0.98 }}
                                             animate={{ opacity: 1, scale: 1 }}
@@ -232,21 +282,38 @@ export default function BuilderPage() {
                                         >
                                             <div className="space-y-6">
                                                 <div className="flex items-center justify-between px-2">
-                                                    <span className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-800">Determinant Identity</span>
-                                                    <button onClick={copyToClipboard} className="text-[10px] font-black text-blue-500 hover:text-white transition-all uppercase underline underline-offset-4 decoration-2">Copy CID</button>
+                                                    <span className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-800">Canonical ID</span>
                                                 </div>
                                                 <div className="p-8 bg-black border-2 border-white/5 rounded-[2.5rem] font-mono text-[11px] text-zinc-400 break-all leading-relaxed shadow-inner">
                                                     {result.canonical_id}
                                                 </div>
                                             </div>
 
+                                            <div className="space-y-6">
+                                                <div className="flex items-center justify-between px-2">
+                                                    <span className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-800">Actions</span>
+                                                </div>
+                                                <div className="grid grid-cols-2 gap-4">
+                                                    <button
+                                                        onClick={copyJsonToClipboard}
+                                                        className="flex items-center justify-center gap-3 px-6 py-4 bg-blue-500 hover:bg-blue-400 rounded-2xl text-xs font-black text-white transition-all shadow-lg"
+                                                    >
+                                                        {copiedJson ? <Check size={16} /> : <Braces size={16} />}
+                                                        {copiedJson ? 'Copied!' : 'Copy JSON'}
+                                                    </button>
+                                                    <button
+                                                        onClick={copyTextToClipboard}
+                                                        className="flex items-center justify-center gap-3 px-6 py-4 bg-zinc-800 hover:bg-zinc-700 rounded-2xl text-xs font-black text-white transition-all shadow-lg"
+                                                    >
+                                                        {copiedText ? <Check size={16} /> : <Copy size={16} />}
+                                                        {copiedText ? 'Copied!' : 'Copy Text'}
+                                                    </button>
+                                                </div>
+                                            </div>
+
                                             <div className="space-y-6 flex-1 flex flex-col min-h-0">
                                                 <div className="flex items-center justify-between px-2">
-                                                    <span className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-800">Component Buffer</span>
-                                                    <button onClick={copyToClipboard} className="flex items-center gap-3 text-[10px] font-black text-white/50 hover:text-white transition-all">
-                                                        {copied ? <Check size={14} className="text-emerald-500" /> : <Braces size={14} />}
-                                                        EXTRACT JSON
-                                                    </button>
+                                                    <span className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-800">Prompt JSON</span>
                                                 </div>
                                                 <div className="flex-1 bg-black border-2 border-white/5 rounded-[3.5rem] p-10 overflow-auto shadow-inner relative group/code custom-scrollbar">
                                                     <pre className="text-xs font-mono text-zinc-500 leading-8">
@@ -266,8 +333,8 @@ export default function BuilderPage() {
                                                 <Cpu size={48} className="text-zinc-800 -rotate-12" />
                                             </div>
                                             <div className="text-center space-y-4">
-                                                <h3 className="font-black text-xs uppercase tracking-[0.6em] text-zinc-700">Ready for Uplink</h3>
-                                                <p className="text-sm max-w-[240px] leading-relaxed italic text-zinc-800 font-bold">Initiate parametric assembly to visualize the prompt manifest stream.</p>
+                                                <h3 className="font-black text-xs uppercase tracking-[0.6em] text-zinc-700">Awaiting Assembly</h3>
+                                                <p className="text-sm max-w-[280px] leading-relaxed italic text-zinc-800 font-bold">Select all parameters and click "Assemble Prompt" to generate your prompt.</p>
                                             </div>
                                         </motion.div>
                                     )}
