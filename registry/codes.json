@@ -294,13 +294,14 @@
                 "warm"
             ]
         },
-        "EA": {
-            "label": "East Asian",
-            "short_label": "East Asian",
-            "description": "Fair skin tones and East Asian features",
+        "VN": {
+            "label": "Vietnamese",
+            "short_label": "Vietnamese",
+            "description": "Vietnamese features with warm golden to light tan skin tones",
             "tags": [
-                "East Asian",
-                "fair"
+                "Southeast Asian",
+                "Vietnamese",
+                "warm"
             ]
         },
         "LA": {
