@@ -8,96 +8,135 @@ const __dirname = path.dirname(__filename);
 
 // Paths
 const REPO_ROOT = path.resolve(__dirname, '../..');
-const SOURCE_DIR = path.join(REPO_ROOT, 'builds/prompts');
-const DEST_DIR = path.join(__dirname, '../public/prompts');
-const INDEX_FILE = path.join(DEST_DIR, 'index.json');
+const SOURCE_PROMPTS = path.join(REPO_ROOT, 'builds/prompts');
+const SOURCE_COMPONENTS = path.join(REPO_ROOT, 'components');
+const SOURCE_REGISTRY = path.join(REPO_ROOT, 'registry');
+const DEST_PROMPTS = path.join(__dirname, '../public/prompts');
+const DEST_COMPONENTS = path.join(__dirname, '../public/components');
+const DEST_REGISTRY = path.join(__dirname, '../public/registry');
+const INDEX_FILE = path.join(DEST_PROMPTS, 'index.json');
 
-console.log('🔄 Syncing prompts to static assets...\n');
-console.log(`Source: ${SOURCE_DIR}`);
-console.log(`Destination: ${DEST_DIR}\n`);
+console.log('🔄 Syncing data to static assets...\n');
 
-// Check if source directory exists
-if (!fs.existsSync(SOURCE_DIR)) {
-    console.warn('⚠️  Source directory does not exist:', SOURCE_DIR);
-    console.warn('   Creating empty index.json for deployment...\n');
-    
-    // Create destination directory
-    fs.mkdirSync(DEST_DIR, { recursive: true });
-    
-    // Write empty index
-    fs.writeFileSync(INDEX_FILE, JSON.stringify({ prompts: [] }, null, 2));
-    console.log('✅ Created empty index.json');
-    process.exit(0);
+// 1. Sync Components (required for Builder)
+console.log('📦 Syncing components...');
+if (fs.existsSync(SOURCE_COMPONENTS)) {
+    copyDirectory(SOURCE_COMPONENTS, DEST_COMPONENTS);
+    const componentCount = countFiles(DEST_COMPONENTS, '.json');
+    console.log(`   ✅ Copied ${componentCount} component files\n`);
+} else {
+    console.warn('   ⚠️  Components directory not found\n');
 }
 
-// Create destination directory
-fs.mkdirSync(DEST_DIR, { recursive: true });
+// 2. Sync Registry (required for UI)
+console.log('📦 Syncing registry...');
+if (fs.existsSync(SOURCE_REGISTRY)) {
+    copyDirectory(SOURCE_REGISTRY, DEST_REGISTRY);
+    console.log(`   ✅ Copied registry files\n`);
+} else {
+    console.warn('   ⚠️  Registry directory not found\n');
+}
 
-// Read all JSON files from source
-const files = fs.readdirSync(SOURCE_DIR)
-    .filter(f => f.endsWith('.json'));
-
-console.log(`📦 Found ${files.length} prompt files\n`);
-
-// Copy files and build index
-const index = [];
-let copiedCount = 0;
-
-for (const filename of files) {
-    const sourcePath = path.join(SOURCE_DIR, filename);
-    const destPath = path.join(DEST_DIR, filename);
+// 3. Sync Prompts
+console.log('📦 Syncing prompts...');
+if (!fs.existsSync(SOURCE_PROMPTS)) {
+    console.warn('   ⚠️  Prompts directory not found');
+    console.warn('   Creating empty index.json...\n');
+    fs.mkdirSync(DEST_PROMPTS, { recursive: true });
+    fs.writeFileSync(INDEX_FILE, JSON.stringify({ prompts: [] }, null, 2));
+    console.log('   ✅ Created empty index.json\n');
+} else {
+    fs.mkdirSync(DEST_PROMPTS, { recursive: true });
     
-    // Copy file
-    fs.copyFileSync(sourcePath, destPath);
-    copiedCount++;
+    const files = fs.readdirSync(SOURCE_PROMPTS).filter(f => f.endsWith('.json'));
+    console.log(`   Found ${files.length} prompt files`);
     
-    // Get file stats
-    const stats = fs.statSync(destPath);
+    const index = [];
+    let copiedCount = 0;
     
-    // Parse canonical ID and extract dimensions
-    // Format: FA-{FA}__BT-{BT}__ET-{ET}__[PH_REGION-{region}__]HR-{HR}__SC-{SC}__ST-{ST}__v{XX}.json
-    const canonicalId = filename.replace('.json', '');
-    const parts = canonicalId.split('__');
-    
-    const dims = {};
-    parts.forEach(part => {
-        const match = part.match(/^([A-Z_]+)-(.+)$/);
-        if (match) {
-            const [, dimension, code] = match;
-            dims[dimension] = code;
-        } else if (part.startsWith('v')) {
-            dims.v = part.substring(1);
+    for (const filename of files) {
+        const sourcePath = path.join(SOURCE_PROMPTS, filename);
+        const destPath = path.join(DEST_PROMPTS, filename);
+        
+        fs.copyFileSync(sourcePath, destPath);
+        copiedCount++;
+        
+        const stats = fs.statSync(destPath);
+        const canonicalId = filename.replace('.json', '');
+        const parts = canonicalId.split('__');
+        
+        const dims = {};
+        parts.forEach(part => {
+            const match = part.match(/^([A-Z_]+)-(.+)$/);
+            if (match) {
+                const [, dimension, code] = match;
+                dims[dimension] = code;
+            } else if (part.startsWith('v')) {
+                dims.v = part.substring(1);
+            }
+        });
+        
+        index.push({
+            filename,
+            canonicalId,
+            dims,
+            modified: stats.mtime.toISOString(),
+            size: stats.size
+        });
+        
+        if (copiedCount % 25 === 0) {
+            console.log(`   Progress: ${copiedCount}/${files.length}...`);
         }
-    });
+    }
     
-    // Add to index
-    index.push({
-        filename,
-        canonicalId,
-        dims,
-        modified: stats.mtime.toISOString(),
-        size: stats.size
-    });
+    index.sort((a, b) => new Date(b.modified).getTime() - new Date(a.modified).getTime());
     
-    // Progress indicator
-    if (copiedCount % 25 === 0) {
-        console.log(`   Copied ${copiedCount}/${files.length}...`);
+    const indexData = {
+        prompts: index,
+        generated: new Date().toISOString(),
+        count: index.length
+    };
+    
+    fs.writeFileSync(INDEX_FILE, JSON.stringify(indexData, null, 2));
+    console.log(`   ✅ Copied ${copiedCount} prompts\n`);
+}
+
+console.log('✅ Sync complete!\n');
+
+// Helper functions
+function copyDirectory(src, dest) {
+    fs.mkdirSync(dest, { recursive: true });
+    
+    const entries = fs.readdirSync(src, { withFileTypes: true });
+    
+    for (const entry of entries) {
+        const srcPath = path.join(src, entry.name);
+        const destPath = path.join(dest, entry.name);
+        
+        if (entry.isDirectory()) {
+            copyDirectory(srcPath, destPath);
+        } else {
+            fs.copyFileSync(srcPath, destPath);
+        }
     }
 }
 
-// Sort by modified date (newest first)
-index.sort((a, b) => new Date(b.modified).getTime() - new Date(a.modified).getTime());
-
-// Write index file
-const indexData = {
-    prompts: index,
-    generated: new Date().toISOString(),
-    count: index.length
-};
-
-fs.writeFileSync(INDEX_FILE, JSON.stringify(indexData, null, 2));
-
-console.log(`\n✅ Sync complete!`);
-console.log(`   Copied: ${copiedCount} files`);
-console.log(`   Index: ${INDEX_FILE}`);
-console.log(`   Size: ${(fs.statSync(INDEX_FILE).size / 1024).toFixed(2)} KB\n`);
+function countFiles(dir, ext) {
+    let count = 0;
+    
+    if (!fs.existsSync(dir)) return 0;
+    
+    const entries = fs.readdirSync(dir, { withFileTypes: true });
+    
+    for (const entry of entries) {
+        const fullPath = path.join(dir, entry.name);
+        
+        if (entry.isDirectory()) {
+            count += countFiles(fullPath, ext);
+        } else if (entry.name.endsWith(ext)) {
+            count++;
+        }
+    }
+    
+    return count;
+}

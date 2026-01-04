@@ -22,6 +22,19 @@ interface ComponentData {
     [key: string]: any;
 }
 
+// Map dimension codes to folder names
+const DIMENSION_FOLDERS: Record<string, string> = {
+    'FA': 'face',
+    'BT': 'body',
+    'ET': 'ethnicity',
+    'HR': 'hair',
+    'SC': 'scene',
+    'ST': 'outfit',
+    'NG': 'negative',
+    'PH_REGION': 'ph_region',
+    'VN_REGION': 'vn_region'
+};
+
 /**
  * Build a prompt by reading component files and assembling them
  * This is a pure JavaScript implementation that works on Netlify
@@ -29,9 +42,8 @@ interface ComponentData {
 export async function buildPrompt(params: BuildParams) {
     const { FA, BT, ET, HR, SC, ST, v, r, PH_REGION, VN_REGION } = params;
     
-    // Determine the root directory (one level up from ui/)
-    const rootDir = path.resolve(process.cwd(), '..');
-    const componentsDir = path.join(rootDir, 'components');
+    // Read from public/components (synced at build time)
+    const componentsDir = path.join(process.cwd(), 'public/components');
     
     // Read component files
     const components: Record<string, ComponentData> = {};
@@ -91,10 +103,15 @@ export async function buildPrompt(params: BuildParams) {
  * Read a component file from the components directory
  */
 function readComponent(componentsDir: string, dimension: string, code: string): ComponentData {
-    const filePath = path.join(componentsDir, dimension, `${code}.json`);
+    const folder = DIMENSION_FOLDERS[dimension];
+    if (!folder) {
+        throw new Error(`Unknown dimension: ${dimension}`);
+    }
+    
+    const filePath = path.join(componentsDir, folder, `${code}.json`);
     
     if (!fs.existsSync(filePath)) {
-        throw new Error(`Component not found: ${dimension}/${code}.json`);
+        throw new Error(`Component not found: ${folder}/${code}.json`);
     }
     
     const content = fs.readFileSync(filePath, 'utf-8');
