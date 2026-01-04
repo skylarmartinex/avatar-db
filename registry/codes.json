@@ -152,82 +152,72 @@
             "status": "active"
         },
         "SG-PH-A": {
-            "label": "Soft Goddess — Filipina (A)",
-            "short_label": "Soft Goddess",
-            "description": "DEPRECATED: Use SG-A + ET-PH instead",
-            "ethnicity": "Filipina",
+            "label": "Soft Goddess (A-Alt)",
+            "short_label": "Soft Goddess A-Alt",
+            "description": "Alternative soft goddess beauty with gentle harmony",
             "archetype": "Soft Goddess",
             "status": "deprecated"
         },
         "SG-PH-B": {
-            "label": "Soft Goddess — Filipina (B)",
-            "short_label": "Soft Goddess B",
-            "description": "DEPRECATED: Use SG-B + ET-PH instead",
-            "ethnicity": "Filipina",
+            "label": "Soft Goddess (B-Alt)",
+            "short_label": "Soft Goddess B-Alt",
+            "description": "Alternative soft goddess with rounder features",
             "archetype": "Soft Goddess",
             "status": "deprecated"
         },
         "MB-PH-A": {
-            "label": "Modern Bombshell — Filipina (A)",
-            "short_label": "Modern Bombshell",
-            "description": "DEPRECATED: Use MB-A + ET-PH instead",
-            "ethnicity": "Filipina",
+            "label": "Modern Bombshell (A-Alt)",
+            "short_label": "Modern Bombshell A-Alt",
+            "description": "Alternative modern glam with sultry eyes",
             "archetype": "Modern Bombshell",
             "status": "deprecated"
         },
         "MB-PH-B": {
-            "label": "Modern Bombshell — Filipina (B)",
-            "short_label": "Modern Bombshell B",
-            "description": "DEPRECATED: Use MB-B + ET-PH instead",
-            "ethnicity": "Filipina",
+            "label": "Modern Bombshell (B-Alt)",
+            "short_label": "Modern Bombshell B-Alt",
+            "description": "Alternative sultry look with broader features",
             "archetype": "Modern Bombshell",
             "status": "deprecated"
         },
         "EM-PH-A": {
-            "label": "Editorial Model — Filipina (A)",
-            "short_label": "Editorial Model",
-            "description": "DEPRECATED: Use EM-A + ET-PH instead",
-            "ethnicity": "Filipina",
+            "label": "Editorial Model (A-Alt)",
+            "short_label": "Editorial Model A-Alt",
+            "description": "Alternative refined high-fashion beauty",
             "archetype": "Editorial Model",
             "status": "deprecated"
         },
         "EM-PH-B": {
-            "label": "Editorial Model — Filipina (B)",
-            "short_label": "Editorial Model B",
-            "description": "DEPRECATED: Use EM-B + ET-PH instead",
-            "ethnicity": "Filipina",
+            "label": "Editorial Model (B-Alt)",
+            "short_label": "Editorial Model B-Alt",
+            "description": "Alternative striking editorial beauty",
             "archetype": "Editorial Model",
             "status": "deprecated"
         },
         "RS-PH-A": {
-            "label": "Romantic Sweet — Filipina (A)",
-            "short_label": "Romantic Sweet",
-            "description": "DEPRECATED: Use RS-A + ET-PH instead",
-            "ethnicity": "Filipina",
+            "label": "Romantic Sweet (A-Alt)",
+            "short_label": "Romantic Sweet A-Alt",
+            "description": "Alternative fresh romantic sweetness",
             "archetype": "Romantic Sweet",
             "status": "deprecated"
         },
         "RS-PH-B": {
-            "label": "Romantic Sweet — Filipina (B)",
-            "short_label": "Romantic Sweet B",
-            "description": "DEPRECATED: Use RS-B + ET-PH instead",
-            "ethnicity": "Filipina",
+            "label": "Romantic Sweet (B-Alt)",
+            "short_label": "Romantic Sweet B-Alt",
+            "description": "Alternative sweet romantic beauty",
             "archetype": "Romantic Sweet",
             "status": "deprecated"
         },
         "FD-PH-A": {
-            "label": "Fitness Defined — Filipina (A)",
-            "short_label": "Fitness Defined",
-            "description": "DEPRECATED: Use FD-A + ET-PH instead",
-            "ethnicity": "Filipina",
+            "label": "Fitness Defined (A-Alt)",
+            "short_label": "Fitness Defined A-Alt",
+            "description": "Alternative athletic fitness beauty",
             "archetype": "Fitness Defined",
             "status": "deprecated"
         },
         "FD-PH-B": {
-            "label": "Fitness Defined — Filipina (B)",
-            "short_label": "Fitness Defined B",
-            "description": "DEPRECATED: Use FD-B + ET-PH instead",
-            "ethnicity": "Filipina",
+            "label": "Fitness Defined (B-Alt)",
+            "short_label": "Fitness Defined B-Alt",
+            "description": "Alternative powerful competition-ready fitness beauty",
             "archetype": "Fitness Defined",
             "status": "deprecated"
         }

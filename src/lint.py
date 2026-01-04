@@ -60,15 +60,31 @@ def validate_component(dim: str, code: str, content: Dict[str, Any]) -> List[str
         if "negative_prompt" not in content:
             errors.append(f"[{dim}-{code}] Missing required key: negative_prompt")
 
+    # Ethnicity neutral check for FA
+    if dim == "FA":
+        ethnicity_keywords = ["Filipina", "Filipino", "Vietnamese", "Korean", "Japanese", "Chinese", "Thai", "Asian", "Caucasian", "Black", "Hispanic", "Latina", "Latino"]
+        content_str = json.dumps(content).lower()
+        for kw in ethnicity_keywords:
+            if kw.lower() in content_str:
+                errors.append(f"[{dim}-{code}] FA module must be ethnicity-neutral. Found term: {kw}")
+
     return errors
 
 def run_lint():
     codes = get_all_codes()
     all_errors = []
     
-    # Lint registry
-    for dim, code_list in codes.items():
-        for code in code_list:
+    # Lint registry and components
+    for dim, code_map in codes.items():
+        for code, meta in code_map.items():
+            # Check registry metadata for FA
+            if dim == "FA":
+                ethnicity_keywords = ["Filipina", "Filipino", "Vietnamese", "Korean", "Japanese", "Chinese", "Thai", "Asian", "Caucasian", "Black", "Hispanic", "Latina", "Latino"]
+                meta_str = json.dumps(meta).lower()
+                for kw in ethnicity_keywords:
+                    if kw.lower() in meta_str:
+                        all_errors.append(f"Registry ERROR [{dim}-{code}]: Metadata must be ethnicity-neutral. Found term: {kw}")
+
             path = get_component_path(dim, code)
             try:
                 content = load_json(path)
