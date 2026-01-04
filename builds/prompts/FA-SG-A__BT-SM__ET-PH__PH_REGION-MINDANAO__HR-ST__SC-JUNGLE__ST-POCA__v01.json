@@ -1,0 +1,250 @@
+{
+  "camera": {
+    "shot": "medium portrait, upper thighs to head",
+    "angle": "straight-on with subtle downward tilt",
+    "perspective": "natural human-eye perspective, flattering compression"
+  },
+  "lighting": {
+    "source": "natural sunlight",
+    "direction": "strong side light from camera-left",
+    "contrast": "high contrast sculpting muscle and facial structure",
+    "temperature": "warm golden tones"
+  },
+  "composition": {
+    "framing": "centered subject with vertical emphasis",
+    "silhouette": "clean and uninterrupted",
+    "depth": "moderate, background visually secondary"
+  },
+  "image_quality": {
+    "style": "luxury editorial fitness photography",
+    "resolution": "ultra-high resolution, photorealistic",
+    "sharpness": "extreme clarity on face and torso",
+    "noise": "minimal"
+  },
+  "global_mood": {
+    "emotion": "confident, calm, magnetic",
+    "vibe": "sensual, powerful, high-end editorial",
+    "prohibited": [
+      "fear",
+      "horror",
+      "costume",
+      "whimsical",
+      "cartoon",
+      "random fashion"
+    ]
+  },
+  "posture_anchor": {
+    "stance": "upright, grounded, confident editorial stance",
+    "body_alignment": "neutral spine, shoulders back, chest open",
+    "weight_distribution": "weight subtly shifted to one hip",
+    "pose_energy": "controlled, deliberate, high-fashion",
+    "movement_constraints": [
+      "no running",
+      "no walking",
+      "no lounging",
+      "no exaggerated motion"
+    ]
+  },
+  "framing_anchor": {
+    "composition_bias": [
+      "centered subject",
+      "vertical framing",
+      "full torso visibility",
+      "clear body outline"
+    ],
+    "background_relationship": "subject clearly separated from background; no environmental clutter intersecting body"
+  },
+  "setting": "lush tropical jungle",
+  "surrounding": {
+    "environment_style": "editorial, controlled, cinematic",
+    "mood": "cinematic, controlled, editorial with filtered natural light creating depth",
+    "elements": [
+      "dense greenery",
+      "filtered sunlight",
+      "subtle depth"
+    ],
+    "visual_priority": "background remains secondary to subject",
+    "guardrails": [
+      "no chaotic foliage crossing body",
+      "no survival or crouching poses",
+      "no fear or tension",
+      "no environmental clutter intersecting subject",
+      "subject clearly separated from background"
+    ]
+  },
+  "subject": {
+    "ethnicity": "Filipina",
+    "skin": {
+      "tone": "golden tan",
+      "undertone": "warm",
+      "texture": "smooth, luminous, healthy glow"
+    },
+    "aesthetic_bias": [
+      "warmth",
+      "natural elegance",
+      "approachability"
+    ],
+    "overall": "Filipina beauty with warm golden tan skin, natural elegance, and approachable sophistication",
+    "regional_modifier": "Mindanao Lowland (Southern Philippines)",
+    "facial_nuance": {
+      "skin": {
+        "tone_adjustment": "rich golden tan with warm bronze undertones",
+        "texture": "smooth with natural warmth and healthy radiance"
+      },
+      "facial_structure": {
+        "face_shape": "oval with soft contours and balanced proportions",
+        "cheekbones": "moderately high with gentle definition",
+        "jawline": "softly rounded with feminine grace",
+        "forehead": "balanced with smooth curve"
+      },
+      "features": {
+        "eyes": "expressive almond eyes with warm depth and natural brightness",
+        "nose": "soft bridge with gently rounded tip",
+        "lips": "full and soft with natural warmth"
+      }
+    },
+    "scope": "facial features and skin nuance only - does not affect body, posture, mood, camera, lighting, or outfit",
+    "face_anchor": "soft_goddess",
+    "do_not_change": [
+      "eye color",
+      "bone structure",
+      "facial proportions",
+      "no exaggerated expressions",
+      "no fear or horror emotion",
+      "no cartoon stylization"
+    ],
+    "facial_features": {
+      "face_shape": "soft oval-to-heart hybrid with gentle taper toward the chin",
+      "jawline": "smooth, elegant, softly defined",
+      "cheekbones": "high and softly rounded, naturally light-catching",
+      "eyes": {
+        "shape": "large almond-shaped eyes with slight upward outer tilt",
+        "lids": "softly hooded upper lids",
+        "expression": "calm, confident, serene, inviting, never fearful or surprised"
+      },
+      "nose": "refined bridge with softly rounded, slightly upturned tip",
+      "lips": "full, plush lips with defined cupid's bow and hydrated sheen",
+      "overall": "soft goddess beauty with harmonious proportions, gentle feminine features, naturally elegant and photogenic, high-end editorial presence"
+    },
+    "build": "slender model physique with elongated proportions",
+    "body_proportions": "tall lean frame with subtle curves, narrow waist, modest bust, slim hips, long limbs with minimal muscle definition",
+    "additional_body_notes": "runway-ready slender build, elegant elongated silhouette, minimal body fat with natural softness, graceful and statuesque posture",
+    "hair_style": "straight, black hair",
+    "outfit": "Pocahontas-inspired tribal fashion bikini",
+    "materials": [
+      "leather-inspired textures",
+      "suede-like finish"
+    ],
+    "details": [
+      "fringe accents",
+      "subtle beadwork",
+      "natural stitching",
+      "earth-toned tribal patterns"
+    ],
+    "fit": "minimal coverage, fashion-forward, editorial",
+    "style": "high-fashion tribal bikini with bohemian luxury aesthetic",
+    "explicit_exclusions": [
+      "no dresses",
+      "no polka dots",
+      "no modern casual clothing",
+      "no costumes",
+      "no full coverage",
+      "no random fashion elements"
+    ]
+  },
+  "pose": {
+    "stance": "confident editorial pose",
+    "energy": "powerful, sensual, controlled"
+  },
+  "negative_prompt": {
+    "quality_exclusions": [
+      "low quality",
+      "low resolution",
+      "blurry",
+      "out of focus",
+      "grainy",
+      "pixelated",
+      "jpeg artifacts",
+      "watermark",
+      "text",
+      "signature"
+    ],
+    "anatomy_exclusions": [
+      "bad anatomy",
+      "bad proportions",
+      "deformed",
+      "disfigured",
+      "mutated",
+      "extra limbs",
+      "missing limbs",
+      "fused fingers",
+      "too many fingers",
+      "malformed hands",
+      "poorly drawn hands",
+      "poorly drawn face"
+    ],
+    "expression_exclusions": [
+      "horror",
+      "scared expression",
+      "fearful",
+      "terrified",
+      "shocked",
+      "surprised",
+      "screaming",
+      "crying",
+      "distressed",
+      "haunted vibes",
+      "dark mood",
+      "sinister"
+    ],
+    "clothing_exclusions": [
+      "costume",
+      "costumes",
+      "dress",
+      "dresses",
+      "polka dots",
+      "polka dot pattern",
+      "full coverage clothing",
+      "modern casual clothing",
+      "random fashion elements",
+      "halloween costume",
+      "theatrical costume"
+    ],
+    "style_exclusions": [
+      "cartoon",
+      "anime",
+      "illustration",
+      "painting",
+      "drawing",
+      "sketch",
+      "3d render",
+      "cgi",
+      "artificial",
+      "stylized",
+      "whimsical",
+      "fantasy"
+    ],
+    "pose_exclusions": [
+      "running",
+      "walking",
+      "jumping",
+      "lounging",
+      "sitting",
+      "crouching",
+      "kneeling",
+      "lying down",
+      "exaggerated motion",
+      "dynamic action",
+      "candid movement"
+    ],
+    "environment_exclusions": [
+      "cluttered background",
+      "busy background",
+      "distracting elements",
+      "props in hands",
+      "environmental clutter intersecting body",
+      "chaotic composition",
+      "wide scenic emphasis"
+    ]
+  }
+}
