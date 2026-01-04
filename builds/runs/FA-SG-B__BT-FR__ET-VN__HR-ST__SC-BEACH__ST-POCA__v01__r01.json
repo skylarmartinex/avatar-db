@@ -1,0 +1,22 @@
+{
+  "timestamp": "2026-01-03T18:14:27.009670",
+  "selection_codes": {
+    "FA": "SG-B",
+    "BT": "FR",
+    "ET": "VN",
+    "HR": "ST",
+    "SC": "BEACH",
+    "ST": "POCA",
+    "PH_REGION": null,
+    "VN_REGION": null,
+    "BASE": "BASE",
+    "PF": "POSTURE_FRAMING",
+    "NB": "NB"
+  },
+  "prompt_version": "01",
+  "run_id": "01",
+  "prompt_json_path": "/Users/skylarmartinez/.gemini/antigravity/scratch/avatar-db/builds/prompts/FA-SG-B__BT-FR__ET-VN__HR-ST__SC-BEACH__ST-POCA__v01.json",
+  "image_path": "",
+  "rating": "",
+  "notes": ""
+}

@@ -14,6 +14,10 @@ def get_all_codes() -> Dict[str, List[str]]:
 
 def get_component_path(dim: str, code: str) -> str:
     folder_map = {
+        "BASE": "base",
+        "PF": "base",
+        "PH_REGION": "ph_region",
+        "VN_REGION": "vn_region",
         "FA": "face",
         "BT": "body",
         "ET": "ethnicity",

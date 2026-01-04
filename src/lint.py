@@ -8,10 +8,15 @@ from .registry import get_all_codes, get_component_path
 ALLOWED_TOP_LEVEL_KEYS = {
     "setting", "viewing_angle", "subject", "lighting", "skin", "clothing", 
     "pose", "surrounding", "aspect_ratio", "composition", "image_quality", 
-    "overall_mood", "negative_prompt"
+    "overall_mood", "negative_prompt", "camera", "global_mood", 
+    "posture_anchor", "framing_anchor"
 }
 
 BOUNDARY_RULES = {
+    "BASE": ["camera", "lighting", "composition", "image_quality", "global_mood"],
+    "PF": ["posture_anchor", "framing_anchor", "subject", "pose", "composition", "viewing_angle", "setting"],
+    "PH_REGION": ["subject", "skin"],
+    "VN_REGION": ["subject", "skin"],
     "FA": ["subject"],
     "BT": ["subject"],
     "HR": ["subject"],

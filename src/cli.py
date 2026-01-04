@@ -29,6 +29,8 @@ def main():
     build_parser.add_argument("--ST", required=True)
     build_parser.add_argument("--v", required=True)
     build_parser.add_argument("--r", required=True)
+    build_parser.add_argument("--ph-region", help="Philippines regional modifier")
+    build_parser.add_argument("--vn-region", help="Vietnam regional modifier")
 
     # Build Pack
     pack_parser = subparsers.add_parser("build-pack")
@@ -36,6 +38,8 @@ def main():
     pack_parser.add_argument("--STY", required=True)
     pack_parser.add_argument("--v", required=True)
     pack_parser.add_argument("--r", required=True)
+    pack_parser.add_argument("--ph-region", help="Philippines regional modifier")
+    pack_parser.add_argument("--vn-region", help="Vietnam regional modifier")
 
     # Batch
     batch_parser = subparsers.add_parser("batch")
@@ -61,7 +65,8 @@ def main():
     elif args.command == "build":
         res = build_prompt(
             fa=args.FA, bt=args.BT, et=args.ET, hr=args.HR, 
-            sc=args.SC, st=args.ST, v=args.v, r=args.r
+            sc=args.SC, st=args.ST, v=args.v, r=args.r,
+            ph_region=args.ph_region, vn_region=args.vn_region
         )
         print(f"Built: {res['run_id']}")
 
@@ -70,7 +75,8 @@ def main():
         sty_pack = load_json(get_pack_path("STY", args.STY))
         res = build_prompt(
             fa=sub_pack["FA"], bt=sub_pack["BT"], et=sub_pack["ET"], hr=sub_pack["HR"],
-            sc=sty_pack["SC"], st=sty_pack["ST"], v=args.v, r=args.r
+            sc=sty_pack["SC"], st=sty_pack["ST"], v=args.v, r=args.r,
+            ph_region=args.ph_region, vn_region=args.vn_region
         )
         print(f"Built from pack: {res['run_id']}")
 
