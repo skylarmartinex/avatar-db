@@ -65,8 +65,8 @@ export async function buildPrompt(params: BuildParams) {
             components.VN_REGION = readComponent(componentsDir, 'VN_REGION', VN_REGION);
         }
         
-        // Read negative prompt (default)
-        components.NG = readComponent(componentsDir, 'NG', 'DEFAULT');
+        // Read negative prompt (NB = Nano Banana default negative)
+        components.NG = readComponent(componentsDir, 'NG', 'NB');
         
     } catch (error: any) {
         throw new Error(`Failed to read component: ${error.message}`);
