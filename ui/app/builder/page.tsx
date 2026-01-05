@@ -9,7 +9,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 export default function BuilderPage() {
     const [registry, setRegistry] = useState<any>(null);
     const [selections, setSelections] = useState({
-        FA: '', BT: '', ET: '', HR: '', SC: '', ST: '', v: '01', r: '01'
+        ET: '', REGION: '', FA: '', BT: '', HR: '', SC: '', ST: '', v: '01', r: '01'
     });
     const [result, setResult] = useState<any>(null);
     const [loading, setLoading] = useState(false);
@@ -22,14 +22,40 @@ export default function BuilderPage() {
         fetch('/api/registry').then(res => res.json()).then(setRegistry);
     }, []);
 
+    // Reset region when ethnicity changes
+    useEffect(() => {
+        setSelections(prev => ({ ...prev, REGION: '' }));
+    }, [selections.ET]);
+
     async function handleBuild() {
         setLoading(true);
         setError(null);
         try {
+            // Determine which region dimension to use
+            const buildParams: any = {
+                FA: selections.FA,
+                BT: selections.BT,
+                ET: selections.ET,
+                HR: selections.HR,
+                SC: selections.SC,
+                ST: selections.ST,
+                v: selections.v,
+                r: selections.r
+            };
+
+            // Add region based on ethnicity
+            if (selections.REGION) {
+                if (selections.ET === 'PH') {
+                    buildParams.PH_REGION = selections.REGION;
+                } else if (selections.ET === 'VN') {
+                    buildParams.VN_REGION = selections.REGION;
+                }
+            }
+
             const res = await fetch('/api/build', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(selections)
+                body: JSON.stringify(buildParams)
             });
             const data = await res.json();
 
@@ -86,14 +112,135 @@ export default function BuilderPage() {
         </div>
     );
 
-    const DIMS = [
-        { code: 'ET', label: 'Ethnicity', placeholder: 'Select ethnicity' },
-        { code: 'FA', label: 'Face Archetype', placeholder: 'Select face type' },
-        { code: 'BT', label: 'Body Type', placeholder: 'Select body type' },
-        { code: 'HR', label: 'Hair Style', placeholder: 'Select hair style' },
-        { code: 'SC', label: 'Background', placeholder: 'Select background' },
-        { code: 'ST', label: 'Outfit', placeholder: 'Select outfit' }
+    // Get available regions based on selected ethnicity
+    const getRegionOptions = () => {
+        if (selections.ET === 'PH' && registry.PH_REGION) {
+            return Object.entries(registry.PH_REGION)
+                .filter(([, data]: [string, any]) => data.status !== 'deprecated')
+                .map(([code, data]: [string, any]) => ({ code, label: data.label || code }));
+        } else if (selections.ET === 'VN' && registry.VN_REGION) {
+            return Object.entries(registry.VN_REGION)
+                .filter(([, data]: [string, any]) => data.status !== 'deprecated')
+                .map(([code, data]: [string, any]) => ({ code, label: data.label || code }));
+        }
+        return [];
+    };
+
+    const regionOptions = getRegionOptions();
+    const isRegionEnabled = regionOptions.length > 0;
+
+    // Left column parameters
+    const LEFT_PARAMS = [
+        { code: 'ET', label: 'Ethnicity', placeholder: 'Select ethnicity', registryKey: 'ET' },
+        { code: 'REGION', label: 'Region', placeholder: 'Select region', registryKey: null, isRegion: true },
+        { code: 'HR', label: 'Hair Style', placeholder: 'Select hair style', registryKey: 'HR' },
+        { code: 'SC', label: 'Background', placeholder: 'Select background', registryKey: 'SC' }
     ];
+
+    // Right column parameters
+    const RIGHT_PARAMS = [
+        { code: 'FA', label: 'Face Archetype', placeholder: 'Select face type', registryKey: 'FA' },
+        { code: 'BT', label: 'Body Type', placeholder: 'Select body type', registryKey: 'BT' },
+        { code: 'ST', label: 'Outfit', placeholder: 'Select outfit', registryKey: 'ST' }
+    ];
+
+    const renderParameter = (param: any) => {
+        const selectedCode = selections[param.code as keyof typeof selections];
+        
+        // Special handling for Region
+        if (param.isRegion) {
+            const metadata = selectedCode && isRegionEnabled ? 
+                (selections.ET === 'PH' ? registry.PH_REGION?.[selectedCode] : registry.VN_REGION?.[selectedCode]) : null;
+
+            return (
+                <div key={param.code} className={cn("space-y-3", !isRegionEnabled && "opacity-40")}>
+                    <div className="flex items-center gap-2 px-1">
+                        <label className="text-[11px] font-bold uppercase tracking-wider text-zinc-600">
+                            {param.label}
+                        </label>
+                        {metadata && (
+                            <div 
+                                className="relative group/info"
+                                onMouseEnter={() => setHoveredDim(param.code)}
+                                onMouseLeave={() => setHoveredDim(null)}
+                            >
+                                <Info size={12} className="text-zinc-700 hover:text-blue-500 cursor-help transition-colors" />
+                                {hoveredDim === param.code && (
+                                    <div className="absolute left-0 top-6 z-50 w-72 p-4 bg-zinc-900 border border-white/10 rounded-xl shadow-2xl">
+                                        <p className="text-xs font-bold text-white mb-1">{metadata.label}</p>
+                                        <p className="text-[11px] text-zinc-500 leading-relaxed italic">"{metadata.description}"</p>
+                                        <div className="mt-2 px-2 py-1 bg-white/5 rounded text-[10px] font-mono text-zinc-600">{selectedCode}</div>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+                        {selectedCode && isRegionEnabled && <div className="w-1 h-1 rounded-full bg-blue-500 ml-auto" />}
+                    </div>
+                    <select
+                        className="w-full bg-[#030303] border border-white/10 px-4 py-3 rounded-xl appearance-none focus:border-blue-500/50 outline-none transition-all text-sm font-semibold text-white hover:border-white/20 disabled:cursor-not-allowed"
+                        value={selectedCode}
+                        onChange={e => setSelections({ ...selections, [param.code]: e.target.value })}
+                        disabled={!isRegionEnabled}
+                    >
+                        <option value="" className="text-zinc-600">
+                            {isRegionEnabled ? param.placeholder : 'Select ethnicity first'}
+                        </option>
+                        {regionOptions.map(({ code, label }) => (
+                            <option key={code} value={code}>{label}</option>
+                        ))}
+                    </select>
+                </div>
+            );
+        }
+
+        // Standard parameter
+        const metadata = selectedCode && param.registryKey ? registry[param.registryKey]?.[selectedCode] : null;
+
+        return (
+            <div key={param.code} className="space-y-3">
+                <div className="flex items-center gap-2 px-1">
+                    <label className="text-[11px] font-bold uppercase tracking-wider text-zinc-600">
+                        {param.label}
+                    </label>
+                    {metadata && (
+                        <div 
+                            className="relative group/info"
+                            onMouseEnter={() => setHoveredDim(param.code)}
+                            onMouseLeave={() => setHoveredDim(null)}
+                        >
+                            <Info size={12} className="text-zinc-700 hover:text-blue-500 cursor-help transition-colors" />
+                            {hoveredDim === param.code && (
+                                <div className="absolute left-0 top-6 z-50 w-72 p-4 bg-zinc-900 border border-white/10 rounded-xl shadow-2xl">
+                                    <p className="text-xs font-bold text-white mb-1">{metadata.label}</p>
+                                    <p className="text-[11px] text-zinc-500 leading-relaxed italic">"{metadata.description}"</p>
+                                    <div className="mt-2 px-2 py-1 bg-white/5 rounded text-[10px] font-mono text-zinc-600">{selectedCode}</div>
+                                </div>
+                            )}
+                        </div>
+                    )}
+                    {selectedCode && <div className="w-1 h-1 rounded-full bg-blue-500 ml-auto" />}
+                </div>
+                <select
+                    className="w-full bg-[#030303] border border-white/10 px-4 py-3 rounded-xl appearance-none focus:border-blue-500/50 outline-none transition-all text-sm font-semibold text-white hover:border-white/20"
+                    value={selectedCode}
+                    onChange={e => setSelections({ ...selections, [param.code]: e.target.value })}
+                >
+                    <option value="" className="text-zinc-600">{param.placeholder}</option>
+                    {param.registryKey && Object.entries(registry[param.registryKey] || {})
+                        .filter(([, data]: [string, any]) => data.status !== 'deprecated')
+                        .map(([code, data]: [string, any]) => (
+                            <option key={code} value={code}>
+                                {data.label || code}
+                            </option>
+                        ))}
+                </select>
+            </div>
+        );
+    };
+
+    // Check if all required parameters are selected
+    const requiredParams = ['ET', 'FA', 'BT', 'HR', 'SC', 'ST'];
+    const allRequiredSelected = requiredParams.every(p => selections[p as keyof typeof selections]);
 
     return (
         <div className="max-w-[1600px] mx-auto space-y-20 pb-48">
@@ -123,7 +270,7 @@ export default function BuilderPage() {
                         variant="ghost"
                         size="sm"
                         className="h-14 px-8 rounded-2xl text-zinc-500 hover:text-white"
-                        onClick={() => setSelections({ FA: '', BT: '', ET: '', HR: '', SC: '', ST: '', v: '01', r: '01' })}
+                        onClick={() => setSelections({ ET: '', REGION: '', FA: '', BT: '', HR: '', SC: '', ST: '', v: '01', r: '01' })}
                     >
                         <RefreshCw size={16} className="mr-2" />
                         Clear
@@ -132,7 +279,7 @@ export default function BuilderPage() {
                         size="sm"
                         className="h-14 px-12 rounded-2xl bg-white text-black hover:scale-105 shadow-[0_10px_50px_rgba(255,255,255,0.1)] font-black text-lg tracking-tight"
                         onClick={handleBuild}
-                        disabled={loading || !DIMS.every(d => selections[d.code as keyof typeof selections])}
+                        disabled={loading || !allRequiredSelected}
                     >
                         {loading ? <Cpu className="animate-spin mr-3" size={20} /> : <Wand2 className="mr-3" size={20} fill="currentColor" />}
                         {loading ? "Assembling..." : "Assemble"}
@@ -141,54 +288,18 @@ export default function BuilderPage() {
             </div>
 
             <div className="grid grid-cols-1 xl:grid-cols-12 gap-16">
-                {/* Compact Parameter Grid */}
+                {/* Two-Column Parameter Grid */}
                 <div className="xl:col-span-7 space-y-12">
                     <div className="grid grid-cols-2 gap-x-8 gap-y-6">
-                        {DIMS.map(dim => {
-                            const selectedCode = selections[dim.code as keyof typeof selections];
-                            const metadata = selectedCode ? registry[dim.code]?.[selectedCode] : null;
+                        {/* Left Column */}
+                        <div className="space-y-6">
+                            {LEFT_PARAMS.map(renderParameter)}
+                        </div>
 
-                            return (
-                                <div key={dim.code} className="space-y-3">
-                                    <div className="flex items-center gap-2 px-1">
-                                        <label className="text-[11px] font-bold uppercase tracking-wider text-zinc-600">
-                                            {dim.label}
-                                        </label>
-                                        {metadata && (
-                                            <div 
-                                                className="relative group/info"
-                                                onMouseEnter={() => setHoveredDim(dim.code)}
-                                                onMouseLeave={() => setHoveredDim(null)}
-                                            >
-                                                <Info size={12} className="text-zinc-700 hover:text-blue-500 cursor-help transition-colors" />
-                                                {hoveredDim === dim.code && (
-                                                    <div className="absolute left-0 top-6 z-50 w-72 p-4 bg-zinc-900 border border-white/10 rounded-xl shadow-2xl">
-                                                        <p className="text-xs font-bold text-white mb-1">{metadata.label}</p>
-                                                        <p className="text-[11px] text-zinc-500 leading-relaxed italic">"{metadata.description}"</p>
-                                                        <div className="mt-2 px-2 py-1 bg-white/5 rounded text-[10px] font-mono text-zinc-600">{selectedCode}</div>
-                                                    </div>
-                                                )}
-                                            </div>
-                                        )}
-                                        {selectedCode && <div className="w-1 h-1 rounded-full bg-blue-500 ml-auto" />}
-                                    </div>
-                                    <select
-                                        className="w-full bg-[#030303] border border-white/10 px-4 py-3 rounded-xl appearance-none focus:border-blue-500/50 outline-none transition-all text-sm font-semibold text-white hover:border-white/20"
-                                        value={selectedCode}
-                                        onChange={e => setSelections({ ...selections, [dim.code]: e.target.value })}
-                                    >
-                                        <option value="" className="text-zinc-600">{dim.placeholder}</option>
-                                        {Object.entries(registry[dim.code] || {})
-                                            .filter(([, data]: [string, any]) => data.status !== 'deprecated')
-                                            .map(([code, data]: [string, any]) => (
-                                                <option key={code} value={code}>
-                                                    {data.label || code}
-                                                </option>
-                                            ))}
-                                    </select>
-                                </div>
-                            );
-                        })}
+                        {/* Right Column */}
+                        <div className="space-y-6">
+                            {RIGHT_PARAMS.map(renderParameter)}
+                        </div>
                     </div>
 
                     {/* Compact System Parameters */}
