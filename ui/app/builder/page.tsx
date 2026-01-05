@@ -76,7 +76,7 @@ export default function BuilderPage() {
 
     function copyJsonToClipboard() {
         if (result?.promptContent) {
-            navigator.clipboard.writeText(JSON.stringify(result.promptContent, null, 2));
+            navigator.clipboard.writeText(JSON.stringify(result.prompt, null, 2));
             setCopiedJson(true);
             setTimeout(() => setCopiedJson(false), 2000);
         }
@@ -84,7 +84,7 @@ export default function BuilderPage() {
 
     function copyTextToClipboard() {
         if (result?.promptContent) {
-            const flattenedText = flattenPromptToText(result.promptContent);
+            const flattenedText = flattenPromptToText(result.prompt);
             navigator.clipboard.writeText(flattenedText);
             setCopiedText(true);
             setTimeout(() => setCopiedText(false), 2000);
@@ -407,7 +407,7 @@ export default function BuilderPage() {
                                                 </div>
                                                 <div className="flex-1 bg-black border-2 border-white/5 rounded-[3.5rem] p-10 overflow-auto shadow-inner relative group/code custom-scrollbar">
                                                     <pre className="text-xs font-mono text-zinc-500 leading-8">
-                                                        {JSON.stringify(result.promptContent, null, 2)}
+                                                        {JSON.stringify(result.prompt, null, 2)}
                                                     </pre>
                                                     <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent pointer-events-none h-32 bottom-0 top-auto opacity-80" />
                                                 </div>

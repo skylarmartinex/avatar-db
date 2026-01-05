@@ -14,14 +14,6 @@ interface BuildParams {
     VN_REGION?: string;
 }
 
-interface ComponentData {
-    code: string;
-    label: string;
-    description?: string;
-    prompt?: string;
-    [key: string]: any;
-}
-
 // Map dimension codes to folder names
 const DIMENSION_FOLDERS: Record<string, string> = {
     'FA': 'face',
@@ -36,7 +28,7 @@ const DIMENSION_FOLDERS: Record<string, string> = {
 };
 
 /**
- * Build a prompt by reading component files and assembling them
+ * Build a prompt by reading component files and merging them
  * This is a pure JavaScript implementation that works on Netlify
  */
 export async function buildPrompt(params: BuildParams) {
@@ -45,64 +37,101 @@ export async function buildPrompt(params: BuildParams) {
     // Read from public/components (synced at build time)
     const componentsDir = path.join(process.cwd(), 'public/components');
     
-    // Read component files
-    const components: Record<string, ComponentData> = {};
-    
     try {
-        // Read each dimension's component
-        components.FA = readComponent(componentsDir, 'FA', FA);
-        components.BT = readComponent(componentsDir, 'BT', BT);
-        components.ET = readComponent(componentsDir, 'ET', ET);
-        components.HR = readComponent(componentsDir, 'HR', HR);
-        components.SC = readComponent(componentsDir, 'SC', SC);
-        components.ST = readComponent(componentsDir, 'ST', ST);
+        // Read each component as full JSON objects
+        const faComponent = readComponent(componentsDir, 'FA', FA);
+        const btComponent = readComponent(componentsDir, 'BT', BT);
+        const etComponent = readComponent(componentsDir, 'ET', ET);
+        const hrComponent = readComponent(componentsDir, 'HR', HR);
+        const scComponent = readComponent(componentsDir, 'SC', SC);
+        const stComponent = readComponent(componentsDir, 'ST', ST);
+        const ngComponent = readComponent(componentsDir, 'NG', 'NB');
         
         // Read region if specified
+        let regionComponent = null;
         if (PH_REGION) {
-            components.PH_REGION = readComponent(componentsDir, 'PH_REGION', PH_REGION);
-        }
-        if (VN_REGION) {
-            components.VN_REGION = readComponent(componentsDir, 'VN_REGION', VN_REGION);
+            regionComponent = readComponent(componentsDir, 'PH_REGION', PH_REGION);
+        } else if (VN_REGION) {
+            regionComponent = readComponent(componentsDir, 'VN_REGION', VN_REGION);
         }
         
-        // Read negative prompt (NB = Nano Banana default negative)
-        components.NG = readComponent(componentsDir, 'NG', 'NB');
+        // Deep merge all components in the correct order
+        // Order matters: later merges override earlier ones for conflicting keys
+        const mergedPrompt = deepMerge(
+            {},
+            faComponent,      // Face archetype (base subject)
+            btComponent,      // Body type
+            etComponent,      // Ethnicity
+            regionComponent,  // Region (if specified)
+            hrComponent,      // Hair
+            scComponent,      // Scene/background
+            stComponent,      // Outfit/clothing
+            ngComponent       // Negative prompt
+        );
+        
+        // Build canonical ID
+        const idParts = [`FA-${FA}`, `BT-${BT}`, `ET-${ET}`];
+        if (PH_REGION) idParts.push(`PH_REGION-${PH_REGION}`);
+        if (VN_REGION) idParts.push(`VN_REGION-${VN_REGION}`);
+        idParts.push(`HR-${HR}`, `SC-${SC}`, `ST-${ST}`, `v${v}`);
+        
+        const canonical_id = idParts.join('__');
+        
+        // Build human-readable title
+        const title = buildTitle(params, faComponent, btComponent, etComponent, regionComponent);
+        
+        return {
+            success: true,
+            canonical_id,
+            title,
+            prompt: mergedPrompt,
+            dims: { FA, BT, ET, HR, SC, ST, v, r, PH_REGION, VN_REGION }
+        };
         
     } catch (error: any) {
-        throw new Error(`Failed to read component: ${error.message}`);
+        throw new Error(`Failed to build prompt: ${error.message}`);
+    }
+}
+
+/**
+ * Deep merge multiple objects
+ * Later objects override earlier ones for conflicting keys
+ */
+function deepMerge(...objects: any[]): any {
+    const result: any = {};
+    
+    for (const obj of objects) {
+        if (!obj || typeof obj !== 'object') continue;
+        
+        for (const key in obj) {
+            if (!obj.hasOwnProperty(key)) continue;
+            
+            const value = obj[key];
+            
+            // If both are objects (and not arrays), merge recursively
+            if (
+                value && 
+                typeof value === 'object' && 
+                !Array.isArray(value) &&
+                result[key] &&
+                typeof result[key] === 'object' &&
+                !Array.isArray(result[key])
+            ) {
+                result[key] = deepMerge(result[key], value);
+            } else {
+                // Otherwise, override
+                result[key] = value;
+            }
+        }
     }
     
-    // Assemble the prompt
-    const prompt = {
-        subject: components.FA.prompt || '',
-        identity: assembleIdentity(components.ET, components.PH_REGION, components.VN_REGION),
-        body: components.BT.prompt || '',
-        hair: components.HR.prompt || '',
-        background: components.SC.prompt || '',
-        outfit: components.ST.prompt || '',
-        negative: components.NG.prompt || ''
-    };
-    
-    // Build canonical ID
-    const idParts = [`FA-${FA}`, `BT-${BT}`, `ET-${ET}`];
-    if (PH_REGION) idParts.push(`PH_REGION-${PH_REGION}`);
-    if (VN_REGION) idParts.push(`VN_REGION-${VN_REGION}`);
-    idParts.push(`HR-${HR}`, `SC-${SC}`, `ST-${ST}`, `v${v}`);
-    
-    const canonical_id = idParts.join('__');
-    
-    return {
-        success: true,
-        canonical_id,
-        promptContent: prompt,
-        dims: { FA, BT, ET, HR, SC, ST, v, r, PH_REGION, VN_REGION }
-    };
+    return result;
 }
 
 /**
  * Read a component file from the components directory
  */
-function readComponent(componentsDir: string, dimension: string, code: string): ComponentData {
+function readComponent(componentsDir: string, dimension: string, code: string): any {
     const folder = DIMENSION_FOLDERS[dimension];
     if (!folder) {
         throw new Error(`Unknown dimension: ${dimension}`);
@@ -119,21 +148,26 @@ function readComponent(componentsDir: string, dimension: string, code: string): 
 }
 
 /**
- * Assemble the identity string from ethnicity and region
+ * Build a human-readable title
  */
-function assembleIdentity(
-    ethnicity: ComponentData,
-    phRegion?: ComponentData,
-    vnRegion?: ComponentData
+function buildTitle(
+    params: BuildParams,
+    faComponent: any,
+    btComponent: any,
+    etComponent: any,
+    regionComponent: any
 ): string {
-    let identity = ethnicity.prompt || '';
+    const parts = [];
     
-    // Append region if specified
-    if (phRegion && phRegion.prompt) {
-        identity += `, ${phRegion.prompt}`;
-    } else if (vnRegion && vnRegion.prompt) {
-        identity += `, ${vnRegion.prompt}`;
+    if (faComponent?.label) parts.push(faComponent.label);
+    if (btComponent?.label) parts.push(btComponent.label);
+    if (etComponent?.label) {
+        let ethLabel = etComponent.label;
+        if (regionComponent?.label) {
+            ethLabel += ` (${regionComponent.label})`;
+        }
+        parts.push(ethLabel);
     }
     
-    return identity;
+    return parts.join(' · ') || 'Assembled Prompt';
 }
