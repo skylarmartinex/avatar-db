@@ -1,8 +1,8 @@
 "use client";
 import { useEffect, useState } from 'react';
-import { Play, Copy, Check, Info, Wand2, RefreshCw, Layers, Sparkles, Terminal, Activity, ChevronDown, Cpu, Braces } from 'lucide-react';
+import { Copy, Check, Info, Wand2, RefreshCw, Terminal, Activity, Cpu, Braces } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -16,6 +16,7 @@ export default function BuilderPage() {
     const [error, setError] = useState<string | null>(null);
     const [copiedJson, setCopiedJson] = useState(false);
     const [copiedText, setCopiedText] = useState(false);
+    const [hoveredDim, setHoveredDim] = useState<string | null>(null);
 
     useEffect(() => {
         fetch('/api/registry').then(res => res.json()).then(setRegistry);
@@ -57,7 +58,6 @@ export default function BuilderPage() {
 
     function copyTextToClipboard() {
         if (result?.promptContent) {
-            // Flatten the prompt into readable text
             const flattenedText = flattenPromptToText(result.promptContent);
             navigator.clipboard.writeText(flattenedText);
             setCopiedText(true);
@@ -66,9 +66,7 @@ export default function BuilderPage() {
     }
 
     function flattenPromptToText(prompt: any): string {
-        // Convert the structured prompt into a readable text format
         const parts = [];
-
         if (prompt.subject) parts.push(`Subject: ${prompt.subject}`);
         if (prompt.identity) parts.push(`Identity: ${prompt.identity}`);
         if (prompt.body) parts.push(`Body: ${prompt.body}`);
@@ -76,7 +74,6 @@ export default function BuilderPage() {
         if (prompt.background) parts.push(`Background: ${prompt.background}`);
         if (prompt.outfit) parts.push(`Outfit: ${prompt.outfit}`);
         if (prompt.negative) parts.push(`Negative: ${prompt.negative}`);
-
         return parts.join('\n');
     }
 
@@ -90,154 +87,136 @@ export default function BuilderPage() {
     );
 
     const DIMS = [
-        { code: 'ET', label: 'Ethnicity' },
-        { code: 'FA', label: 'Face Archetype' },
-        { code: 'BT', label: 'Body Type' },
-        { code: 'HR', label: 'Hair Style' },
-        { code: 'SC', label: 'Background / Scene' },
-        { code: 'ST', label: 'Outfit' }
+        { code: 'ET', label: 'Ethnicity', placeholder: 'Select ethnicity' },
+        { code: 'FA', label: 'Face Archetype', placeholder: 'Select face type' },
+        { code: 'BT', label: 'Body Type', placeholder: 'Select body type' },
+        { code: 'HR', label: 'Hair Style', placeholder: 'Select hair style' },
+        { code: 'SC', label: 'Background', placeholder: 'Select background' },
+        { code: 'ST', label: 'Outfit', placeholder: 'Select outfit' }
     ];
 
     return (
-        <div className="max-w-[1600px] mx-auto space-y-24 pb-48">
-            {/* Dynamic Header */}
-            <div className="flex flex-col xl:flex-row xl:items-end justify-between gap-16 pb-16 border-b border-white/5">
-                <div className="space-y-10">
+        <div className="max-w-[1600px] mx-auto space-y-20 pb-48">
+            {/* Compact Header */}
+            <div className="flex flex-col xl:flex-row xl:items-end justify-between gap-12 pb-12 border-b border-white/5">
+                <div className="space-y-8">
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
                         className="inline-flex items-center gap-3 px-5 py-2 rounded-2xl bg-white text-black text-[10px] font-black uppercase tracking-[0.3em] shadow-[0_0_30px_rgba(255,255,255,0.2)]"
                     >
                         <Activity size={14} fill="currentColor" />
-                        Live Composer v4.2
+                        Live Composer v4.3
                     </motion.div>
-                    <div className="space-y-6">
-                        <h1 className="text-9xl font-black tracking-[-0.05em] text-white leading-[0.85]">
+                    <div className="space-y-4">
+                        <h1 className="text-8xl font-black tracking-[-0.05em] text-white leading-[0.85]">
                             Builder<span className="text-blue-500">.</span>
                         </h1>
-                        <p className="text-zinc-500 text-2xl font-medium max-w-2xl leading-relaxed">
-                            Synthesize high-precision parametric manifests. <br />
-                            <span className="text-zinc-700">Deterministic identity through controlled mutation.</span>
+                        <p className="text-zinc-500 text-xl font-medium max-w-2xl leading-relaxed">
+                            Fast parametric prompt assembly. <span className="text-zinc-700">Select, assemble, copy.</span>
                         </p>
                     </div>
                 </div>
 
-                <div className="flex items-center gap-6">
+                <div className="flex items-center gap-4">
                     <Button
                         variant="ghost"
-                        size="lg"
-                        className="h-20 px-10 rounded-3xl text-zinc-500 hover:text-white"
+                        size="sm"
+                        className="h-14 px-8 rounded-2xl text-zinc-500 hover:text-white"
                         onClick={() => setSelections({ FA: '', BT: '', ET: '', HR: '', SC: '', ST: '', v: '01', r: '01' })}
                     >
-                        <RefreshCw size={20} className="mr-3" />
+                        <RefreshCw size={16} className="mr-2" />
                         Clear
                     </Button>
                     <Button
-                        size="lg"
-                        className="h-20 px-16 rounded-[2.5rem] bg-white text-black hover:scale-105 shadow-[0_10px_50px_rgba(255,255,255,0.1)] font-black text-xl tracking-tighter"
+                        size="sm"
+                        className="h-14 px-12 rounded-2xl bg-white text-black hover:scale-105 shadow-[0_10px_50px_rgba(255,255,255,0.1)] font-black text-lg tracking-tight"
                         onClick={handleBuild}
                         disabled={loading || !DIMS.every(d => selections[d.code as keyof typeof selections])}
                     >
-                        {loading ? <Cpu className="animate-spin mr-4" size={24} /> : <Wand2 className="mr-4" size={24} fill="currentColor" />}
-                        {loading ? "Synthesizing..." : "Assemble Prompt"}
+                        {loading ? <Cpu className="animate-spin mr-3" size={20} /> : <Wand2 className="mr-3" size={20} fill="currentColor" />}
+                        {loading ? "Assembling..." : "Assemble"}
                     </Button>
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 xl:grid-cols-12 gap-20">
-                {/* Selection Matrix */}
-                <div className="xl:col-span-7 space-y-16">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-16 gap-y-20">
+            <div className="grid grid-cols-1 xl:grid-cols-12 gap-16">
+                {/* Compact Parameter Grid */}
+                <div className="xl:col-span-7 space-y-12">
+                    <div className="grid grid-cols-2 gap-x-8 gap-y-6">
                         {DIMS.map(dim => {
                             const selectedCode = selections[dim.code as keyof typeof selections];
                             const metadata = selectedCode ? registry[dim.code]?.[selectedCode] : null;
 
                             return (
-                                <div key={dim.code} className="space-y-8 group">
-                                    <div className="flex items-center justify-between px-2">
-                                        <label className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-700 group-hover:text-blue-500 transition-colors">
+                                <div key={dim.code} className="space-y-3">
+                                    <div className="flex items-center gap-2 px-1">
+                                        <label className="text-[11px] font-bold uppercase tracking-wider text-zinc-600">
                                             {dim.label}
                                         </label>
-                                        {selectedCode && (
-                                            <div className="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)] animate-pulse" />
-                                        )}
-                                    </div>
-                                    <div className="relative">
-                                        <select
-                                            className="w-full bg-[#030303] border-2 border-white/5 p-7 rounded-[2rem] appearance-none focus:border-blue-500/50 outline-none transition-all text-lg font-black text-white group-hover:border-white/10 shadow-2xl"
-                                            value={selectedCode}
-                                            onChange={e => setSelections({ ...selections, [dim.code]: e.target.value })}
-                                        >
-                                            <option value="">Param Null</option>
-                                            {Object.entries(registry[dim.code] || {})
-                                                .filter(([, data]: [string, any]) => data.status !== 'deprecated')
-                                                .map(([code, data]: [string, any]) => (
-                                                    <option key={code} value={code}>
-                                                        {data.label || code}
-                                                    </option>
-                                                ))}
-                                        </select>
-                                        <div className="absolute right-8 top-1/2 -translate-y-1/2 pointer-events-none text-zinc-700">
-                                            <ChevronDown size={22} />
-                                        </div>
-                                    </div>
-
-                                    <AnimatePresence mode="wait">
-                                        {metadata ? (
-                                            <motion.div
-                                                initial={{ opacity: 0, y: 10, filter: 'blur(5px)' }}
-                                                animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                                                exit={{ opacity: 0, y: -10, filter: 'blur(5px)' }}
-                                                className="p-8 rounded-[2.5rem] bg-zinc-900/40 border border-white/[0.05] space-y-4 shadow-sm"
+                                        {metadata && (
+                                            <div 
+                                                className="relative group/info"
+                                                onMouseEnter={() => setHoveredDim(dim.code)}
+                                                onMouseLeave={() => setHoveredDim(null)}
                                             >
-                                                <div className="flex items-center justify-between">
-                                                    <span className="text-xl font-black text-white">{metadata.label}</span>
-                                                    <span className="px-2 py-0.5 rounded bg-white/[0.05] text-[10px] font-mono text-zinc-500">{selectedCode}</span>
-                                                </div>
-                                                <p className="text-sm text-zinc-500 leading-relaxed font-medium italic">"{metadata.description}"</p>
-                                            </motion.div>
-                                        ) : (
-                                            <div className="h-[120px] rounded-[2.5rem] border-2 border-dashed border-white/[0.02] flex items-center justify-center bg-transparent">
-                                                <span className="text-[10px] font-black text-zinc-800 uppercase tracking-[0.5em]">Input Awaiting</span>
+                                                <Info size={12} className="text-zinc-700 hover:text-blue-500 cursor-help transition-colors" />
+                                                {hoveredDim === dim.code && (
+                                                    <div className="absolute left-0 top-6 z-50 w-72 p-4 bg-zinc-900 border border-white/10 rounded-xl shadow-2xl">
+                                                        <p className="text-xs font-bold text-white mb-1">{metadata.label}</p>
+                                                        <p className="text-[11px] text-zinc-500 leading-relaxed italic">"{metadata.description}"</p>
+                                                        <div className="mt-2 px-2 py-1 bg-white/5 rounded text-[10px] font-mono text-zinc-600">{selectedCode}</div>
+                                                    </div>
+                                                )}
                                             </div>
                                         )}
-                                    </AnimatePresence>
+                                        {selectedCode && <div className="w-1 h-1 rounded-full bg-blue-500 ml-auto" />}
+                                    </div>
+                                    <select
+                                        className="w-full bg-[#030303] border border-white/10 px-4 py-3 rounded-xl appearance-none focus:border-blue-500/50 outline-none transition-all text-sm font-semibold text-white hover:border-white/20"
+                                        value={selectedCode}
+                                        onChange={e => setSelections({ ...selections, [dim.code]: e.target.value })}
+                                    >
+                                        <option value="" className="text-zinc-600">{dim.placeholder}</option>
+                                        {Object.entries(registry[dim.code] || {})
+                                            .filter(([, data]: [string, any]) => data.status !== 'deprecated')
+                                            .map(([code, data]: [string, any]) => (
+                                                <option key={code} value={code}>
+                                                    {data.label || code}
+                                                </option>
+                                            ))}
+                                    </select>
                                 </div>
                             );
                         })}
                     </div>
 
-                    <div className="pt-20">
-                        <div className="bg-[#050505] p-12 rounded-[4rem] border border-white/[0.03] space-y-12">
-                            <div className="flex items-center gap-4">
-                                <div className="w-10 h-px bg-zinc-800" />
-                                <h3 className="text-[10px] font-black uppercase tracking-[0.5em] text-zinc-600">Global Headers</h3>
+                    {/* Compact System Parameters */}
+                    <div className="pt-8 border-t border-white/5">
+                        <div className="grid grid-cols-2 gap-6">
+                            <div className="space-y-2">
+                                <label className="text-[11px] font-bold uppercase tracking-wider text-zinc-700 px-1">Version</label>
+                                <input
+                                    type="text"
+                                    className="w-full bg-black border border-white/10 px-4 py-3 rounded-xl text-sm font-semibold text-white focus:border-blue-500/50 transition-all outline-none"
+                                    value={selections.v}
+                                    onChange={e => setSelections({ ...selections, v: e.target.value })}
+                                />
                             </div>
-                            <div className="grid grid-cols-2 gap-12">
-                                <div className="space-y-4">
-                                    <p className="text-[10px] text-zinc-800 font-black uppercase tracking-widest pl-2">System Version</p>
-                                    <input
-                                        type="text"
-                                        className="w-full bg-black border-2 border-white/5 p-6 rounded-3xl text-sm font-black text-white focus:border-blue-500/50 transition-all outline-none"
-                                        value={selections.v}
-                                        onChange={e => setSelections({ ...selections, v: e.target.value })}
-                                    />
-                                </div>
-                                <div className="space-y-4">
-                                    <p className="text-[10px] text-zinc-800 font-black uppercase tracking-widest pl-2">Sequence ID</p>
-                                    <input
-                                        type="text"
-                                        className="w-full bg-black border-2 border-white/5 p-6 rounded-3xl text-sm font-black text-white focus:border-blue-500/50 transition-all outline-none"
-                                        value={selections.r}
-                                        onChange={e => setSelections({ ...selections, r: e.target.value })}
-                                    />
-                                </div>
+                            <div className="space-y-2">
+                                <label className="text-[11px] font-bold uppercase tracking-wider text-zinc-700 px-1">Run ID</label>
+                                <input
+                                    type="text"
+                                    className="w-full bg-black border border-white/10 px-4 py-3 rounded-xl text-sm font-semibold text-white focus:border-blue-500/50 transition-all outline-none"
+                                    value={selections.r}
+                                    onChange={e => setSelections({ ...selections, r: e.target.value })}
+                                />
                             </div>
                         </div>
                     </div>
                 </div>
 
-                {/* Console Hub */}
+                {/* Output Panel (unchanged) */}
                 <div className="xl:col-span-5 relative">
                     <div className="sticky top-40">
                         <Card className="rounded-[4rem] bg-[#020202] border-white/[0.05] shadow-[0_40px_100px_rgba(0,0,0,1)] min-h-[750px] flex flex-col group/terminal relative overflow-hidden">
@@ -334,7 +313,7 @@ export default function BuilderPage() {
                                             </div>
                                             <div className="text-center space-y-4">
                                                 <h3 className="font-black text-xs uppercase tracking-[0.6em] text-zinc-700">Awaiting Assembly</h3>
-                                                <p className="text-sm max-w-[280px] leading-relaxed italic text-zinc-800 font-bold">Select all parameters and click "Assemble Prompt" to generate your prompt.</p>
+                                                <p className="text-sm max-w-[280px] leading-relaxed italic text-zinc-800 font-bold">Select all parameters and click "Assemble" to generate your prompt.</p>
                                             </div>
                                         </motion.div>
                                     )}
