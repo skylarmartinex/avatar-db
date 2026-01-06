@@ -75,7 +75,7 @@ export default function BuilderPage() {
     }
 
     function copyJsonToClipboard() {
-        if (result?.promptContent) {
+        if (result?.prompt) {
             navigator.clipboard.writeText(JSON.stringify(result.prompt, null, 2));
             setCopiedJson(true);
             setTimeout(() => setCopiedJson(false), 2000);
@@ -83,7 +83,7 @@ export default function BuilderPage() {
     }
 
     function copyTextToClipboard() {
-        if (result?.promptContent) {
+        if (result?.prompt) {
             const flattenedText = flattenPromptToText(result.prompt);
             navigator.clipboard.writeText(flattenedText);
             setCopiedText(true);
