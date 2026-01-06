@@ -1,6 +1,6 @@
 "use client";
-import { useEffect, useState } from 'react';
-import { Copy, Check, Info, Wand2, RefreshCw, Terminal, Activity, Cpu, Braces } from 'lucide-react';
+import { useEffect, useState, useRef } from 'react';
+import { Copy, Check, Info, Wand2, RefreshCw, Terminal, Activity, Cpu, Braces, MousePointerClick } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
@@ -16,7 +16,9 @@ export default function BuilderPage() {
     const [error, setError] = useState<string | null>(null);
     const [copiedJson, setCopiedJson] = useState(false);
     const [copiedText, setCopiedText] = useState(false);
+    const [copyError, setCopyError] = useState<string | null>(null);
     const [hoveredDim, setHoveredDim] = useState<string | null>(null);
+    const jsonTextareaRef = useRef<HTMLTextAreaElement>(null);
 
     useEffect(() => {
         fetch('/api/registry').then(res => res.json()).then(setRegistry);
@@ -74,33 +76,86 @@ export default function BuilderPage() {
         }
     }
 
-    function copyJsonToClipboard() {
-        if (result?.prompt) {
-            navigator.clipboard.writeText(JSON.stringify(result.prompt, null, 2));
-            setCopiedJson(true);
-            setTimeout(() => setCopiedJson(false), 2000);
+    // Bulletproof copy helper with fallback
+    async function copyToClipboard(text: string): Promise<{ ok: boolean; method?: string; error?: string }> {
+        console.log("copyToClipboard called with text length:", text.length);
+        
+        // Attempt modern clipboard API
+        try {
+            if (window.isSecureContext && navigator.clipboard?.writeText) {
+                await navigator.clipboard.writeText(text);
+                console.log("✅ Copied via clipboard API");
+                return { ok: true, method: "clipboard" };
+            }
+        } catch (e) {
+            console.warn("Clipboard API failed:", e);
+        }
+
+        // Fallback: hidden textarea + execCommand
+        try {
+            const ta = document.createElement("textarea");
+            ta.value = text;
+            ta.setAttribute("readonly", "");
+            ta.style.position = "fixed";
+            ta.style.left = "-9999px";
+            ta.style.top = "-9999px";
+            document.body.appendChild(ta);
+            ta.focus();
+            ta.select();
+            ta.setSelectionRange(0, ta.value.length);
+            const ok = document.execCommand("copy");
+            document.body.removeChild(ta);
+            if (!ok) throw new Error("execCommand copy returned false");
+            console.log("✅ Copied via execCommand");
+            return { ok: true, method: "execCommand" };
+        } catch (e) {
+            console.error("❌ All copy methods failed:", e);
+            return { ok: false, error: String(e) };
         }
     }
 
-    function copyTextToClipboard() {
+    async function copyJsonToClipboard() {
+        console.log("Copy JSON clicked");
+        setCopyError(null);
+        
         if (result?.prompt) {
-            const flattenedText = flattenPromptToText(result.prompt);
-            navigator.clipboard.writeText(flattenedText);
-            setCopiedText(true);
-            setTimeout(() => setCopiedText(false), 2000);
+            const jsonText = JSON.stringify(result.prompt, null, 2);
+            const copyResult = await copyToClipboard(jsonText);
+            
+            if (copyResult.ok) {
+                setCopiedJson(true);
+                setTimeout(() => setCopiedJson(false), 2000);
+            } else {
+                setCopyError(`Copy failed: ${copyResult.error}`);
+                setTimeout(() => setCopyError(null), 5000);
+            }
         }
     }
 
-    function flattenPromptToText(prompt: any): string {
-        const parts = [];
-        if (prompt.subject) parts.push(`Subject: ${prompt.subject}`);
-        if (prompt.identity) parts.push(`Identity: ${prompt.identity}`);
-        if (prompt.body) parts.push(`Body: ${prompt.body}`);
-        if (prompt.hair) parts.push(`Hair: ${prompt.hair}`);
-        if (prompt.background) parts.push(`Background: ${prompt.background}`);
-        if (prompt.outfit) parts.push(`Outfit: ${prompt.outfit}`);
-        if (prompt.negative) parts.push(`Negative: ${prompt.negative}`);
-        return parts.join('\n');
+    async function copyTextToClipboard() {
+        console.log("Copy Text clicked");
+        setCopyError(null);
+        
+        if (result?.prompt) {
+            const jsonText = JSON.stringify(result.prompt, null, 2);
+            const copyResult = await copyToClipboard(jsonText);
+            
+            if (copyResult.ok) {
+                setCopiedText(true);
+                setTimeout(() => setCopiedText(false), 2000);
+            } else {
+                setCopyError(`Copy failed: ${copyResult.error}`);
+                setTimeout(() => setCopyError(null), 5000);
+            }
+        }
+    }
+
+    function selectAllJson() {
+        console.log("Select All clicked");
+        if (jsonTextareaRef.current) {
+            jsonTextareaRef.current.focus();
+            jsonTextareaRef.current.select();
+        }
     }
 
     if (!registry) return (
@@ -327,7 +382,7 @@ export default function BuilderPage() {
                     </div>
                 </div>
 
-                {/* Output Panel (unchanged) */}
+                {/* Output Panel */}
                 <div className="xl:col-span-5 relative">
                     <div className="sticky top-40">
                         <Card className="rounded-[4rem] bg-[#020202] border-white/[0.05] shadow-[0_40px_100px_rgba(0,0,0,1)] min-h-[750px] flex flex-col group/terminal relative overflow-hidden">
@@ -379,24 +434,37 @@ export default function BuilderPage() {
                                                 </div>
                                             </div>
 
+                                            {copyError && (
+                                                <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-xl">
+                                                    <p className="text-xs text-red-400 font-medium">{copyError}</p>
+                                                </div>
+                                            )}
+
                                             <div className="space-y-6">
                                                 <div className="flex items-center justify-between px-2">
                                                     <span className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-800">Actions</span>
                                                 </div>
-                                                <div className="grid grid-cols-2 gap-4">
+                                                <div className="grid grid-cols-3 gap-3">
                                                     <button
                                                         onClick={copyJsonToClipboard}
-                                                        className="flex items-center justify-center gap-3 px-6 py-4 bg-blue-500 hover:bg-blue-400 rounded-2xl text-xs font-black text-white transition-all shadow-lg"
+                                                        className="flex items-center justify-center gap-2 px-4 py-4 bg-blue-500 hover:bg-blue-400 rounded-2xl text-xs font-black text-white transition-all shadow-lg"
                                                     >
-                                                        {copiedJson ? <Check size={16} /> : <Braces size={16} />}
-                                                        {copiedJson ? 'Copied!' : 'Copy JSON'}
+                                                        {copiedJson ? <Check size={14} /> : <Braces size={14} />}
+                                                        {copiedJson ? 'Copied!' : 'Copy'}
+                                                    </button>
+                                                    <button
+                                                        onClick={selectAllJson}
+                                                        className="flex items-center justify-center gap-2 px-4 py-4 bg-zinc-800 hover:bg-zinc-700 rounded-2xl text-xs font-black text-white transition-all shadow-lg"
+                                                    >
+                                                        <MousePointerClick size={14} />
+                                                        Select
                                                     </button>
                                                     <button
                                                         onClick={copyTextToClipboard}
-                                                        className="flex items-center justify-center gap-3 px-6 py-4 bg-zinc-800 hover:bg-zinc-700 rounded-2xl text-xs font-black text-white transition-all shadow-lg"
+                                                        className="flex items-center justify-center gap-2 px-4 py-4 bg-zinc-800 hover:bg-zinc-700 rounded-2xl text-xs font-black text-white transition-all shadow-lg"
                                                     >
-                                                        {copiedText ? <Check size={16} /> : <Copy size={16} />}
-                                                        {copiedText ? 'Copied!' : 'Copy Text'}
+                                                        {copiedText ? <Check size={14} /> : <Copy size={14} />}
+                                                        Text
                                                     </button>
                                                 </div>
                                             </div>
@@ -406,9 +474,12 @@ export default function BuilderPage() {
                                                     <span className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-800">Prompt JSON</span>
                                                 </div>
                                                 <div className="flex-1 bg-black border-2 border-white/5 rounded-[3.5rem] p-10 overflow-auto shadow-inner relative group/code custom-scrollbar">
-                                                    <pre className="text-xs font-mono text-zinc-500 leading-8">
-                                                        {JSON.stringify(result.prompt, null, 2)}
-                                                    </pre>
+                                                    <textarea
+                                                        ref={jsonTextareaRef}
+                                                        readOnly
+                                                        className="w-full h-full bg-transparent text-xs font-mono text-zinc-500 leading-8 outline-none resize-none"
+                                                        value={JSON.stringify(result.prompt, null, 2)}
+                                                    />
                                                     <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent pointer-events-none h-32 bottom-0 top-auto opacity-80" />
                                                 </div>
                                             </div>
