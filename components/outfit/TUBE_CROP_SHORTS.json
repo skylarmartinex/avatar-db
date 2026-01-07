@@ -1,0 +1,28 @@
+{
+  "clothing": {
+    "outfit_type": "Modern editorial street-fit set",
+    "top": {
+      "style": "Tube-style crop top",
+      "material": "Smooth stretch fabric with subtle sheen",
+      "color": "Neutral or bold solid tones (black, white, tan, deep red)",
+      "fit": "Snug, body-contouring fit that highlights shoulders, collarbones, and bust",
+      "support_notes": "Fashion-focused fit, not athletic compression"
+    },
+    "bottom": {
+      "style": "High-waisted short shorts",
+      "material": "Soft matte fabric or light denim-look stretch",
+      "color": "Coordinated neutral or matching tone",
+      "fit": "Tight at the waist and hips to accentuate curves and leg definition",
+      "length": "Short enough to feel bold, still tasteful and editorial"
+    },
+    "overall_vibe": "Confident, sexy, modern lifestyle editorial",
+    "explicit_exclusions": [
+      "no bodysuits",
+      "no dresses",
+      "no polka dots",
+      "no cartoon styling",
+      "no costume looks",
+      "no baggy or casual streetwear"
+    ]
+  }
+}

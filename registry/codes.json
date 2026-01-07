@@ -68,10 +68,16 @@
       "description": "Elite fitness editorial with modern sensuality",
       "status": "active"
     },
-    "MINIMAL_BODYSUIT": {
-      "code": "MINIMAL_BODYSUIT",
-      "label": "Minimal Editorial Bodysuit",
-      "description": "Powerful, dominant, runway fitness aesthetic",
+    "TUBE_CROP_SHORTS": {
+      "code": "TUBE_CROP_SHORTS",
+      "label": "Tube Crop + Short Shorts",
+      "description": "Confident, sexy, modern lifestyle editorial",
+      "status": "active"
+    },
+    "VS_RUNWAY_BIKINI": {
+      "code": "VS_RUNWAY_BIKINI",
+      "label": "VS Runway Bikini",
+      "description": "Luxury lingerie runway meets high-end editorial fitness",
       "status": "active"
     }
   },

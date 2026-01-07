@@ -1,0 +1,31 @@
+{
+  "clothing": {
+    "outfit_type": "High-fashion runway bikini",
+    "top": {
+      "style": "Victoria's Secret–style runway bikini top",
+      "material": "Satin, silk-blend, or glossy stretch fabric",
+      "color": "Classic runway tones (black, champagne, deep emerald, crimson)",
+      "design_details": [
+        "clean, minimal silhouette",
+        "subtle shimmer under studio or sunlight",
+        "fashion-forward cut"
+      ],
+      "fit": "Designed to lift and frame the bust in an editorial, luxury way"
+    },
+    "bottom": {
+      "style": "Runway bikini bottoms",
+      "material": "Matching satin or stretch fabric",
+      "color": "Coordinated with top",
+      "fit": "High-cut leg line to elongate legs and highlight hip-to-waist contrast"
+    },
+    "overall_vibe": "Luxury lingerie runway meets high-end editorial fitness",
+    "explicit_exclusions": [
+      "no tribal themes",
+      "no costumes",
+      "no novelty prints",
+      "no polka dots",
+      "no casual swimwear",
+      "no beach tourist style"
+    ]
+  }
+}
