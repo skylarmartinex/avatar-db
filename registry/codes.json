@@ -79,6 +79,12 @@
       "label": "VS Runway Bikini",
       "description": "Luxury lingerie runway meets high-end editorial fitness",
       "status": "active"
+    },
+    "MEDIA_DAY_ATHLETIC": {
+      "code": "MEDIA_DAY_ATHLETIC",
+      "label": "Media Day Athletic",
+      "description": "Confident, sexy, professional media-day editorial",
+      "status": "active"
     }
   },
   "POSE": {
@@ -118,6 +124,12 @@
       "code": "RESORT",
       "label": "Luxury Resort",
       "description": "Upscale resort exterior",
+      "status": "active"
+    },
+    "MEDIA_DAY_STUDIO": {
+      "code": "MEDIA_DAY_STUDIO",
+      "label": "Media Day Studio",
+      "description": "Bright studio portrait with soft gradient backdrop",
       "status": "active"
     }
   }
