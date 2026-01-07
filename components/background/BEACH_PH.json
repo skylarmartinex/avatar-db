@@ -1,12 +1,15 @@
 {
-  "surrounding": {
-    "background_elements": [
-      "White sand tropical beach",
-      "Turquoise ocean water with gentle waves",
-      "Palm trees swaying in the breeze"
-    ],
-    "background_focus": "Softly blurred but recognizable tropical paradise",
-    "color_contrast": "Strong contrast between earth-toned bikini, golden skin, and bright beach environment",
-    "environmental_clutter": "Minimal, clean composition with natural beach elements"
+  "background_scene": {
+    "type": "Editorial beach",
+    "description": "Minimalist beach environment with soft white sand and distant turquoise ocean horizon, palm trees in soft focus",
+    "lighting_behavior": "Warm natural light, clean highlights, no harsh shadows",
+    "mood_guardrails": [
+      "sensual",
+      "clean",
+      "editorial",
+      "luxury",
+      "never tourist",
+      "never casual"
+    ]
   }
 }

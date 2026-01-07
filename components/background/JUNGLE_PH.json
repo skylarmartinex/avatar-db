@@ -1,12 +1,16 @@
 {
-  "surrounding": {
-    "background_elements": [
-      "Lush tropical jungle foliage",
-      "Filtered sunlight through dense canopy",
-      "Natural greenery and exotic plants"
-    ],
-    "background_focus": "Softly blurred cinematic jungle backdrop",
-    "color_contrast": "Rich contrast between earth-toned bikini, golden skin, and vibrant green jungle",
-    "environmental_clutter": "Minimal, clean composition with natural jungle elements, no horror or fear cues"
+  "background_scene": {
+    "type": "Editorial jungle",
+    "description": "Controlled tropical jungle setting with lush greenery and filtered sunlight through dense canopy, exotic plants in soft focus",
+    "lighting_behavior": "Cinematic but clean, filtered natural light, no chaotic shadows",
+    "mood_guardrails": [
+      "luxury",
+      "editorial",
+      "confident",
+      "sensual",
+      "never survival",
+      "never fear",
+      "never horror"
+    ]
   }
 }

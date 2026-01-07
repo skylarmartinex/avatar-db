@@ -1,10 +1,10 @@
 {
   "setting": {
-    "location_type": "Outdoor residential or urban entryway",
-    "environment": "Exterior doorway with textured stone or natural concrete wall and a dark painted wooden door",
+    "location_type": "Editorial photoshoot environment",
+    "environment": "Controlled high-end photography setting",
     "time_of_day": "Late afternoon or early evening",
     "weather_conditions": "Clear, dry conditions",
-    "atmosphere": "Warm, sensual, high-end editorial lifestyle aesthetic with subtle tribal influence"
+    "atmosphere": "Warm, sensual, high-end editorial lifestyle aesthetic"
   },
   "viewing_angle": {
     "camera_height": "Approximately chest height of the subject",
@@ -27,20 +27,19 @@
   "composition": {
     "framing": "Subject centered with slight headroom",
     "rule_of_thirds": "Face and upper torso aligned near center",
-    "visual_balance": "Balanced between illuminated subject and darker background",
-    "depth": "Moderate depth created primarily through lighting contrast",
-    "leading_elements": "Door frame and wall subtly guide attention toward the subject"
+    "visual_balance": "Balanced between illuminated subject and background",
+    "depth": "Moderate depth created primarily through lighting contrast"
   },
   "image_quality": {
     "resolution_target": "Ultra-high resolution, photorealistic",
     "sharpness": "Extreme sharpness on face, bust, and abdominal definition",
     "noise_level": "Minimal noise",
     "dynamic_range": "Wide dynamic range preserving highlights and deep shadows",
-    "overall_style": "Luxury Instagram fitness and tribal-inspired editorial photography"
+    "overall_style": "Luxury Instagram fitness and editorial photography"
   },
   "overall_mood": {
     "tone": "Fierce, confident, and intensely striking",
-    "aesthetic": "Indigenous-inspired fantasy meets elite fitness editorial",
+    "aesthetic": "Elite fitness editorial with high-end production value",
     "visual_focus": "Powerful emphasis on facial beauty, extreme body definition, and curves"
   }
 }

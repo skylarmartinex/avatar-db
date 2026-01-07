@@ -1,12 +1,15 @@
 {
-  "surrounding": {
-    "background_elements": [
-      "Luxury resort exterior architecture",
-      "Polished stone or marble surfaces",
-      "Upscale modern design elements"
-    ],
-    "background_focus": "Softly blurred but recognizable high-end resort setting",
-    "color_contrast": "Elegant contrast between earth-toned bikini, golden skin, and refined resort architecture",
-    "environmental_clutter": "Minimal, clean composition with upscale lifestyle aesthetic"
+  "background_scene": {
+    "type": "Luxury resort",
+    "description": "Upscale resort exterior with polished stone or marble surfaces, modern high-end architecture in soft focus",
+    "lighting_behavior": "Warm natural light with elegant architectural shadows",
+    "mood_guardrails": [
+      "luxury",
+      "editorial",
+      "upscale",
+      "confident",
+      "never casual",
+      "never tourist"
+    ]
   }
 }

@@ -1,12 +1,15 @@
 {
-  "surrounding": {
-    "background_elements": [
-      "Seamless gradient backdrop",
-      "Professional studio environment",
-      "Clean minimal aesthetic"
-    ],
-    "background_focus": "Perfectly smooth gradient with no distractions",
-    "color_contrast": "Pure focus on subject with neutral gradient background",
-    "environmental_clutter": "Zero clutter, pure studio minimalism"
+  "background_scene": {
+    "type": "Studio gradient",
+    "description": "Seamless professional studio backdrop with smooth neutral gradient, perfectly clean and minimal",
+    "lighting_behavior": "Even diffusion, no harsh shadows, pure studio control",
+    "mood_guardrails": [
+      "clean",
+      "luxury",
+      "editorial",
+      "minimal",
+      "never gritty",
+      "never horror"
+    ]
   }
 }
