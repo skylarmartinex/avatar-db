@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState, useRef } from 'react';
-import { Copy, Check, Info, Wand2, RefreshCw, Terminal, Activity, Cpu, Braces, MousePointerClick } from 'lucide-react';
+import { Copy, Check, Info, Wand2, RefreshCw, Terminal, Activity, Cpu, Braces, MousePointerClick, Lock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
@@ -8,56 +8,40 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 export default function BuilderPage() {
     const [registry, setRegistry] = useState<any>(null);
-    const [selections, setSelections] = useState({
-        ET: '', REGION: '', FA: '', BT: '', HR: '', SC: '', ST: '', v: '01', r: '01'
-    });
+    const [selectedBackground, setSelectedBackground] = useState('DOORWAY_GOLD');
     const [result, setResult] = useState<any>(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [copiedJson, setCopiedJson] = useState(false);
     const [copiedText, setCopiedText] = useState(false);
     const [copyError, setCopyError] = useState<string | null>(null);
-    const [hoveredDim, setHoveredDim] = useState<string | null>(null);
     const jsonTextareaRef = useRef<HTMLTextAreaElement>(null);
 
     useEffect(() => {
         fetch('/api/registry').then(res => res.json()).then(setRegistry);
     }, []);
 
-    // Reset region when ethnicity changes
-    useEffect(() => {
-        setSelections(prev => ({ ...prev, REGION: '' }));
-    }, [selections.ET]);
-
     async function handleBuild() {
         setLoading(true);
         setError(null);
         try {
-            // Determine which region dimension to use
-            const buildParams: any = {
-                FA: selections.FA,
-                BT: selections.BT,
-                ET: selections.ET,
-                HR: selections.HR,
-                SC: selections.SC,
-                ST: selections.ST,
-                v: selections.v,
-                r: selections.r
-            };
-
-            // Add region based on ethnicity
-            if (selections.REGION) {
-                if (selections.ET === 'PH') {
-                    buildParams.PH_REGION = selections.REGION;
-                } else if (selections.ET === 'VN') {
-                    buildParams.VN_REGION = selections.REGION;
-                }
-            }
-
             const res = await fetch('/api/build', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(buildParams)
+                body: JSON.stringify({
+                    BASE: 'BASE',
+                    SUBJECT_TYPE: 'TYPE',
+                    FACE: 'GOLD',
+                    BODY: 'GOLD',
+                    HAIR: 'GOLD',
+                    ETHNICITY: 'GOLD',
+                    SKIN: 'GOLD',
+                    OUTFIT: 'GOLD',
+                    POSE: 'GOLD',
+                    BACKGROUND: selectedBackground,
+                    v: '01',
+                    r: '01'
+                })
             });
             const data = await res.json();
 
@@ -79,8 +63,7 @@ export default function BuilderPage() {
     // Bulletproof copy helper with fallback
     async function copyToClipboard(text: string): Promise<{ ok: boolean; method?: string; error?: string }> {
         console.log("copyToClipboard called with text length:", text.length);
-        
-        // Attempt modern clipboard API
+
         try {
             if (window.isSecureContext && navigator.clipboard?.writeText) {
                 await navigator.clipboard.writeText(text);
@@ -91,7 +74,6 @@ export default function BuilderPage() {
             console.warn("Clipboard API failed:", e);
         }
 
-        // Fallback: hidden textarea + execCommand
         try {
             const ta = document.createElement("textarea");
             ta.value = text;
@@ -117,11 +99,11 @@ export default function BuilderPage() {
     async function copyJsonToClipboard() {
         console.log("Copy JSON clicked");
         setCopyError(null);
-        
+
         if (result?.prompt) {
             const jsonText = JSON.stringify(result.prompt, null, 2);
             const copyResult = await copyToClipboard(jsonText);
-            
+
             if (copyResult.ok) {
                 setCopiedJson(true);
                 setTimeout(() => setCopiedJson(false), 2000);
@@ -135,11 +117,11 @@ export default function BuilderPage() {
     async function copyTextToClipboard() {
         console.log("Copy Text clicked");
         setCopyError(null);
-        
+
         if (result?.prompt) {
             const jsonText = JSON.stringify(result.prompt, null, 2);
             const copyResult = await copyToClipboard(jsonText);
-            
+
             if (copyResult.ok) {
                 setCopiedText(true);
                 setTimeout(() => setCopiedText(false), 2000);
@@ -167,135 +149,10 @@ export default function BuilderPage() {
         </div>
     );
 
-    // Get available regions based on selected ethnicity
-    const getRegionOptions = () => {
-        if (selections.ET === 'PH' && registry.PH_REGION) {
-            return Object.entries(registry.PH_REGION)
-                .filter(([, data]: [string, any]) => data.status !== 'deprecated')
-                .map(([code, data]: [string, any]) => ({ code, label: data.label || code }));
-        } else if (selections.ET === 'VN' && registry.VN_REGION) {
-            return Object.entries(registry.VN_REGION)
-                .filter(([, data]: [string, any]) => data.status !== 'deprecated')
-                .map(([code, data]: [string, any]) => ({ code, label: data.label || code }));
-        }
-        return [];
-    };
-
-    const regionOptions = getRegionOptions();
-    const isRegionEnabled = regionOptions.length > 0;
-
-    // Left column parameters
-    const LEFT_PARAMS = [
-        { code: 'ET', label: 'Ethnicity', placeholder: 'Select ethnicity', registryKey: 'ET' },
-        { code: 'REGION', label: 'Region', placeholder: 'Select region', registryKey: null, isRegion: true },
-        { code: 'HR', label: 'Hair Style', placeholder: 'Select hair style', registryKey: 'HR' },
-        { code: 'SC', label: 'Background', placeholder: 'Select background', registryKey: 'SC' }
-    ];
-
-    // Right column parameters
-    const RIGHT_PARAMS = [
-        { code: 'FA', label: 'Face Archetype', placeholder: 'Select face type', registryKey: 'FA' },
-        { code: 'BT', label: 'Body Type', placeholder: 'Select body type', registryKey: 'BT' },
-        { code: 'ST', label: 'Outfit', placeholder: 'Select outfit', registryKey: 'ST' }
-    ];
-
-    const renderParameter = (param: any) => {
-        const selectedCode = selections[param.code as keyof typeof selections];
-        
-        // Special handling for Region
-        if (param.isRegion) {
-            const metadata = selectedCode && isRegionEnabled ? 
-                (selections.ET === 'PH' ? registry.PH_REGION?.[selectedCode] : registry.VN_REGION?.[selectedCode]) : null;
-
-            return (
-                <div key={param.code} className={cn("space-y-3", !isRegionEnabled && "opacity-40")}>
-                    <div className="flex items-center gap-2 px-1">
-                        <label className="text-[11px] font-bold uppercase tracking-wider text-zinc-600">
-                            {param.label}
-                        </label>
-                        {metadata && (
-                            <div 
-                                className="relative group/info"
-                                onMouseEnter={() => setHoveredDim(param.code)}
-                                onMouseLeave={() => setHoveredDim(null)}
-                            >
-                                <Info size={12} className="text-zinc-700 hover:text-blue-500 cursor-help transition-colors" />
-                                {hoveredDim === param.code && (
-                                    <div className="absolute left-0 top-6 z-50 w-72 p-4 bg-zinc-900 border border-white/10 rounded-xl shadow-2xl">
-                                        <p className="text-xs font-bold text-white mb-1">{metadata.label}</p>
-                                        <p className="text-[11px] text-zinc-500 leading-relaxed italic">"{metadata.description}"</p>
-                                        <div className="mt-2 px-2 py-1 bg-white/5 rounded text-[10px] font-mono text-zinc-600">{selectedCode}</div>
-                                    </div>
-                                )}
-                            </div>
-                        )}
-                        {selectedCode && isRegionEnabled && <div className="w-1 h-1 rounded-full bg-blue-500 ml-auto" />}
-                    </div>
-                    <select
-                        className="w-full bg-[#030303] border border-white/10 px-4 py-3 rounded-xl appearance-none focus:border-blue-500/50 outline-none transition-all text-sm font-semibold text-white hover:border-white/20 disabled:cursor-not-allowed"
-                        value={selectedCode}
-                        onChange={e => setSelections({ ...selections, [param.code]: e.target.value })}
-                        disabled={!isRegionEnabled}
-                    >
-                        <option value="" className="text-zinc-600">
-                            {isRegionEnabled ? param.placeholder : 'Select ethnicity first'}
-                        </option>
-                        {regionOptions.map(({ code, label }) => (
-                            <option key={code} value={code}>{label}</option>
-                        ))}
-                    </select>
-                </div>
-            );
-        }
-
-        // Standard parameter
-        const metadata = selectedCode && param.registryKey ? registry[param.registryKey]?.[selectedCode] : null;
-
-        return (
-            <div key={param.code} className="space-y-3">
-                <div className="flex items-center gap-2 px-1">
-                    <label className="text-[11px] font-bold uppercase tracking-wider text-zinc-600">
-                        {param.label}
-                    </label>
-                    {metadata && (
-                        <div 
-                            className="relative group/info"
-                            onMouseEnter={() => setHoveredDim(param.code)}
-                            onMouseLeave={() => setHoveredDim(null)}
-                        >
-                            <Info size={12} className="text-zinc-700 hover:text-blue-500 cursor-help transition-colors" />
-                            {hoveredDim === param.code && (
-                                <div className="absolute left-0 top-6 z-50 w-72 p-4 bg-zinc-900 border border-white/10 rounded-xl shadow-2xl">
-                                    <p className="text-xs font-bold text-white mb-1">{metadata.label}</p>
-                                    <p className="text-[11px] text-zinc-500 leading-relaxed italic">"{metadata.description}"</p>
-                                    <div className="mt-2 px-2 py-1 bg-white/5 rounded text-[10px] font-mono text-zinc-600">{selectedCode}</div>
-                                </div>
-                            )}
-                        </div>
-                    )}
-                    {selectedCode && <div className="w-1 h-1 rounded-full bg-blue-500 ml-auto" />}
-                </div>
-                <select
-                    className="w-full bg-[#030303] border border-white/10 px-4 py-3 rounded-xl appearance-none focus:border-blue-500/50 outline-none transition-all text-sm font-semibold text-white hover:border-white/20"
-                    value={selectedCode}
-                    onChange={e => setSelections({ ...selections, [param.code]: e.target.value })}
-                >
-                    <option value="" className="text-zinc-600">{param.placeholder}</option>
-                    {param.registryKey && Object.entries(registry[param.registryKey] || {})
-                        .filter(([, data]: [string, any]) => data.status !== 'deprecated')
-                        .map(([code, data]: [string, any]) => (
-                            <option key={code} value={code}>
-                                {data.label || code}
-                            </option>
-                        ))}
-                </select>
-            </div>
-        );
-    };
-
-    // Check if all required parameters are selected
-    const requiredParams = ['ET', 'FA', 'BT', 'HR', 'SC', 'ST'];
-    const allRequiredSelected = requiredParams.every(p => selections[p as keyof typeof selections]);
+    const backgrounds = registry.BACKGROUND ? Object.entries(registry.BACKGROUND)
+        .filter(([, data]: [string, any]) => data.status === 'active')
+        .map(([code, data]: [string, any]) => ({ code, label: data.label, description: data.description }))
+        : [];
 
     return (
         <div className="max-w-[1600px] mx-auto space-y-20 pb-48">
@@ -308,14 +165,14 @@ export default function BuilderPage() {
                         className="inline-flex items-center gap-3 px-5 py-2 rounded-2xl bg-white text-black text-[10px] font-black uppercase tracking-[0.3em] shadow-[0_0_30px_rgba(255,255,255,0.2)]"
                     >
                         <Activity size={14} fill="currentColor" />
-                        Live Composer v4.3
+                        Gold Standard Mode
                     </motion.div>
                     <div className="space-y-4">
                         <h1 className="text-8xl font-black tracking-[-0.05em] text-white leading-[0.85]">
                             Builder<span className="text-blue-500">.</span>
                         </h1>
                         <p className="text-zinc-500 text-xl font-medium max-w-2xl leading-relaxed">
-                            Fast parametric prompt assembly. <span className="text-zinc-700">Select, assemble, copy.</span>
+                            Gold Avatar (Locked). <span className="text-zinc-700">Background swapping only.</span>
                         </p>
                     </div>
                 </div>
@@ -325,16 +182,16 @@ export default function BuilderPage() {
                         variant="ghost"
                         size="sm"
                         className="h-14 px-8 rounded-2xl text-zinc-500 hover:text-white"
-                        onClick={() => setSelections({ ET: '', REGION: '', FA: '', BT: '', HR: '', SC: '', ST: '', v: '01', r: '01' })}
+                        onClick={() => setSelectedBackground('DOORWAY_GOLD')}
                     >
                         <RefreshCw size={16} className="mr-2" />
-                        Clear
+                        Reset
                     </Button>
                     <Button
                         size="sm"
                         className="h-14 px-12 rounded-2xl bg-white text-black hover:scale-105 shadow-[0_10px_50px_rgba(255,255,255,0.1)] font-black text-lg tracking-tight"
                         onClick={handleBuild}
-                        disabled={loading || !allRequiredSelected}
+                        disabled={loading}
                     >
                         {loading ? <Cpu className="animate-spin mr-3" size={20} /> : <Wand2 className="mr-3" size={20} fill="currentColor" />}
                         {loading ? "Assembling..." : "Assemble"}
@@ -343,46 +200,76 @@ export default function BuilderPage() {
             </div>
 
             <div className="grid grid-cols-1 xl:grid-cols-12 gap-16">
-                {/* Two-Column Parameter Grid */}
+                {/* Simplified Parameter Panel */}
                 <div className="xl:col-span-7 space-y-12">
-                    <div className="grid grid-cols-2 gap-x-8 gap-y-6">
-                        {/* Left Column */}
-                        <div className="space-y-6">
-                            {LEFT_PARAMS.map(renderParameter)}
+                    {/* Locked Preset */}
+                    <div className="p-8 bg-zinc-900/50 border border-white/10 rounded-3xl">
+                        <div className="flex items-center gap-4 mb-6">
+                            <Lock size={20} className="text-yellow-500" />
+                            <h2 className="text-lg font-black uppercase tracking-wider text-white">Gold Avatar (Locked)</h2>
                         </div>
-
-                        {/* Right Column */}
-                        <div className="space-y-6">
-                            {RIGHT_PARAMS.map(renderParameter)}
+                        <div className="grid grid-cols-2 gap-4 text-sm">
+                            <div className="flex items-center gap-2">
+                                <div className="w-2 h-2 rounded-full bg-blue-500" />
+                                <span className="text-zinc-500">Face: <span className="text-white font-semibold">Soft Goddess</span></span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <div className="w-2 h-2 rounded-full bg-blue-500" />
+                                <span className="text-zinc-500">Body: <span className="text-white font-semibold">Ripped Athletic</span></span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <div className="w-2 h-2 rounded-full bg-blue-500" />
+                                <span className="text-zinc-500">Hair: <span className="text-white font-semibold">Long Black</span></span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <div className="w-2 h-2 rounded-full bg-blue-500" />
+                                <span className="text-zinc-500">Ethnicity: <span className="text-white font-semibold">Filipino</span></span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <div className="w-2 h-2 rounded-full bg-blue-500" />
+                                <span className="text-zinc-500">Skin: <span className="text-white font-semibold">Golden Tan</span></span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <div className="w-2 h-2 rounded-full bg-blue-500" />
+                                <span className="text-zinc-500">Outfit: <span className="text-white font-semibold">Tribal Bikini</span></span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <div className="w-2 h-2 rounded-full bg-blue-500" />
+                                <span className="text-zinc-500">Pose: <span className="text-white font-semibold">Power Pose</span></span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <div className="w-2 h-2 rounded-full bg-blue-500" />
+                                <span className="text-zinc-500">Base: <span className="text-white font-semibold">Gold Standard</span></span>
+                            </div>
                         </div>
                     </div>
 
-                    {/* Compact System Parameters */}
-                    <div className="pt-8 border-t border-white/5">
-                        <div className="grid grid-cols-2 gap-6">
-                            <div className="space-y-2">
-                                <label className="text-[11px] font-bold uppercase tracking-wider text-zinc-700 px-1">Version</label>
-                                <input
-                                    type="text"
-                                    className="w-full bg-black border border-white/10 px-4 py-3 rounded-xl text-sm font-semibold text-white focus:border-blue-500/50 transition-all outline-none"
-                                    value={selections.v}
-                                    onChange={e => setSelections({ ...selections, v: e.target.value })}
-                                />
-                            </div>
-                            <div className="space-y-2">
-                                <label className="text-[11px] font-bold uppercase tracking-wider text-zinc-700 px-1">Run ID</label>
-                                <input
-                                    type="text"
-                                    className="w-full bg-black border border-white/10 px-4 py-3 rounded-xl text-sm font-semibold text-white focus:border-blue-500/50 transition-all outline-none"
-                                    value={selections.r}
-                                    onChange={e => setSelections({ ...selections, r: e.target.value })}
-                                />
-                            </div>
+                    {/* Background Selector */}
+                    <div className="space-y-6">
+                        <div className="flex items-center gap-3 px-1">
+                            <label className="text-sm font-bold uppercase tracking-wider text-white">
+                                Background
+                            </label>
+                            <div className="w-1 h-1 rounded-full bg-green-500" />
                         </div>
+                        <select
+                            className="w-full bg-[#030303] border border-white/10 px-6 py-4 rounded-2xl appearance-none focus:border-blue-500/50 outline-none transition-all text-base font-semibold text-white hover:border-white/20"
+                            value={selectedBackground}
+                            onChange={e => setSelectedBackground(e.target.value)}
+                        >
+                            {backgrounds.map(({ code, label }) => (
+                                <option key={code} value={code}>{label}</option>
+                            ))}
+                        </select>
+                        {backgrounds.find(b => b.code === selectedBackground) && (
+                            <p className="text-xs text-zinc-600 italic px-1">
+                                {backgrounds.find(b => b.code === selectedBackground)?.description}
+                            </p>
+                        )}
                     </div>
                 </div>
 
-                {/* Output Panel */}
+                {/* Output Panel (unchanged) */}
                 <div className="xl:col-span-5 relative">
                     <div className="sticky top-40">
                         <Card className="rounded-[4rem] bg-[#020202] border-white/[0.05] shadow-[0_40px_100px_rgba(0,0,0,1)] min-h-[750px] flex flex-col group/terminal relative overflow-hidden">
@@ -495,7 +382,7 @@ export default function BuilderPage() {
                                             </div>
                                             <div className="text-center space-y-4">
                                                 <h3 className="font-black text-xs uppercase tracking-[0.6em] text-zinc-700">Awaiting Assembly</h3>
-                                                <p className="text-sm max-w-[280px] leading-relaxed italic text-zinc-800 font-bold">Select all parameters and click "Assemble" to generate your prompt.</p>
+                                                <p className="text-sm max-w-[280px] leading-relaxed italic text-zinc-800 font-bold">Select a background and click "Assemble" to generate your prompt.</p>
                                             </div>
                                         </motion.div>
                                     )}

@@ -1,36 +1,46 @@
 {
-    "camera": {
-        "shot": "medium portrait, upper thighs to head",
-        "angle": "straight-on with subtle downward tilt",
-        "perspective": "natural human-eye perspective, flattering compression"
-    },
-    "lighting": {
-        "source": "natural sunlight",
-        "direction": "strong side light from camera-left",
-        "contrast": "high contrast sculpting muscle and facial structure",
-        "temperature": "warm golden tones"
-    },
-    "composition": {
-        "framing": "centered subject with vertical emphasis",
-        "silhouette": "clean and uninterrupted",
-        "depth": "moderate, background visually secondary"
-    },
-    "image_quality": {
-        "style": "luxury editorial fitness photography",
-        "resolution": "ultra-high resolution, photorealistic",
-        "sharpness": "extreme clarity on face and torso",
-        "noise": "minimal"
-    },
-    "global_mood": {
-        "emotion": "confident, calm, magnetic",
-        "vibe": "sensual, powerful, high-end editorial",
-        "prohibited": [
-            "fear",
-            "horror",
-            "costume",
-            "whimsical",
-            "cartoon",
-            "random fashion"
-        ]
-    }
+  "setting": {
+    "location_type": "Outdoor residential or urban entryway",
+    "environment": "Exterior doorway with textured stone or natural concrete wall and a dark painted wooden door",
+    "time_of_day": "Late afternoon or early evening",
+    "weather_conditions": "Clear, dry conditions",
+    "atmosphere": "Warm, sensual, high-end editorial lifestyle aesthetic with subtle tribal influence"
+  },
+  "viewing_angle": {
+    "camera_height": "Approximately chest height of the subject",
+    "camera_distance": "Medium shot (upper thighs to head)",
+    "angle": "Straight-on with a subtle downward tilt",
+    "perspective_effect": "Natural human-eye perspective with flattering compression, no distortion"
+  },
+  "lighting": {
+    "primary_light_source": "Natural sunlight",
+    "direction": "Strong side lighting from camera-left",
+    "quality": "Hard, directional light",
+    "shadow_characteristics": "High-contrast shadows carving out muscle definition, abs, and facial structure",
+    "color_temperature": "Warm golden tones"
+  },
+  "aspect_ratio": {
+    "format": "Portrait",
+    "ratio": "3:4",
+    "orientation": "Vertical"
+  },
+  "composition": {
+    "framing": "Subject centered with slight headroom",
+    "rule_of_thirds": "Face and upper torso aligned near center",
+    "visual_balance": "Balanced between illuminated subject and darker background",
+    "depth": "Moderate depth created primarily through lighting contrast",
+    "leading_elements": "Door frame and wall subtly guide attention toward the subject"
+  },
+  "image_quality": {
+    "resolution_target": "Ultra-high resolution, photorealistic",
+    "sharpness": "Extreme sharpness on face, bust, and abdominal definition",
+    "noise_level": "Minimal noise",
+    "dynamic_range": "Wide dynamic range preserving highlights and deep shadows",
+    "overall_style": "Luxury Instagram fitness and tribal-inspired editorial photography"
+  },
+  "overall_mood": {
+    "tone": "Fierce, confident, and intensely striking",
+    "aesthetic": "Indigenous-inspired fantasy meets elite fitness editorial",
+    "visual_focus": "Powerful emphasis on facial beauty, extreme body definition, and curves"
+  }
 }

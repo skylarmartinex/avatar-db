@@ -2,29 +2,32 @@ import fs from 'fs';
 import path from 'path';
 
 interface BuildParams {
-    FA: string;
-    BT: string;
-    ET: string;
-    HR: string;
-    SC: string;
-    ST: string;
+    BASE: string;
+    SUBJECT_TYPE: string;
+    FACE: string;
+    BODY: string;
+    HAIR: string;
+    ETHNICITY: string;
+    SKIN: string;
+    OUTFIT: string;
+    POSE: string;
+    BACKGROUND: string;
     v: string;
     r: string;
-    PH_REGION?: string;
-    VN_REGION?: string;
 }
 
 // Map dimension codes to folder names
 const DIMENSION_FOLDERS: Record<string, string> = {
-    'FA': 'face',
-    'BT': 'body',
-    'ET': 'ethnicity',
-    'HR': 'hair',
-    'SC': 'scene',
-    'ST': 'outfit',
-    'NG': 'negative',
-    'PH_REGION': 'ph_region',
-    'VN_REGION': 'vn_region'
+    'BASE': 'base',
+    'SUBJECT_TYPE': 'subject',
+    'FACE': 'face',
+    'BODY': 'body',
+    'HAIR': 'hair',
+    'ETHNICITY': 'ethnicity',
+    'SKIN': 'skin',
+    'OUTFIT': 'outfit',
+    'POSE': 'pose',
+    'BACKGROUND': 'background'
 };
 
 /**
@@ -32,60 +35,65 @@ const DIMENSION_FOLDERS: Record<string, string> = {
  * This is a pure JavaScript implementation that works on Netlify
  */
 export async function buildPrompt(params: BuildParams) {
-    const { FA, BT, ET, HR, SC, ST, v, r, PH_REGION, VN_REGION } = params;
+    const { BASE, SUBJECT_TYPE, FACE, BODY, HAIR, ETHNICITY, SKIN, OUTFIT, POSE, BACKGROUND, v, r } = params;
     
     // Read from public/components (synced at build time)
     const componentsDir = path.join(process.cwd(), 'public/components');
     
     try {
-        // Read each component as full JSON objects
-        const faComponent = readComponent(componentsDir, 'FA', FA);
-        const btComponent = readComponent(componentsDir, 'BT', BT);
-        const etComponent = readComponent(componentsDir, 'ET', ET);
-        const hrComponent = readComponent(componentsDir, 'HR', HR);
-        const scComponent = readComponent(componentsDir, 'SC', SC);
-        const stComponent = readComponent(componentsDir, 'ST', ST);
-        const ngComponent = readComponent(componentsDir, 'NG', 'NB');
-        
-        // Read region if specified
-        let regionComponent = null;
-        if (PH_REGION) {
-            regionComponent = readComponent(componentsDir, 'PH_REGION', PH_REGION);
-        } else if (VN_REGION) {
-            regionComponent = readComponent(componentsDir, 'VN_REGION', VN_REGION);
-        }
+        // Read each component as full JSON objects in merge order
+        const baseComponent = readComponent(componentsDir, 'BASE', BASE);
+        const subjectTypeComponent = readComponent(componentsDir, 'SUBJECT_TYPE', SUBJECT_TYPE);
+        const faceComponent = readComponent(componentsDir, 'FACE', FACE);
+        const bodyComponent = readComponent(componentsDir, 'BODY', BODY);
+        const hairComponent = readComponent(componentsDir, 'HAIR', HAIR);
+        const ethnicityComponent = readComponent(componentsDir, 'ETHNICITY', ETHNICITY);
+        const skinComponent = readComponent(componentsDir, 'SKIN', SKIN);
+        const outfitComponent = readComponent(componentsDir, 'OUTFIT', OUTFIT);
+        const poseComponent = readComponent(componentsDir, 'POSE', POSE);
+        const backgroundComponent = readComponent(componentsDir, 'BACKGROUND', BACKGROUND);
         
         // Deep merge all components in the correct order
         // Order matters: later merges override earlier ones for conflicting keys
         const mergedPrompt = deepMerge(
             {},
-            faComponent,      // Face archetype (base subject)
-            btComponent,      // Body type
-            etComponent,      // Ethnicity
-            regionComponent,  // Region (if specified)
-            hrComponent,      // Hair
-            scComponent,      // Scene/background
-            stComponent,      // Outfit/clothing
-            ngComponent       // Negative prompt
+            baseComponent,           // Technical foundation
+            subjectTypeComponent,    // Subject type
+            faceComponent,           // Facial features
+            bodyComponent,           // Body build
+            hairComponent,           // Hair
+            ethnicityComponent,      // Ethnicity
+            skinComponent,           // Skin
+            outfitComponent,         // Clothing
+            poseComponent,           // Pose
+            backgroundComponent      // Background/surrounding
         );
         
         // Build canonical ID
-        const idParts = [`FA-${FA}`, `BT-${BT}`, `ET-${ET}`];
-        if (PH_REGION) idParts.push(`PH_REGION-${PH_REGION}`);
-        if (VN_REGION) idParts.push(`VN_REGION-${VN_REGION}`);
-        idParts.push(`HR-${HR}`, `SC-${SC}`, `ST-${ST}`, `v${v}`);
+        const idParts = [
+            `BASE-${BASE}`,
+            `FACE-${FACE}`,
+            `BODY-${BODY}`,
+            `HAIR-${HAIR}`,
+            `ETHNICITY-${ETHNICITY}`,
+            `SKIN-${SKIN}`,
+            `OUTFIT-${OUTFIT}`,
+            `POSE-${POSE}`,
+            `BACKGROUND-${BACKGROUND}`,
+            `v${v}`
+        ];
         
         const canonical_id = idParts.join('__');
         
         // Build human-readable title
-        const title = buildTitle(params, faComponent, btComponent, etComponent, regionComponent);
+        const title = `Gold Avatar · ${BACKGROUND}`;
         
         return {
             success: true,
             canonical_id,
             title,
             prompt: mergedPrompt,
-            dims: { FA, BT, ET, HR, SC, ST, v, r, PH_REGION, VN_REGION }
+            dims: { BASE, SUBJECT_TYPE, FACE, BODY, HAIR, ETHNICITY, SKIN, OUTFIT, POSE, BACKGROUND, v, r }
         };
         
     } catch (error: any) {
@@ -145,29 +153,4 @@ function readComponent(componentsDir: string, dimension: string, code: string): 
     
     const content = fs.readFileSync(filePath, 'utf-8');
     return JSON.parse(content);
-}
-
-/**
- * Build a human-readable title
- */
-function buildTitle(
-    params: BuildParams,
-    faComponent: any,
-    btComponent: any,
-    etComponent: any,
-    regionComponent: any
-): string {
-    const parts = [];
-    
-    if (faComponent?.label) parts.push(faComponent.label);
-    if (btComponent?.label) parts.push(btComponent.label);
-    if (etComponent?.label) {
-        let ethLabel = etComponent.label;
-        if (regionComponent?.label) {
-            ethLabel += ` (${regionComponent.label})`;
-        }
-        parts.push(ethLabel);
-    }
-    
-    return parts.join(' · ') || 'Assembled Prompt';
 }
