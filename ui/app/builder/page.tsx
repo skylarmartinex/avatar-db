@@ -9,6 +9,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 export default function BuilderPage() {
     const [registry, setRegistry] = useState<any>(null);
     const [selectedBackground, setSelectedBackground] = useState('DOORWAY_GOLD');
+    const [selectedOutfit, setSelectedOutfit] = useState('TRIBAL_BIKINI');
     const [result, setResult] = useState<any>(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -36,7 +37,7 @@ export default function BuilderPage() {
                     HAIR: 'GOLD',
                     ETHNICITY: 'GOLD',
                     SKIN: 'GOLD',
-                    OUTFIT: 'GOLD',
+                    OUTFIT: selectedOutfit,
                     POSE: 'GOLD',
                     BACKGROUND: selectedBackground,
                     v: '01',
@@ -60,10 +61,9 @@ export default function BuilderPage() {
         }
     }
 
-    // Bulletproof copy helper with fallback
     async function copyToClipboard(text: string): Promise<{ ok: boolean; method?: string; error?: string }> {
         console.log("copyToClipboard called with text length:", text.length);
-
+        
         try {
             if (window.isSecureContext && navigator.clipboard?.writeText) {
                 await navigator.clipboard.writeText(text);
@@ -99,11 +99,11 @@ export default function BuilderPage() {
     async function copyJsonToClipboard() {
         console.log("Copy JSON clicked");
         setCopyError(null);
-
+        
         if (result?.prompt) {
             const jsonText = JSON.stringify(result.prompt, null, 2);
             const copyResult = await copyToClipboard(jsonText);
-
+            
             if (copyResult.ok) {
                 setCopiedJson(true);
                 setTimeout(() => setCopiedJson(false), 2000);
@@ -117,11 +117,11 @@ export default function BuilderPage() {
     async function copyTextToClipboard() {
         console.log("Copy Text clicked");
         setCopyError(null);
-
+        
         if (result?.prompt) {
             const jsonText = JSON.stringify(result.prompt, null, 2);
             const copyResult = await copyToClipboard(jsonText);
-
+            
             if (copyResult.ok) {
                 setCopiedText(true);
                 setTimeout(() => setCopiedText(false), 2000);
@@ -154,6 +154,11 @@ export default function BuilderPage() {
         .map(([code, data]: [string, any]) => ({ code, label: data.label, description: data.description }))
         : [];
 
+    const outfits = registry.OUTFIT ? Object.entries(registry.OUTFIT)
+        .filter(([, data]: [string, any]) => data.status === 'active')
+        .map(([code, data]: [string, any]) => ({ code, label: data.label, description: data.description }))
+        : [];
+
     return (
         <div className="max-w-[1600px] mx-auto space-y-20 pb-48">
             {/* Compact Header */}
@@ -172,7 +177,7 @@ export default function BuilderPage() {
                             Builder<span className="text-blue-500">.</span>
                         </h1>
                         <p className="text-zinc-500 text-xl font-medium max-w-2xl leading-relaxed">
-                            Gold Avatar (Locked). <span className="text-zinc-700">Background swapping only.</span>
+                            Gold Avatar (Locked). <span className="text-zinc-700">Background + Outfit swapping only.</span>
                         </p>
                     </div>
                 </div>
@@ -182,7 +187,10 @@ export default function BuilderPage() {
                         variant="ghost"
                         size="sm"
                         className="h-14 px-8 rounded-2xl text-zinc-500 hover:text-white"
-                        onClick={() => setSelectedBackground('DOORWAY_GOLD')}
+                        onClick={() => {
+                            setSelectedBackground('DOORWAY_GOLD');
+                            setSelectedOutfit('TRIBAL_BIKINI');
+                        }}
                     >
                         <RefreshCw size={16} className="mr-2" />
                         Reset
@@ -231,10 +239,6 @@ export default function BuilderPage() {
                             </div>
                             <div className="flex items-center gap-2">
                                 <div className="w-2 h-2 rounded-full bg-blue-500" />
-                                <span className="text-zinc-500">Outfit: <span className="text-white font-semibold">Tribal Bikini</span></span>
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <div className="w-2 h-2 rounded-full bg-blue-500" />
                                 <span className="text-zinc-500">Pose: <span className="text-white font-semibold">Power Pose</span></span>
                             </div>
                             <div className="flex items-center gap-2">
@@ -244,28 +248,55 @@ export default function BuilderPage() {
                         </div>
                     </div>
 
-                    {/* Background Selector */}
-                    <div className="space-y-6">
-                        <div className="flex items-center gap-3 px-1">
-                            <label className="text-sm font-bold uppercase tracking-wider text-white">
-                                Background
-                            </label>
-                            <div className="w-1 h-1 rounded-full bg-green-500" />
+                    {/* Variable Selectors */}
+                    <div className="space-y-8">
+                        {/* Outfit Selector */}
+                        <div className="space-y-6">
+                            <div className="flex items-center gap-3 px-1">
+                                <label className="text-sm font-bold uppercase tracking-wider text-white">
+                                    Outfit
+                                </label>
+                                <div className="w-1 h-1 rounded-full bg-green-500" />
+                            </div>
+                            <select
+                                className="w-full bg-[#030303] border border-white/10 px-6 py-4 rounded-2xl appearance-none focus:border-blue-500/50 outline-none transition-all text-base font-semibold text-white hover:border-white/20"
+                                value={selectedOutfit}
+                                onChange={e => setSelectedOutfit(e.target.value)}
+                            >
+                                {outfits.map(({ code, label }) => (
+                                    <option key={code} value={code}>{label}</option>
+                                ))}
+                            </select>
+                            {outfits.find(o => o.code === selectedOutfit) && (
+                                <p className="text-xs text-zinc-600 italic px-1">
+                                    {outfits.find(o => o.code === selectedOutfit)?.description}
+                                </p>
+                            )}
                         </div>
-                        <select
-                            className="w-full bg-[#030303] border border-white/10 px-6 py-4 rounded-2xl appearance-none focus:border-blue-500/50 outline-none transition-all text-base font-semibold text-white hover:border-white/20"
-                            value={selectedBackground}
-                            onChange={e => setSelectedBackground(e.target.value)}
-                        >
-                            {backgrounds.map(({ code, label }) => (
-                                <option key={code} value={code}>{label}</option>
-                            ))}
-                        </select>
-                        {backgrounds.find(b => b.code === selectedBackground) && (
-                            <p className="text-xs text-zinc-600 italic px-1">
-                                {backgrounds.find(b => b.code === selectedBackground)?.description}
-                            </p>
-                        )}
+
+                        {/* Background Selector */}
+                        <div className="space-y-6">
+                            <div className="flex items-center gap-3 px-1">
+                                <label className="text-sm font-bold uppercase tracking-wider text-white">
+                                    Background
+                                </label>
+                                <div className="w-1 h-1 rounded-full bg-green-500" />
+                            </div>
+                            <select
+                                className="w-full bg-[#030303] border border-white/10 px-6 py-4 rounded-2xl appearance-none focus:border-blue-500/50 outline-none transition-all text-base font-semibold text-white hover:border-white/20"
+                                value={selectedBackground}
+                                onChange={e => setSelectedBackground(e.target.value)}
+                            >
+                                {backgrounds.map(({ code, label }) => (
+                                    <option key={code} value={code}>{label}</option>
+                                ))}
+                            </select>
+                            {backgrounds.find(b => b.code === selectedBackground) && (
+                                <p className="text-xs text-zinc-600 italic px-1">
+                                    {backgrounds.find(b => b.code === selectedBackground)?.description}
+                                </p>
+                            )}
+                        </div>
                     </div>
                 </div>
 
@@ -382,7 +413,7 @@ export default function BuilderPage() {
                                             </div>
                                             <div className="text-center space-y-4">
                                                 <h3 className="font-black text-xs uppercase tracking-[0.6em] text-zinc-700">Awaiting Assembly</h3>
-                                                <p className="text-sm max-w-[280px] leading-relaxed italic text-zinc-800 font-bold">Select a background and click "Assemble" to generate your prompt.</p>
+                                                <p className="text-sm max-w-[280px] leading-relaxed italic text-zinc-800 font-bold">Select outfit and background, then click "Assemble".</p>
                                             </div>
                                         </motion.div>
                                     )}

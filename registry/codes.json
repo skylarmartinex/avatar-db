@@ -56,10 +56,22 @@
     }
   },
   "OUTFIT": {
-    "GOLD": {
-      "code": "GOLD",
-      "label": "Tribal Bikini",
-      "description": "Gold standard outfit (locked)",
+    "TRIBAL_BIKINI": {
+      "code": "TRIBAL_BIKINI",
+      "label": "Tribal Editorial Bikini",
+      "description": "Indigenous-inspired fantasy meets elite fitness editorial (control)",
+      "status": "active"
+    },
+    "LUXURY_SPORTS": {
+      "code": "LUXURY_SPORTS",
+      "label": "Luxury Sports Bikini",
+      "description": "Elite fitness editorial with modern sensuality",
+      "status": "active"
+    },
+    "MINIMAL_BODYSUIT": {
+      "code": "MINIMAL_BODYSUIT",
+      "label": "Minimal Editorial Bodysuit",
+      "description": "Powerful, dominant, runway fitness aesthetic",
       "status": "active"
     }
   },

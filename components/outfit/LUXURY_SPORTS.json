@@ -1,0 +1,25 @@
+{
+  "clothing": {
+    "outfit_name": "Luxury Sports Bikini",
+    "intent": "Elite fitness editorial with modern sensuality",
+    "design": {
+      "style": "Minimal high-end athletic bikini",
+      "materials": ["matte performance fabric", "soft compression textile"],
+      "colors": ["sand", "charcoal", "olive", "espresso"],
+      "details": ["clean lines", "no visible seams", "no branding"],
+      "fit": "Sculpted athletic cut enhancing muscle definition and curves"
+    },
+    "aesthetic": {
+      "vibe": "Confident, powerful, contemporary fitness model",
+      "photography_style": "Luxury sports editorial, not influencer casual"
+    },
+    "exclusions": [
+      "no logos",
+      "no patterns",
+      "no streetwear",
+      "no casual beachwear",
+      "no costumes",
+      "no lingerie"
+    ]
+  }
+}
