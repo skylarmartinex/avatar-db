@@ -11,7 +11,23 @@ export default function BuilderPage() {
     const [selectedBackground, setSelectedBackground] = useState('DOORWAY_GOLD');
     const [selectedOutfit, setSelectedOutfit] = useState('TRIBAL_BIKINI');
     const [selectedHair, setSelectedHair] = useState('GOLD');
-    const [selectedAppearance, setSelectedAppearance] = useState('PORCELAIN_COOL');
+    const [selectedAppearance, setSelectedAppearance] = useState('MEDIUM_TAN_OLIVE');
+
+    // Granular Controls
+    const [hairTexture, setHairTexture] = useState('Loose beach waves');
+    const [hairLength, setHairLength] = useState('Long');
+    const [hairStyleMode, setHairStyleMode] = useState('Down');
+    const [hairPart, setHairPart] = useState('Center part');
+    const [hairBangs, setHairBangs] = useState('None');
+    const [hairFinish, setHairFinish] = useState('Fresh salon blowout');
+
+    const [skinBase, setSkinBase] = useState('Medium-tan');
+    const [skinUndertone, setSkinUndertone] = useState('Olive');
+    const [skinFinish, setSkinFinish] = useState('Dewy');
+
+    const [hairBaseColor, setHairBaseColor] = useState('Espresso brunette');
+    const [highlightsEnabled, setHighlightsEnabled] = useState(true);
+
     const [result, setResult] = useState<any>(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -44,7 +60,30 @@ export default function BuilderPage() {
                     POSE: 'GOLD',
                     BACKGROUND: selectedBackground,
                     v: '01',
-                    r: '01'
+                    r: '01',
+                    overrides: {
+                        subject: {
+                            hair: {
+                                texture: hairTexture,
+                                length: hairLength,
+                                style_mode: hairStyleMode,
+                                part: hairPart,
+                                bangs: hairBangs,
+                                finish: hairFinish
+                            }
+                        },
+                        appearance: {
+                            skin_tone: {
+                                base: skinBase,
+                                undertone: skinUndertone,
+                                complexion_finish: skinFinish
+                            },
+                            hair_color: {
+                                base_color: hairBaseColor,
+                                highlights: { enabled: highlightsEnabled }
+                            }
+                        }
+                    }
                 })
             });
             const data = await res.json();
@@ -169,7 +208,7 @@ export default function BuilderPage() {
         .map(([code, data]: [string, any]) => ({ code, label: data.label, description: data.description }))
         : [];
 
-    const hairPresets = registry.HR ? Object.entries(registry.HR)
+    const hairPresets = registry.HAIR ? Object.entries(registry.HAIR)
         .filter(([, data]: [string, any]) => data.status === 'active')
         .map(([code, data]: [string, any]) => ({ code, label: data.label, description: data.description }))
         : [];
@@ -178,6 +217,19 @@ export default function BuilderPage() {
         .filter(([, data]: [string, any]) => data.status === 'active')
         .map(([code, data]: [string, any]) => ({ code, label: data.label, description: data.description }))
         : [];
+
+    const ENUMS = {
+        textures: ["Pin-straight, glass-smooth", "Loose beach waves", "Defined curls (2C–3A)", "Spiral curls (3B–3C)", "Wet-look strands"],
+        lengths: ["Short", "Medium", "Long", "Extra-long"],
+        styleModes: ["Down", "Half-up", "High ponytail", "Slick-back ponytail", "Braids"],
+        parts: ["Center part", "Side part", "No visible part"],
+        bangs: ["None", "Curtain bangs", "Blunt bangs"],
+        hairFinishes: ["Fresh salon blowout", "Day-two texture", "High-shine editorial", "Matte natural"],
+        skinBases: ["Porcelain", "Ivory", "Fair", "Light", "Light-medium", "Medium", "Medium-tan", "Tan", "Deep"],
+        undertones: ["Warm", "Cool", "Neutral", "Olive", "Golden"],
+        skinFinishes: ["Matte", "Natural", "Dewy"],
+        hairColors: ["Jet black", "Soft black", "Espresso brunette", "Honey brown", "Auburn", "Copper", "Honey blonde", "Ash blonde", "Platinum blonde"]
+    };
 
     return (
         <div className="max-w-[1600px] mx-auto space-y-20 pb-48">
@@ -247,18 +299,9 @@ export default function BuilderPage() {
                                 <div className="w-2 h-2 rounded-full bg-blue-500" />
                                 <span className="text-zinc-500">Body: <span className="text-white font-semibold">Ripped Athletic</span></span>
                             </div>
-                            <div className="flex items-center gap-2 text-zinc-600">
-                                <span className="">Hair: <span className="text-zinc-400">Variable</span></span>
-                            </div>
                             <div className="flex items-center gap-2">
                                 <div className="w-2 h-2 rounded-full bg-blue-500" />
                                 <span className="text-zinc-500">Ethnicity: <span className="text-white font-semibold">Filipino</span></span>
-                            </div>
-                            <div className="flex items-center gap-2 text-zinc-600">
-                                <span className="">Appearance: <span className="text-zinc-400">Variable</span></span>
-                            </div>
-                            <div className="flex items-center gap-2 text-zinc-600">
-                                <span className="">Skin: <span className="text-zinc-400">Locked to Gold</span></span>
                             </div>
                             <div className="flex items-center gap-2">
                                 <div className="w-2 h-2 rounded-full bg-blue-500" />
@@ -297,52 +340,139 @@ export default function BuilderPage() {
                             )}
                         </div>
 
-                        {/* Hair Selector */}
-                        <div className="space-y-6">
-                            <div className="flex items-center gap-3 px-1">
-                                <label className="text-sm font-bold uppercase tracking-wider text-white">
-                                    Hair Style
-                                </label>
-                                <div className="w-1 h-1 rounded-full bg-blue-500" />
+                        {/* Hair System */}
+                        <div className="p-8 bg-black/40 border border-white/5 rounded-[2.5rem] space-y-10">
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-3">
+                                    <div className="w-2 h-8 bg-blue-500 rounded-full" />
+                                    <h3 className="text-xl font-black uppercase tracking-widest text-white">Hair Blueprint</h3>
+                                </div>
+                                <select
+                                    className="bg-zinc-900 border border-white/10 px-4 py-2 rounded-xl text-xs font-bold text-zinc-400 outline-none"
+                                    value={selectedHair}
+                                    onChange={e => setSelectedHair(e.target.value)}
+                                >
+                                    {hairPresets.map(({ code, label }) => (
+                                        <option key={code} value={code}>{label} Preset</option>
+                                    ))}
+                                </select>
                             </div>
-                            <select
-                                className="w-full bg-[#030303] border border-white/10 px-6 py-4 rounded-2xl appearance-none focus:border-blue-500/50 outline-none transition-all text-base font-semibold text-white hover:border-white/20"
-                                value={selectedHair}
-                                onChange={e => setSelectedHair(e.target.value)}
-                            >
-                                {hairPresets.map(({ code, label }) => (
-                                    <option key={code} value={code}>{label}</option>
-                                ))}
-                            </select>
-                            {hairPresets.find(h => h.code === selectedHair) && (
-                                <p className="text-xs text-zinc-600 italic px-1">
-                                    {hairPresets.find(h => h.code === selectedHair)?.description}
-                                </p>
-                            )}
+
+                            <div className="grid grid-cols-2 gap-8">
+                                <div className="space-y-4">
+                                    <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-1">Texture</label>
+                                    <select
+                                        className="w-full bg-zinc-900 border border-white/5 px-6 py-4 rounded-2xl text-sm font-bold text-white outline-none focus:border-blue-500/50 transition-all"
+                                        value={hairTexture}
+                                        onChange={e => setHairTexture(e.target.value)}
+                                    >
+                                        {ENUMS.textures.map(t => <option key={t} value={t}>{t}</option>)}
+                                    </select>
+                                </div>
+                                <div className="space-y-4">
+                                    <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-1">Length</label>
+                                    <select
+                                        className="w-full bg-zinc-900 border border-white/5 px-6 py-4 rounded-2xl text-sm font-bold text-white outline-none focus:border-blue-500/50 transition-all"
+                                        value={hairLength}
+                                        onChange={e => setHairLength(e.target.value)}
+                                    >
+                                        {ENUMS.lengths.map(l => <option key={l} value={l}>{l}</option>)}
+                                    </select>
+                                </div>
+                                <div className="space-y-4">
+                                    <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-1">Style Mode</label>
+                                    <select
+                                        className="w-full bg-zinc-900 border border-white/5 px-6 py-4 rounded-2xl text-sm font-bold text-white outline-none focus:border-blue-500/50 transition-all"
+                                        value={hairStyleMode}
+                                        onChange={e => setHairStyleMode(e.target.value)}
+                                    >
+                                        {ENUMS.styleModes.map(s => <option key={s} value={s}>{s}</option>)}
+                                    </select>
+                                </div>
+                                <div className="space-y-4">
+                                    <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-1">Finish</label>
+                                    <select
+                                        className="w-full bg-zinc-900 border border-white/5 px-6 py-4 rounded-2xl text-sm font-bold text-white outline-none focus:border-blue-500/50 transition-all"
+                                        value={hairFinish}
+                                        onChange={e => setHairFinish(e.target.value)}
+                                    >
+                                        {ENUMS.hairFinishes.map(f => <option key={f} value={f}>{f}</option>)}
+                                    </select>
+                                </div>
+                            </div>
                         </div>
 
-                        {/* Appearance/Color Selector */}
-                        <div className="space-y-6">
-                            <div className="flex items-center gap-3 px-1">
-                                <label className="text-sm font-bold uppercase tracking-wider text-white">
-                                    Character Finish (Color/Skin)
-                                </label>
-                                <div className="w-1 h-1 rounded-full bg-amber-500" />
+                        {/* Appearance System */}
+                        <div className="p-8 bg-black/40 border border-white/5 rounded-[2.5rem] space-y-10">
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-3">
+                                    <div className="w-2 h-8 bg-amber-500 rounded-full" />
+                                    <h3 className="text-xl font-black uppercase tracking-widest text-white">Character Finish</h3>
+                                </div>
+                                <select
+                                    className="bg-zinc-900 border border-white/10 px-4 py-2 rounded-xl text-xs font-bold text-zinc-400 outline-none"
+                                    value={selectedAppearance}
+                                    onChange={e => setSelectedAppearance(e.target.value)}
+                                >
+                                    {appearancePresets.map(({ code, label }) => (
+                                        <option key={code} value={code}>{label} Preset</option>
+                                    ))}
+                                </select>
                             </div>
-                            <select
-                                className="w-full bg-[#030303] border border-white/10 px-6 py-4 rounded-2xl appearance-none focus:border-blue-500/50 outline-none transition-all text-base font-semibold text-white hover:border-white/20"
-                                value={selectedAppearance}
-                                onChange={e => setSelectedAppearance(e.target.value)}
-                            >
-                                {appearancePresets.map(({ code, label }) => (
-                                    <option key={code} value={code}>{label}</option>
-                                ))}
-                            </select>
-                            {appearancePresets.find(a => a.code === selectedAppearance) && (
-                                <p className="text-xs text-zinc-600 italic px-1">
-                                    {appearancePresets.find(a => a.code === selectedAppearance)?.description}
-                                </p>
-                            )}
+
+                            <div className="grid grid-cols-2 gap-8">
+                                <div className="space-y-8 col-span-2">
+                                    <div className="p-6 bg-zinc-900/50 border border-white/5 rounded-3xl space-y-6">
+                                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Skin Properties</label>
+                                        <div className="grid grid-cols-3 gap-6">
+                                            <select
+                                                className="bg-black border border-white/10 px-4 py-3 rounded-xl text-xs font-bold text-white outline-none"
+                                                value={skinBase}
+                                                onChange={e => setSkinBase(e.target.value)}
+                                            >
+                                                {ENUMS.skinBases.map(b => <option key={b} value={b}>{b}</option>)}
+                                            </select>
+                                            <select
+                                                className="bg-black border border-white/10 px-4 py-3 rounded-xl text-xs font-bold text-white outline-none"
+                                                value={skinUndertone}
+                                                onChange={e => setSkinUndertone(e.target.value)}
+                                            >
+                                                {ENUMS.undertones.map(u => <option key={u} value={u}>{u}</option>)}
+                                            </select>
+                                            <select
+                                                className="bg-black border border-white/10 px-4 py-3 rounded-xl text-xs font-bold text-white outline-none"
+                                                value={skinFinish}
+                                                onChange={e => setSkinFinish(e.target.value)}
+                                            >
+                                                {ENUMS.skinFinishes.map(f => <option key={f} value={f}>{f}</option>)}
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div className="p-6 bg-zinc-900/50 border border-white/5 rounded-3xl space-y-6">
+                                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Hair Color Properties</label>
+                                        <div className="grid grid-cols-2 gap-6">
+                                            <select
+                                                className="bg-black border border-white/10 px-4 py-3 rounded-xl text-xs font-bold text-white outline-none"
+                                                value={hairBaseColor}
+                                                onChange={e => setHairBaseColor(e.target.value)}
+                                            >
+                                                {ENUMS.hairColors.map(c => <option key={c} value={c}>{c}</option>)}
+                                            </select>
+                                            <Button
+                                                variant="ghost"
+                                                className={cn(
+                                                    "border border-white/10 rounded-xl text-xs font-black uppercase tracking-widest",
+                                                    highlightsEnabled ? "bg-blue-500/10 text-blue-400 border-blue-500/20" : "text-zinc-600"
+                                                )}
+                                                onClick={() => setHighlightsEnabled(!highlightsEnabled)}
+                                            >
+                                                {highlightsEnabled ? "Highlights ON" : "Highlights OFF"}
+                                            </Button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         {/* Background Selector */}

@@ -15,6 +15,7 @@ interface BuildParams {
     BACKGROUND: string;
     v: string;
     r: string;
+    overrides?: any;
 }
 
 // Map dimension codes to folder names
@@ -37,7 +38,7 @@ const DIMENSION_FOLDERS: Record<string, string> = {
  * This is a pure JavaScript implementation that works on Netlify
  */
 export async function buildPrompt(params: BuildParams) {
-    const { BASE, SUBJECT_TYPE, FACE, BODY, HAIR, ETHNICITY, SKIN, APPEARANCE, OUTFIT, POSE, BACKGROUND, v, r } = params;
+    const { BASE, SUBJECT_TYPE, FACE, BODY, HAIR, ETHNICITY, SKIN, APPEARANCE, OUTFIT, POSE, BACKGROUND, v, r, overrides } = params;
     
     // Read from public/components (synced at build time)
     const componentsDir = path.join(process.cwd(), 'public/components');
@@ -58,7 +59,7 @@ export async function buildPrompt(params: BuildParams) {
         
         // Deep merge all components in the correct order
         // Order matters: later merges override earlier ones for conflicting keys
-        const mergedPrompt = deepMerge(
+        let mergedPrompt = deepMerge(
             {},
             baseComponent,           // Technical foundation
             subjectTypeComponent,    // Subject type
@@ -72,6 +73,11 @@ export async function buildPrompt(params: BuildParams) {
             poseComponent,           // Pose
             backgroundComponent      // Background/surrounding
         );
+
+        // Apply granular overrides if provided
+        if (overrides) {
+            mergedPrompt = deepMerge(mergedPrompt, overrides);
+        }
         
         // Build canonical ID
         const idParts = [
@@ -112,14 +118,14 @@ export async function buildPrompt(params: BuildParams) {
         // Add Hair Structure
         if (mergedPrompt.subject?.hair?.enabled !== false) {
             const h = mergedPrompt.subject?.hair || {};
-            const hair_str = `Hair: ${h.length || 'medium'} ${h.texture || 'natural'} ${h.style || 'style'}${h.bangs ? ` with ${h.bangs}` : ''}${h.volume ? `, ${h.volume.toLowerCase()} volume` : ''}.`;
+            const hair_str = `Hair: ${h.length || 'medium'} ${h.texture || 'natural'} ${h.style_mode || h.style || 'style'}${h.bangs ? ` with ${h.bangs}` : ''}${h.volume ? `, ${h.volume.toLowerCase()} volume` : ''}.`;
             clauses.push(hair_str);
         }
         
         // Add Hair Color
         if (mergedPrompt.appearance?.hair_color?.enabled !== false) {
             const hc = mergedPrompt.appearance?.hair_color || {};
-            const color_str = `Hair color: ${hc.base_color || 'natural'}${hc.highlights?.enabled ? ` with ${hc.highlights.color} highlights` : ''}${hc.gray_percentage ? `, ${hc.gray_percentage} gray` : ''}; ${hc.finish ? hc.finish.toLowerCase() + ' finish' : 'natural finish'}.`;
+            const color_str = `Hair color: ${hc.base_color || 'natural'}${hc.highlights?.enabled ? ` with ${hc.highlights.color || 'natural'} highlights` : ''}${hc.gray_percentage && hc.gray_percentage !== 'None' ? `, ${hc.gray_percentage} gray` : ''}; ${hc.finish ? hc.finish.toLowerCase() + ' finish' : 'natural finish'}.`;
             clauses.push(color_str);
         }
 
