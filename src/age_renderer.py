@@ -60,4 +60,7 @@ def render_age_clause(subject_data: Dict[str, Any]) -> Optional[str]:
     if "anti_gaunt_guard" in cues:
         res += f"; {cues['anti_gaunt_guard'].lower()}"
         
+    if "constraints" in cues:
+        res += f"; constraints: {cues['constraints'].lower()}"
+        
     return res.strip()

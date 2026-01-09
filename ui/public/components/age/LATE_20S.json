@@ -1,0 +1,13 @@
+{
+    "subject": {
+        "age_profile": "Late 20s",
+        "age_cues": {
+            "enabled": true,
+            "face_youthfulness": "Mature young adult; defined facial structure",
+            "eye_area": "Natural under-eye definition",
+            "skin_texture_policy": "Natural texture",
+            "age_markers": "Subtle expressive lines; professional polished look",
+            "anti_gaunt_guard": "Stable facial volume"
+        }
+    }
+}
