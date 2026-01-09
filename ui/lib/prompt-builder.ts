@@ -71,7 +71,7 @@ function renderBodyComponentsClause(bc: any): string | null {
         if (k === "abs" && definition === "Shredded" && emphasis === "High") {
             comp_str = `${k}: competition-lean abs with deep etched separations, sharply visible obliques and serratus lines; no smoothness, no softness`;
         } else if (k === "breasts" && size === "Full" && emphasis === "High") {
-            comp_str = `${k}: prominent, full bust with natural weight and projection; clear cleavage; not subtle`;
+            comp_str = `${k}: noticeably fuller bust with clear volume and projection, intentionally contrasted against the lean athletic frame; natural proportions`;
         } else {
             const c_parts = [];
             c_parts.push(`${emphasis.toLowerCase()} emphasis`);
@@ -94,6 +94,12 @@ function renderBodyComponentsClause(bc: any): string | null {
     if (comp_clauses.length === 0) return null;
     
     let res = `Body components: ${comp_clauses.join("; ")}`;
+    
+    // CONTRAST RULE
+    if (components["breasts"]?.enabled) {
+        res += ". Body proportions: athletic lean frame with a noticeably fuller bust for strong contrast.";
+    }
+
     if (global_constraints && global_constraints.length > 0) {
         res += `. ${global_constraints.join("; ")}.`;
     }
@@ -387,5 +393,6 @@ function readComponent(componentsDir: string, dimension: string, code: string): 
     const content = fs.readFileSync(filePath, 'utf-8');
     return JSON.parse(content);
 }
+
 
 

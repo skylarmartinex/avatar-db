@@ -95,7 +95,7 @@ def render_body_components_clause(bc: Dict[str, Any]) -> Optional[str]:
         if k == "abs" and definition == "Shredded" and emphasis == "High":
             comp_str = f"{k}: competition-lean abs with deep etched separations, sharply visible obliques and serratus lines; no smoothness, no softness"
         elif k == "breasts" and size == "Full" and emphasis == "High":
-             comp_str = f"{k}: prominent, full bust with natural weight and projection; clear cleavage; not subtle"
+             comp_str = f"{k}: noticeably fuller bust with clear volume and projection, intentionally contrasted against the lean athletic frame; natural proportions"
         else:
             c_parts = []
             c_parts.append(f"{emphasis.lower()} emphasis")
@@ -118,6 +118,11 @@ def render_body_components_clause(bc: Dict[str, Any]) -> Optional[str]:
         return None
         
     res = f"Body components: {'; '.join(comp_clauses)}"
+    
+    # CONTRAST RULE: If breasts are enabled, add a Top-Level Proportions clause 
+    # to prevent shredded cues from averaging volume downward.
+    if components.get("breasts", {}).get("enabled"):
+        res += ". Body proportions: athletic lean frame with a noticeably fuller bust for strong contrast."
     
     if global_constraints:
         res += f". {'; '.join(global_constraints)}."
