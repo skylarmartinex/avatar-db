@@ -1,5 +1,22 @@
 {
-  "prompts": [],
-  "generated": "2026-01-09T23:02:12.475Z",
-  "count": 0
+  "prompts": [
+    {
+      "filename": "FA-GOLD__BT-GOLD__ET-GOLD__HR-GOLD__SC-GOLD__ST-GOLD__APPEARANCE-PORCELAIN_COOL__v01.json",
+      "canonicalId": "FA-GOLD__BT-GOLD__ET-GOLD__HR-GOLD__SC-GOLD__ST-GOLD__APPEARANCE-PORCELAIN_COOL__v01",
+      "dims": {
+        "FA": "GOLD",
+        "BT": "GOLD",
+        "ET": "GOLD",
+        "HR": "GOLD",
+        "SC": "GOLD",
+        "ST": "GOLD",
+        "APPEARANCE": "PORCELAIN_COOL",
+        "v": "01"
+      },
+      "modified": "2026-01-09T23:03:06.904Z",
+      "size": 1051
+    }
+  ],
+  "generated": "2026-01-09T23:03:06.905Z",
+  "count": 1
 }
