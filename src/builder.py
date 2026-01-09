@@ -28,8 +28,11 @@ def build_prompt(
     if vn_region:
         segments.append(f"VN_REGION-{vn_region}")
         
+    appearance_code = overrides.pop("APPEARANCE", "PORCELAIN_COOL") if overrides and "APPEARANCE" in overrides else "PORCELAIN_COOL"
+
     segments.extend([
         f"HR-{hr}",
+        f"APPEARANCE-{appearance_code}",
         f"SC-{sc}",
         f"ST-{st}",
         f"v{v}"
@@ -47,8 +50,9 @@ def build_prompt(
     # 6. FA (face)
     # 7. BT (body)
     # 8. HR (hair)
-    # 9. ST (outfit)
-    # 10. NB (negative)
+    # 9. APPEARANCE (color/skin)
+    # 10. ST (outfit)
+    # 11. NB (negative)
     
     dims = []
     codes = []
@@ -77,9 +81,11 @@ def build_prompt(
         dims.append("VN_REGION")
         codes.append(vn_region)
         
-    # 6-10. Rest
-    dims.extend(["FA", "BT", "HR", "ST", "NB"])
-    codes.extend([fa, bt, hr, st, nb])
+    # 6-11. Rest
+    dims.extend(["FA", "BT", "HR", "APPEARANCE", "ST", "NB"])
+    # We'll need to pass 'appearance' code to build_prompt or handle it as optional
+    # For now, let's update the signature or handle as kwarg
+    codes.extend([fa, bt, hr, appearance_code, st, nb])
     
     component_contents = []
     for dim, code in zip(dims, codes):
@@ -93,6 +99,10 @@ def build_prompt(
         from .utils import deep_merge
         final_prompt = deep_merge(final_prompt, overrides)
     
+    # NEW: Render natural language clauses
+    from .renderer import enrich_prompt_with_renderings
+    final_prompt = enrich_prompt_with_renderings(final_prompt)
+    
     # Write builds/prompts/<canonical_id>.json (Always overwrite)
     prompt_path = os.path.join(BASE_DIR, "builds", "prompts", f"{canonical_id}.json")
     save_json(prompt_path, final_prompt)
@@ -102,7 +112,7 @@ def build_prompt(
     run_meta = {
         "timestamp": datetime.now().isoformat(),
         "selection_codes": {
-            "FA": fa, "BT": bt, "ET": et, "HR": hr, "SC": sc, "ST": st, 
+            "FA": fa, "BT": bt, "ET": et, "HR": hr, "SC": sc, "ST": st, "APPEARANCE": appearance_code,
             "PH_REGION": ph_region, "VN_REGION": vn_region,
             "BASE": base_code, "PF": pf_code, "NB": nb
         },

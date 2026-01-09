@@ -9,6 +9,7 @@ interface BuildParams {
     HAIR: string;
     ETHNICITY: string;
     SKIN: string;
+    APPEARANCE: string;
     OUTFIT: string;
     POSE: string;
     BACKGROUND: string;
@@ -25,6 +26,7 @@ const DIMENSION_FOLDERS: Record<string, string> = {
     'HAIR': 'hair',
     'ETHNICITY': 'ethnicity',
     'SKIN': 'skin',
+    'APPEARANCE': 'appearance',
     'OUTFIT': 'outfit',
     'POSE': 'pose',
     'BACKGROUND': 'background'
@@ -35,7 +37,7 @@ const DIMENSION_FOLDERS: Record<string, string> = {
  * This is a pure JavaScript implementation that works on Netlify
  */
 export async function buildPrompt(params: BuildParams) {
-    const { BASE, SUBJECT_TYPE, FACE, BODY, HAIR, ETHNICITY, SKIN, OUTFIT, POSE, BACKGROUND, v, r } = params;
+    const { BASE, SUBJECT_TYPE, FACE, BODY, HAIR, ETHNICITY, SKIN, APPEARANCE, OUTFIT, POSE, BACKGROUND, v, r } = params;
     
     // Read from public/components (synced at build time)
     const componentsDir = path.join(process.cwd(), 'public/components');
@@ -49,6 +51,7 @@ export async function buildPrompt(params: BuildParams) {
         const hairComponent = readComponent(componentsDir, 'HAIR', HAIR);
         const ethnicityComponent = readComponent(componentsDir, 'ETHNICITY', ETHNICITY);
         const skinComponent = readComponent(componentsDir, 'SKIN', SKIN);
+        const appearanceComponent = readComponent(componentsDir, 'APPEARANCE', APPEARANCE);
         const outfitComponent = readComponent(componentsDir, 'OUTFIT', OUTFIT);
         const poseComponent = readComponent(componentsDir, 'POSE', POSE);
         const backgroundComponent = readComponent(componentsDir, 'BACKGROUND', BACKGROUND);
@@ -61,9 +64,10 @@ export async function buildPrompt(params: BuildParams) {
             subjectTypeComponent,    // Subject type
             faceComponent,           // Facial features
             bodyComponent,           // Body build
-            hairComponent,           // Hair
+            hairComponent,           // Hair structure
             ethnicityComponent,      // Ethnicity
-            skinComponent,           // Skin
+            skinComponent,           // Skin foundation
+            appearanceComponent,     // Color and tone
             outfitComponent,         // Clothing
             poseComponent,           // Pose
             backgroundComponent      // Background/surrounding
@@ -75,6 +79,7 @@ export async function buildPrompt(params: BuildParams) {
             `FACE-${FACE}`,
             `BODY-${BODY}`,
             `HAIR-${HAIR}`,
+            `APPEARANCE-${APPEARANCE}`,
             `ETHNICITY-${ETHNICITY}`,
             `SKIN-${SKIN}`,
             `OUTFIT-${OUTFIT}`,
@@ -87,13 +92,54 @@ export async function buildPrompt(params: BuildParams) {
         
         // Build human-readable title
         const title = `Gold Avatar · ${BACKGROUND}`;
+
+        // Simple JS rendering of clauses (mirrors Python logic)
+        const clauses: string[] = [];
+        
+        // Add Physique/Build
+        if (mergedPrompt.subject?.build) {
+            clauses.push(mergedPrompt.subject.build);
+        }
+        
+        // Add Skin Tone
+        if (mergedPrompt.appearance?.skin_tone?.enabled !== false) {
+            const st = mergedPrompt.appearance?.skin_tone || {};
+            const base = st.base || "Medium";
+            const tone_str = `Skin tone: ${base.toLowerCase()}${st.undertone ? `, ${st.undertone.toLowerCase()} undertone` : ''}; ${st.complexion_finish ? st.complexion_finish.toLowerCase() + ' finish' : 'natural finish'}; ${st.blemish_policy ? st.blemish_policy.toLowerCase() + ' blemishes' : 'minimal blemishes'}; skin tone remains consistent across shots; avoid lighting-induced color shift.`;
+            clauses.push(tone_str);
+        }
+        
+        // Add Hair Structure
+        if (mergedPrompt.subject?.hair?.enabled !== false) {
+            const h = mergedPrompt.subject?.hair || {};
+            const hair_str = `Hair: ${h.length || 'medium'} ${h.texture || 'natural'} ${h.style || 'style'}${h.bangs ? ` with ${h.bangs}` : ''}${h.volume ? `, ${h.volume.toLowerCase()} volume` : ''}.`;
+            clauses.push(hair_str);
+        }
+        
+        // Add Hair Color
+        if (mergedPrompt.appearance?.hair_color?.enabled !== false) {
+            const hc = mergedPrompt.appearance?.hair_color || {};
+            const color_str = `Hair color: ${hc.base_color || 'natural'}${hc.highlights?.enabled ? ` with ${hc.highlights.color} highlights` : ''}${hc.gray_percentage ? `, ${hc.gray_percentage} gray` : ''}; ${hc.finish ? hc.finish.toLowerCase() + ' finish' : 'natural finish'}.`;
+            clauses.push(color_str);
+        }
+
+        // Add Scene
+        if (mergedPrompt.setting?.environment) {
+            clauses.push(`Scene: ${mergedPrompt.setting.environment}`);
+        }
+
+        const rendered_prompt = clauses.join(" ");
+
+        // Add to result metadata
+        if (!mergedPrompt.metadata) mergedPrompt.metadata = {};
+        mergedPrompt.metadata.rendered_prompt = rendered_prompt;
         
         return {
             success: true,
             canonical_id,
             title,
             prompt: mergedPrompt,
-            dims: { BASE, SUBJECT_TYPE, FACE, BODY, HAIR, ETHNICITY, SKIN, OUTFIT, POSE, BACKGROUND, v, r }
+            dims: { BASE, SUBJECT_TYPE, FACE, BODY, HAIR, ETHNICITY, SKIN, APPEARANCE, OUTFIT, POSE, BACKGROUND, v, r }
         };
         
     } catch (error: any) {

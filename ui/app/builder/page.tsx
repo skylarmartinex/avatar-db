@@ -121,9 +121,8 @@ export default function BuilderPage() {
         console.log("Copy Text clicked");
         setCopyError(null);
 
-        if (result?.prompt) {
-            const jsonText = JSON.stringify(result.prompt, null, 2);
-            const copyResult = await copyToClipboard(jsonText);
+        if (result?.prompt?.metadata?.rendered_prompt) {
+            const copyResult = await copyToClipboard(result.prompt.metadata.rendered_prompt);
 
             if (copyResult.ok) {
                 setCopiedText(true);
@@ -131,6 +130,14 @@ export default function BuilderPage() {
             } else {
                 setCopyError(`Copy failed: ${copyResult.error}`);
                 setTimeout(() => setCopyError(null), 5000);
+            }
+        } else if (result?.prompt) {
+            // Fallback to JSON if rendered prompt is missing
+            const jsonText = JSON.stringify(result.prompt, null, 2);
+            const copyResult = await copyToClipboard(jsonText);
+            if (copyResult.ok) {
+                setCopiedText(true);
+                setTimeout(() => setCopiedText(false), 2000);
             }
         }
     }
@@ -416,9 +423,14 @@ export default function BuilderPage() {
                                                 </div>
                                             </div>
 
-                                            {copyError && (
-                                                <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-xl">
-                                                    <p className="text-xs text-red-400 font-medium">{copyError}</p>
+                                            {result.prompt?.metadata?.rendered_prompt && (
+                                                <div className="space-y-6">
+                                                    <div className="flex items-center justify-between px-2">
+                                                        <span className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-500">Rendered Prompt String</span>
+                                                    </div>
+                                                    <div className="p-8 bg-blue-500/5 border border-blue-500/10 rounded-[2.5rem] text-sm text-zinc-300 leading-relaxed font-medium">
+                                                        {result.prompt.metadata.rendered_prompt}
+                                                    </div>
                                                 </div>
                                             )}
 
