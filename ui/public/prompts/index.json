@@ -1,3 +1,22 @@
 {
-  "prompts": []
+  "prompts": [
+    {
+      "filename": "FA-GOLD__BT-Ripped Athletic__ET-GOLD__HR-GOLD__SC-GOLD__ST-GOLD__APPEARANCE-PORCELAIN_COOL__v01.json",
+      "canonicalId": "FA-GOLD__BT-Ripped Athletic__ET-GOLD__HR-GOLD__SC-GOLD__ST-GOLD__APPEARANCE-PORCELAIN_COOL__v01",
+      "dims": {
+        "FA": "GOLD",
+        "BT": "Ripped Athletic",
+        "ET": "GOLD",
+        "HR": "GOLD",
+        "SC": "GOLD",
+        "ST": "GOLD",
+        "APPEARANCE": "PORCELAIN_COOL",
+        "v": "01"
+      },
+      "modified": "2026-01-09T22:45:54.923Z",
+      "size": 1058
+    }
+  ],
+  "generated": "2026-01-09T22:45:54.925Z",
+  "count": 1
 }
