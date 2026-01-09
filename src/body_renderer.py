@@ -94,6 +94,8 @@ def render_body_components_clause(bc: Dict[str, Any]) -> Optional[str]:
         # Build component string
         if k == "abs" and definition == "Shredded" and emphasis == "High":
             comp_str = f"{k}: competition-lean abs with deep etched separations, sharply visible obliques and serratus lines; no smoothness, no softness"
+        elif k == "breasts" and size == "Full" and emphasis == "High":
+             comp_str = f"{k}: prominent, full bust with natural weight and projection; clear cleavage; not subtle"
         else:
             c_parts = []
             c_parts.append(f"{emphasis.lower()} emphasis")

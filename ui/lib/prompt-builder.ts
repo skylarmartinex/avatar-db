@@ -70,6 +70,8 @@ function renderBodyComponentsClause(bc: any): string | null {
         let comp_str = "";
         if (k === "abs" && definition === "Shredded" && emphasis === "High") {
             comp_str = `${k}: competition-lean abs with deep etched separations, sharply visible obliques and serratus lines; no smoothness, no softness`;
+        } else if (k === "breasts" && size === "Full" && emphasis === "High") {
+            comp_str = `${k}: prominent, full bust with natural weight and projection; clear cleavage; not subtle`;
         } else {
             const c_parts = [];
             c_parts.push(`${emphasis.toLowerCase()} emphasis`);
@@ -385,4 +387,5 @@ function readComponent(componentsDir: string, dimension: string, code: string): 
     const content = fs.readFileSync(filePath, 'utf-8');
     return JSON.parse(content);
 }
+
 
