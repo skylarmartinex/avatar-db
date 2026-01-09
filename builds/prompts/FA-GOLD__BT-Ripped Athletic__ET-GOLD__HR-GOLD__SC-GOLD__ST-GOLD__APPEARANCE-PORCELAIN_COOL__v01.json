@@ -1,0 +1,30 @@
+{
+  "mock": "data",
+  "body_components": {
+    "enabled": true,
+    "test_mode": {
+      "single_component_only": true,
+      "active_component": "glutes"
+    },
+    "components": {
+      "glutes": {
+        "enabled": true,
+        "emphasis": "High",
+        "definition": "Defined",
+        "size": "Athletic",
+        "shape": "Round lifted (athletic)",
+        "notes": "test notes"
+      }
+    }
+  },
+  "metadata": {
+    "rendered_prompt": "Body components: glutes: high emphasis, defined, athletic size, round lifted (athletic), (test notes); natural proportions, no exaggerated BBL Hair: Minimal Chic, pin-straight, glass-smooth; consistent hair identity across shots.",
+    "clauses": {
+      "skin_tone": null,
+      "hair_structure": "Hair: Minimal Chic, pin-straight, glass-smooth; consistent hair identity across shots.",
+      "hair_color": null,
+      "age_profile": null,
+      "body": "Body components: glutes: high emphasis, defined, athletic size, round lifted (athletic), (test notes); natural proportions, no exaggerated BBL"
+    }
+  }
+}

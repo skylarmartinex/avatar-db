@@ -110,7 +110,13 @@ def build_prompt(
     codes.extend(rest_codes)
     
     component_contents = []
+    is_body_comp_enabled = overrides and overrides.get("body_components", {}).get("enabled") is True
+    
     for dim, code in zip(dims, codes):
+        if dim == "BT" and is_body_comp_enabled:
+            # Skip loading body archetype if pure components system is active
+            component_contents.append({})
+            continue
         path = get_component_path(dim, code)
         component_contents.append(load_json(path))
     

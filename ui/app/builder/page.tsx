@@ -343,7 +343,7 @@ export default function BuilderPage() {
                             </div>
                             <div className="flex items-center gap-2">
                                 <div className="w-2 h-2 rounded-full bg-blue-500" />
-                                <span className="text-zinc-500">Body: <span className="text-white font-semibold">Ripped Athletic</span></span>
+                                <span className="text-zinc-500">Body: <span className="text-white font-semibold">{bodyComponentsEnabled ? "Components Active" : "Ripped Athletic"}</span></span>
                             </div>
                             <div className="flex items-center gap-2">
                                 <div className="w-2 h-2 rounded-full bg-blue-500" />

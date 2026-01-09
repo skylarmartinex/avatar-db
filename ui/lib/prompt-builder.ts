@@ -197,7 +197,11 @@ export async function buildPrompt(params: BuildParams) {
         const baseComponent = readComponent(componentsDir, 'BASE', BASE);
         const subjectTypeComponent = readComponent(componentsDir, 'SUBJECT_TYPE', SUBJECT_TYPE);
         const faceComponent = readComponent(componentsDir, 'FACE', FACE);
-        const bodyComponent = readComponent(componentsDir, 'BODY', BODY);
+        
+        // Skip body archetype if components system is enabled
+        const isBodyComponentsEnabled = overrides?.body_components?.enabled === true;
+        const bodyComponent = isBodyComponentsEnabled ? {} : readComponent(componentsDir, 'BODY', BODY);
+        
         const hairComponent = readComponent(componentsDir, 'HAIR', HAIR);
         const ethnicityComponent = readComponent(componentsDir, 'ETHNICITY', ETHNICITY);
         const skinComponent = readComponent(componentsDir, 'SKIN', SKIN);
