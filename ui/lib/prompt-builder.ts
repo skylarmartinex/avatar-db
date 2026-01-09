@@ -36,7 +36,48 @@ const DIMENSION_FOLDERS: Record<string, string> = {
 };
 
 /**
- * Renders the body clause.
+ * Renders the body components clause.
+ */
+function renderBodyComponentsClause(bc: any): string | null {
+    if (!bc || bc.mode !== 'components') return null;
+    
+    const baseline = bc.baseline_profile || "Ripped Athletic";
+    const test_mode = bc.test_mode || {};
+    const single_only = test_mode.single_component_only !== false;
+    const active_comp = test_mode.active_component;
+    const components = bc.components || {};
+    
+    const parts = [`Body: ${baseline.toLowerCase()}`];
+    const comp_clauses: string[] = [];
+    
+    const target_keys = (single_only && active_comp) ? [active_comp] : Object.keys(components);
+    
+    for (const k of target_keys) {
+        const comp = components[k];
+        if (comp && comp.enabled) {
+            const preset = comp.preset;
+            const intensity = comp.intensity || "Standard";
+            const constraints = comp.constraints || [];
+            
+            if (preset) {
+                let c_str = `${k}—${preset.toLowerCase()}, ${intensity.toLowerCase()} intensity`;
+                if (constraints && constraints.length > 0) {
+                    c_str += `; ${constraints.join(", ").toLowerCase()}`;
+                }
+                comp_clauses.push(c_str);
+            }
+        }
+    }
+    
+    if (comp_clauses.length > 0) {
+        parts.push(`components: ${comp_clauses.join(", ")}`);
+    }
+    
+    return parts.join("; ");
+}
+
+/**
+ * Renders the body clause (blueprint).
  */
 function renderBodyClause(bodyData: any): string | null {
     if (!bodyData) return null;
@@ -198,8 +239,12 @@ export async function buildPrompt(params: BuildParams) {
         // Simple JS rendering of clauses (mirrors Python logic)
         const clauses: string[] = [];
         
-        // Add Body Blueprint
-        const bodyClause = renderBodyClause(mergedPrompt.body);
+        // Add Body Blueprint or Components
+        let bodyClause = renderBodyComponentsClause(mergedPrompt.body_components);
+        if (!bodyClause) {
+            bodyClause = renderBodyClause(mergedPrompt.body);
+        }
+
         if (bodyClause) {
             clauses.push(bodyClause);
         } else {

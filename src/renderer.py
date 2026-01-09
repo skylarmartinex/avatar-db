@@ -1,7 +1,7 @@
 from .hair_color_renderer import render_hair_color_from_appearance
 from .skin_tone_renderer import render_skin_tone_from_appearance
 from .age_renderer import render_age_clause
-from .body_renderer import render_body_clause
+from .body_renderer import render_body_clause, render_body_components_clause
 
 def render_final_prompt(prompt_json: Dict[str, Any]) -> str:
     """
@@ -11,13 +11,18 @@ def render_final_prompt(prompt_json: Dict[str, Any]) -> str:
     """
     clauses = []
     
-    # 1. Body Blueprint (Newly Added)
+    # 1. Body Blueprint or Components (Newly Added)
+    body_components = prompt_json.get("body_components")
     body_data = prompt_json.get("body", {})
-    body_clause = render_body_clause(body_data)
+    
+    body_clause = render_body_components_clause(body_components)
+    if not body_clause:
+        body_clause = render_body_clause(body_data)
+        
     if body_clause:
         clauses.append(body_clause)
     else:
-        # Fallback to old build field if new body system not used
+        # Fallback to old build field if new systems not used
         subject = prompt_json.get("subject", {})
         build = subject.get("build", "")
         if build:
@@ -79,7 +84,7 @@ def enrich_prompt_with_renderings(prompt_json: Dict[str, Any]) -> Dict[str, Any]
         "hair_structure": render_hair_clause(subject.get("hair", {})),
         "hair_color": render_hair_color_from_appearance(appearance),
         "age_profile": render_age_clause(subject),
-        "body": render_body_clause(enriched.get("body", {}))
+        "body": render_body_components_clause(enriched.get("body_components")) or render_body_clause(enriched.get("body", {}))
     }
     
     return enriched
