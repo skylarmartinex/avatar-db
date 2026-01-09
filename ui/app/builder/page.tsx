@@ -10,6 +10,8 @@ export default function BuilderPage() {
     const [registry, setRegistry] = useState<any>(null);
     const [selectedBackground, setSelectedBackground] = useState('DOORWAY_GOLD');
     const [selectedOutfit, setSelectedOutfit] = useState('TRIBAL_BIKINI');
+    const [selectedHair, setSelectedHair] = useState('GOLD');
+    const [selectedAppearance, setSelectedAppearance] = useState('PORCELAIN_COOL');
     const [result, setResult] = useState<any>(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -34,9 +36,10 @@ export default function BuilderPage() {
                     SUBJECT_TYPE: 'TYPE',
                     FACE: 'GOLD',
                     BODY: 'GOLD',
-                    HAIR: 'GOLD',
+                    HAIR: selectedHair,
                     ETHNICITY: 'GOLD',
                     SKIN: 'GOLD',
+                    APPEARANCE: selectedAppearance,
                     OUTFIT: selectedOutfit,
                     POSE: 'GOLD',
                     BACKGROUND: selectedBackground,
@@ -63,7 +66,7 @@ export default function BuilderPage() {
 
     async function copyToClipboard(text: string): Promise<{ ok: boolean; method?: string; error?: string }> {
         console.log("copyToClipboard called with text length:", text.length);
-        
+
         try {
             if (window.isSecureContext && navigator.clipboard?.writeText) {
                 await navigator.clipboard.writeText(text);
@@ -99,11 +102,11 @@ export default function BuilderPage() {
     async function copyJsonToClipboard() {
         console.log("Copy JSON clicked");
         setCopyError(null);
-        
+
         if (result?.prompt) {
             const jsonText = JSON.stringify(result.prompt, null, 2);
             const copyResult = await copyToClipboard(jsonText);
-            
+
             if (copyResult.ok) {
                 setCopiedJson(true);
                 setTimeout(() => setCopiedJson(false), 2000);
@@ -117,11 +120,11 @@ export default function BuilderPage() {
     async function copyTextToClipboard() {
         console.log("Copy Text clicked");
         setCopyError(null);
-        
+
         if (result?.prompt) {
             const jsonText = JSON.stringify(result.prompt, null, 2);
             const copyResult = await copyToClipboard(jsonText);
-            
+
             if (copyResult.ok) {
                 setCopiedText(true);
                 setTimeout(() => setCopiedText(false), 2000);
@@ -159,6 +162,16 @@ export default function BuilderPage() {
         .map(([code, data]: [string, any]) => ({ code, label: data.label, description: data.description }))
         : [];
 
+    const hairPresets = registry.HR ? Object.entries(registry.HR)
+        .filter(([, data]: [string, any]) => data.status === 'active')
+        .map(([code, data]: [string, any]) => ({ code, label: data.label, description: data.description }))
+        : [];
+
+    const appearancePresets = registry.APPEARANCE ? Object.entries(registry.APPEARANCE)
+        .filter(([, data]: [string, any]) => data.status === 'active')
+        .map(([code, data]: [string, any]) => ({ code, label: data.label, description: data.description }))
+        : [];
+
     return (
         <div className="max-w-[1600px] mx-auto space-y-20 pb-48">
             {/* Compact Header */}
@@ -177,7 +190,7 @@ export default function BuilderPage() {
                             Builder<span className="text-blue-500">.</span>
                         </h1>
                         <p className="text-zinc-500 text-xl font-medium max-w-2xl leading-relaxed">
-                            Gold Avatar (Locked). <span className="text-zinc-700">Background + Outfit swapping only.</span>
+                            Gold Avatar. <span className="text-zinc-700">Background + Character Modifiers.</span>
                         </p>
                     </div>
                 </div>
@@ -190,6 +203,8 @@ export default function BuilderPage() {
                         onClick={() => {
                             setSelectedBackground('DOORWAY_GOLD');
                             setSelectedOutfit('TRIBAL_BIKINI');
+                            setSelectedHair('GOLD');
+                            setSelectedAppearance('PORCELAIN_COOL');
                         }}
                     >
                         <RefreshCw size={16} className="mr-2" />
@@ -225,17 +240,18 @@ export default function BuilderPage() {
                                 <div className="w-2 h-2 rounded-full bg-blue-500" />
                                 <span className="text-zinc-500">Body: <span className="text-white font-semibold">Ripped Athletic</span></span>
                             </div>
-                            <div className="flex items-center gap-2">
-                                <div className="w-2 h-2 rounded-full bg-blue-500" />
-                                <span className="text-zinc-500">Hair: <span className="text-white font-semibold">Long Black</span></span>
+                            <div className="flex items-center gap-2 text-zinc-600">
+                                <span className="">Hair: <span className="text-zinc-400">Variable</span></span>
                             </div>
                             <div className="flex items-center gap-2">
                                 <div className="w-2 h-2 rounded-full bg-blue-500" />
                                 <span className="text-zinc-500">Ethnicity: <span className="text-white font-semibold">Filipino</span></span>
                             </div>
-                            <div className="flex items-center gap-2">
-                                <div className="w-2 h-2 rounded-full bg-blue-500" />
-                                <span className="text-zinc-500">Skin: <span className="text-white font-semibold">Golden Tan</span></span>
+                            <div className="flex items-center gap-2 text-zinc-600">
+                                <span className="">Appearance: <span className="text-zinc-400">Variable</span></span>
+                            </div>
+                            <div className="flex items-center gap-2 text-zinc-600">
+                                <span className="">Skin: <span className="text-zinc-400">Locked to Gold</span></span>
                             </div>
                             <div className="flex items-center gap-2">
                                 <div className="w-2 h-2 rounded-full bg-blue-500" />
@@ -270,6 +286,54 @@ export default function BuilderPage() {
                             {outfits.find(o => o.code === selectedOutfit) && (
                                 <p className="text-xs text-zinc-600 italic px-1">
                                     {outfits.find(o => o.code === selectedOutfit)?.description}
+                                </p>
+                            )}
+                        </div>
+
+                        {/* Hair Selector */}
+                        <div className="space-y-6">
+                            <div className="flex items-center gap-3 px-1">
+                                <label className="text-sm font-bold uppercase tracking-wider text-white">
+                                    Hair Style
+                                </label>
+                                <div className="w-1 h-1 rounded-full bg-blue-500" />
+                            </div>
+                            <select
+                                className="w-full bg-[#030303] border border-white/10 px-6 py-4 rounded-2xl appearance-none focus:border-blue-500/50 outline-none transition-all text-base font-semibold text-white hover:border-white/20"
+                                value={selectedHair}
+                                onChange={e => setSelectedHair(e.target.value)}
+                            >
+                                {hairPresets.map(({ code, label }) => (
+                                    <option key={code} value={code}>{label}</option>
+                                ))}
+                            </select>
+                            {hairPresets.find(h => h.code === selectedHair) && (
+                                <p className="text-xs text-zinc-600 italic px-1">
+                                    {hairPresets.find(h => h.code === selectedHair)?.description}
+                                </p>
+                            )}
+                        </div>
+
+                        {/* Appearance/Color Selector */}
+                        <div className="space-y-6">
+                            <div className="flex items-center gap-3 px-1">
+                                <label className="text-sm font-bold uppercase tracking-wider text-white">
+                                    Character Finish (Color/Skin)
+                                </label>
+                                <div className="w-1 h-1 rounded-full bg-amber-500" />
+                            </div>
+                            <select
+                                className="w-full bg-[#030303] border border-white/10 px-6 py-4 rounded-2xl appearance-none focus:border-blue-500/50 outline-none transition-all text-base font-semibold text-white hover:border-white/20"
+                                value={selectedAppearance}
+                                onChange={e => setSelectedAppearance(e.target.value)}
+                            >
+                                {appearancePresets.map(({ code, label }) => (
+                                    <option key={code} value={code}>{label}</option>
+                                ))}
+                            </select>
+                            {appearancePresets.find(a => a.code === selectedAppearance) && (
+                                <p className="text-xs text-zinc-600 italic px-1">
+                                    {appearancePresets.find(a => a.code === selectedAppearance)?.description}
                                 </p>
                             )}
                         </div>
