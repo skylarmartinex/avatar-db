@@ -53,6 +53,7 @@ def render_body_components_clause(bc: Dict[str, Any]) -> Optional[str]:
     """
     Renders the Body Components clause (Pure Components architecture).
     Composes body part attributes without archetypes or presets.
+    Format: "<part>: <emphasis> emphasis, <definition>, <size> size, <shape> (notes if present)."
     """
     if not bc or not bc.get("enabled", False):
         return None
@@ -61,48 +62,59 @@ def render_body_components_clause(bc: Dict[str, Any]) -> Optional[str]:
     single_only = test_mode.get("single_component_only", True)
     active_comp = test_mode.get("active_component", "glutes")
     components = bc.get("components", {})
-    constraints = bc.get("constraints", [])
+    global_constraints = bc.get("constraints", [])
     
     comp_clauses = []
     
-    # Render ONLY enabled components (or only active in single_only mode)
+    # Decide which components to render
     target_keys = [active_comp] if (single_only and active_comp) else components.keys()
+    
+    # Safety constraints map
+    safety_map = {
+        "glutes": "natural proportions, no exaggerated BBL",
+        "breasts": "natural proportions, no exaggerated cleavage"
+    }
     
     for k in target_keys:
         comp = components.get(k)
-        if not comp:
+        if not comp or not comp.get("enabled", False):
+            # In single mode, the user might want to see the active one even if it's not "enabled" 
+            # but usually 'enabled' reflects the UI switch.
             continue
             
         emphasis = comp.get("emphasis", "Off")
-        if emphasis == "Off" and not (single_only and k == active_comp): 
-            # In non-single mode, "Off" means don't render. 
-            # In single mode, we render the active one even if "Off" to show it's selected, 
-            # but usually it'll be enabled.
+        if emphasis == "Off" and not single_only:
             continue
             
         definition = comp.get("definition", "Defined")
         size = comp.get("size", "Athletic")
+        shape = comp.get("shape", "")
         notes = comp.get("notes", "")
         
-        # Build component string: glutes—high emphasis, defined, athletic size (round/lifted; natural proportions)
+        # Build component string: glutes—high emphasis, defined, athletic size, round lifted (athletic) (notes)
         c_parts = []
         c_parts.append(f"{emphasis.lower()} emphasis")
         c_parts.append(definition.lower())
         c_parts.append(f"{size.lower()} size")
+        if shape:
+            c_parts.append(shape.lower())
         if notes:
             c_parts.append(f"({notes.lower()})")
             
-        comp_clauses.append(f"{k}—{', '.join(c_parts)}")
+        comp_str = f"{k}: {', '.join(c_parts)}"
+        
+        # Add safety constraints for specific parts
+        if k in safety_map:
+            comp_str += f"; {safety_map[k]}"
+            
+        comp_clauses.append(comp_str)
                 
     if not comp_clauses:
         return None
         
-    res = f"Body components: {', '.join(comp_clauses)}"
+    res = f"Body components: {'; '.join(comp_clauses)}"
     
-    if constraints:
-        if isinstance(constraints, list):
-            res += f". {'; '.join(constraints)}."
-        else:
-            res += f". {constraints}."
+    if global_constraints:
+        res += f". {'; '.join(global_constraints)}."
             
     return res

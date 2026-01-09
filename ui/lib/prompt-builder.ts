@@ -45,34 +45,51 @@ function renderBodyComponentsClause(bc: any): string | null {
     const single_only = test_mode.single_component_only !== false;
     const active_comp = test_mode.active_component || "glutes";
     const components = bc.components || {};
-    const constraints = bc.constraints || [];
+    const global_constraints = bc.constraints || [];
     
     const comp_clauses: string[] = [];
     const target_keys = single_only ? [active_comp] : Object.keys(components);
     
+    const safetyMap: Record<string, string> = {
+        "glutes": "natural proportions, no exaggerated BBL",
+        "breasts": "natural proportions, no exaggerated cleavage"
+    };
+    
     for (const k of target_keys) {
         const comp = components[k];
-        if (!comp) continue;
+        if (!comp || comp.enabled === false) continue;
         
         const emphasis = comp.emphasis || "Off";
         if (emphasis === "Off" && !single_only) continue;
         
         const definition = comp.definition || "Defined";
         const size = comp.size || "Athletic";
+        const shape = comp.shape || "";
         const notes = comp.notes || "";
         
-        let c_str = `${k}—${emphasis.toLowerCase()} emphasis, ${definition.toLowerCase()}, ${size.toLowerCase()} size`;
+        const c_parts = [];
+        c_parts.push(`${emphasis.toLowerCase()} emphasis`);
+        c_parts.push(definition.toLowerCase());
+        c_parts.push(`${size.toLowerCase()} size`);
+        if (shape) c_parts.push(shape.toLowerCase());
         if (notes) {
-            c_str += ` (${notes.toLowerCase()})`;
+            c_parts.push(`(${notes.toLowerCase()})`);
         }
-        comp_clauses.push(c_str);
+        
+        let comp_str = `${k}: ${c_parts.join(", ")}`;
+        
+        if (safetyMap[k]) {
+            comp_str += `; ${safetyMap[k]}`;
+        }
+        
+        comp_clauses.push(comp_str);
     }
     
     if (comp_clauses.length === 0) return null;
     
-    let res = `Body components: ${comp_clauses.join(", ")}`;
-    if (constraints && constraints.length > 0) {
-        res += `. ${constraints.join("; ")}.`;
+    let res = `Body components: ${comp_clauses.join("; ")}`;
+    if (global_constraints && global_constraints.length > 0) {
+        res += `. ${global_constraints.join("; ")}.`;
     }
     
     return res;
@@ -241,19 +258,18 @@ export async function buildPrompt(params: BuildParams) {
         // Simple JS rendering of clauses (mirrors Python logic)
         const clauses: string[] = [];
         
-        // Add Body Blueprint or Components
-        let bodyCompClause = renderBodyComponentsClause(mergedPrompt.body_components);
-        
-        // Body Blueprint serves as fallback or companion depending on design
-        // Here we render both if available, but usually one is used
-        let bodyBlueClause = renderBodyClause(mergedPrompt.body);
-
-        if (bodyBlueClause) clauses.push(bodyBlueClause);
-        if (bodyCompClause) clauses.push(bodyCompClause);
-
-        // Fallback to old build field if nothing else
-        if (!bodyBlueClause && !bodyCompClause && mergedPrompt.subject?.build) {
+        // Body (Archetype/Base)
+        const bodyBlueClause = renderBodyClause(mergedPrompt.body);
+        if (bodyBlueClause) {
+            clauses.push(bodyBlueClause);
+        } else if (mergedPrompt.subject?.build) {
             clauses.push(mergedPrompt.subject.build);
+        }
+        
+        // Body Components (Additive Composition)
+        const bodyCompClause = renderBodyComponentsClause(mergedPrompt.body_components);
+        if (bodyCompClause) {
+            clauses.push(bodyCompClause);
         }
 
         // Add Age Profile
