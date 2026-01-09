@@ -1,0 +1,26 @@
+{
+    "appearance": {
+        "hair_color": {
+            "enabled": true,
+            "base_color": "Copper",
+            "tone": "Warm",
+            "depth_level": "Medium",
+            "highlights": {
+                "enabled": true,
+                "color": "Platinum blonde",
+                "placement": "Money piece",
+                "intensity": "Bold"
+            },
+            "roots": {
+                "enabled": true,
+                "color": "Dark brown",
+                "softness": "Sharp"
+            },
+            "gradient": {
+                "enabled": false
+            },
+            "gray_percentage": "None",
+            "constraints": []
+        }
+    }
+}

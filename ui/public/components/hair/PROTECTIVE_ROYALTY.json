@@ -1,0 +1,23 @@
+{
+    "subject": {
+        "hair": {
+            "enabled": true,
+            "gender_presentation": "female",
+            "preset": "Protective Royalty",
+            "texture": null,
+            "length": "Long",
+            "style_mode": "Braids",
+            "part": "No visible part",
+            "bangs": "None",
+            "finish": "Soft sheen",
+            "color": "Jet black",
+            "highlights": null,
+            "constraints": [
+                "Braids remain uniform",
+                "Neat scalp sections",
+                "Knotless box braids",
+                "Consistent hair identity across shots"
+            ]
+        }
+    }
+}

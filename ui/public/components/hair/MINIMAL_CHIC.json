@@ -1,0 +1,22 @@
+{
+    "subject": {
+        "hair": {
+            "enabled": true,
+            "gender_presentation": "female",
+            "preset": "Minimal Chic",
+            "texture": "Pin-straight, glass-smooth",
+            "length": "Short",
+            "style_mode": "Down",
+            "part": "Side part",
+            "bangs": "None",
+            "finish": "Matte natural",
+            "color": "Deep brunette",
+            "highlights": null,
+            "constraints": [
+                "Clean, precise lines",
+                "No volume",
+                "Consistent hair identity across shots"
+            ]
+        }
+    }
+}

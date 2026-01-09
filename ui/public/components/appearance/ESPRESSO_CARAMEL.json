@@ -1,0 +1,24 @@
+{
+    "appearance": {
+        "hair_color": {
+            "enabled": true,
+            "base_color": "Espresso brunette",
+            "tone": "Neutral",
+            "depth_level": "Dark",
+            "highlights": {
+                "enabled": true,
+                "color": "Caramel",
+                "placement": "Face-framing",
+                "intensity": "Subtle"
+            },
+            "roots": {
+                "enabled": false
+            },
+            "gradient": {
+                "enabled": false
+            },
+            "gray_percentage": "None",
+            "constraints": []
+        }
+    }
+}

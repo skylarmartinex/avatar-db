@@ -1,0 +1,22 @@
+{
+    "subject": {
+        "hair": {
+            "enabled": true,
+            "gender_presentation": "female",
+            "preset": "Editorial Wet Look",
+            "texture": "Wet-look strands",
+            "length": "Long",
+            "style_mode": "Slick-back ponytail",
+            "part": "No visible part",
+            "bangs": "None",
+            "finish": "High-shine editorial",
+            "color": "Jet black",
+            "highlights": null,
+            "constraints": [
+                "Wet, glossy appearance",
+                "Sleek to scalp",
+                "Consistent hair identity across shots"
+            ]
+        }
+    }
+}
