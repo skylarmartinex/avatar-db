@@ -36,6 +36,17 @@ const DIMENSION_FOLDERS: Record<string, string> = {
 };
 
 /**
+ * Renders the optics clause.
+ */
+function renderOpticsClause(o: any): string | null {
+    if (!o) return null;
+    const fl = o.focal_length || "135mm";
+    const db = o.depth_behavior || "natural optical bokeh";
+    const cr = o.compression_rule || "telephoto compression";
+    return `Shot on a ${fl} telephoto lens with ${db.toLowerCase()}; ${cr.toLowerCase()}.`;
+}
+
+/**
  * Renders the body components clause (Pure Components architecture).
  */
 function renderBodyComponentsClause(bc: any): string | null {
@@ -67,6 +78,7 @@ function renderBodyComponentsClause(bc: any): string | null {
         const shape = comp.shape || "";
         const notes = comp.notes || "";
         
+        // Build component string
         let comp_str = "";
         if (k === "abs" && definition === "Shredded" && emphasis === "High") {
             comp_str = `${k}: competition-lean abs with deep etched separations, sharply visible obliques and serratus lines; no smoothness, no softness`;
@@ -316,6 +328,22 @@ export async function buildPrompt(params: BuildParams) {
             clauses.push(color_str);
         }
 
+        // Camera & Optics
+        if (mergedPrompt.viewing_angle?.camera_distance) {
+            clauses.push(`Framing: ${mergedPrompt.viewing_angle.camera_distance.toLowerCase()}.`);
+        }
+        
+        const opticsClause = renderOpticsClause(mergedPrompt.optics);
+        if (opticsClause) {
+            clauses.push(opticsClause);
+        }
+
+        // Lighting
+        if (mergedPrompt.lighting?.primary_light_source) {
+            const l = mergedPrompt.lighting;
+            clauses.push(`Lighting: ${(l.quality || "").toLowerCase()} ${(l.primary_light_source || "").toLowerCase()}.`);
+        }
+
         // Add Scene
         if (mergedPrompt.setting?.environment) {
             clauses.push(`Scene: ${mergedPrompt.setting.environment}`);
@@ -393,6 +421,3 @@ function readComponent(componentsDir: string, dimension: string, code: string): 
     const content = fs.readFileSync(filePath, 'utf-8');
     return JSON.parse(content);
 }
-
-
-

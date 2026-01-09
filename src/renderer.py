@@ -5,6 +5,26 @@ from .age_renderer import render_age_clause
 from .body_renderer import render_body_clause, render_body_components_clause
 from .hair_renderer import render_hair_clause
 
+def render_viewing_angle_clause(va: Dict[str, Any]) -> Optional[str]:
+    if not va: return None
+    dist = va.get("camera_distance", "")
+    if not dist: return None
+    return f"Framing: {dist.lower()}."
+
+def render_optics_clause(o: Dict[str, Any]) -> Optional[str]:
+    if not o: return None
+    fl = o.get("focal_length", "135mm")
+    db = o.get("depth_behavior", "natural optical bokeh")
+    cr = o.get("compression_rule", "telephoto compression")
+    return f"Shot on a {fl} telephoto lens with {db.lower()}; {cr.lower()}."
+
+def render_lighting_clause(l: Dict[str, Any]) -> Optional[str]:
+    if not l: return None
+    source = l.get("primary_light_source", "")
+    quality = l.get("quality", "")
+    if not source: return None
+    return f"Lighting: {quality.lower()} {source.lower()}."
+
 def render_final_prompt(prompt_json: Dict[str, Any]) -> str:
     """
     Renders the full natural-language prompt from the merged JSON.
@@ -54,7 +74,24 @@ def render_final_prompt(prompt_json: Dict[str, Any]) -> str:
     if hair_color_clause:
         clauses.append(hair_color_clause)
         
-    # 7. Scene/Background
+    # 7. Camera & Optics (New Technical Layer)
+    va = prompt_json.get("viewing_angle", {})
+    va_clause = render_viewing_angle_clause(va)
+    if va_clause:
+        clauses.append(va_clause)
+        
+    optics = prompt_json.get("optics")
+    optics_clause = render_optics_clause(optics)
+    if optics_clause:
+        clauses.append(optics_clause)
+        
+    # 8. Lighting
+    lighting = prompt_json.get("lighting", {})
+    lighting_clause = render_lighting_clause(lighting)
+    if lighting_clause:
+        clauses.append(lighting_clause)
+
+    # 9. Scene/Background
     setting = prompt_json.get("setting", {})
     env = setting.get("environment", "")
     if env:

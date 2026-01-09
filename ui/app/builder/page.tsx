@@ -29,6 +29,14 @@ export default function BuilderPage() {
     const [hairBaseColor, setHairBaseColor] = useState('Espresso brunette');
     const [highlightsEnabled, setHighlightsEnabled] = useState(true);
 
+    const [optics, setOptics] = useState<any>({
+        lens_profile: "Portrait Compression",
+        focal_length: "135mm",
+        aperture: "f/2.8",
+        depth_behavior: "Natural optical bokeh",
+        compression_rule: "Telephoto compression for flattering facial proportions and cinematic depth"
+    });
+
     // Body Components System (Pure Components Architecture)
     const [bodyComponentsEnabled, setBodyComponentsEnabled] = useState(false);
     const [singleComponentOnly, setSingleComponentOnly] = useState(true);
@@ -109,7 +117,8 @@ export default function BuilderPage() {
                                     enabled: highlightsEnabled
                                 }
                             }
-                        }
+                        },
+                        optics: optics
                     }
                 })
             });
@@ -707,6 +716,46 @@ export default function BuilderPage() {
                                     {backgrounds.find(b => b.code === selectedBackground)?.description}
                                 </p>
                             )}
+                        </div>
+
+                        {/* Optics System (Technical Layer) */}
+                        <div className="p-8 bg-black/40 border border-white/5 rounded-[2.5rem] space-y-10 relative overflow-hidden group/optics">
+                            <div className="absolute top-0 right-0 p-6">
+                                <Lock size={16} className="text-zinc-700" />
+                            </div>
+
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-3">
+                                    <div className="w-2 h-8 bg-blue-500 rounded-full" />
+                                    <h3 className="text-xl font-black uppercase tracking-widest text-white">Camera Optics</h3>
+                                </div>
+                                <div className="px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-[10px] font-black text-blue-500 uppercase tracking-widest">
+                                    Technical Layer
+                                </div>
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-8">
+                                <div className="p-6 bg-zinc-900/50 border border-white/5 rounded-3xl space-y-4">
+                                    <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Lens Profile</label>
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-sm font-bold text-white">{optics.lens_profile}</span>
+                                        <span className="text-[10px] font-medium text-zinc-600 italic">Locked</span>
+                                    </div>
+                                </div>
+                                <div className="p-6 bg-zinc-900/50 border border-white/5 rounded-3xl space-y-4">
+                                    <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Physics</label>
+                                    <div className="flex items-center gap-3">
+                                        <span className="px-2 py-1 rounded bg-black text-[10px] font-bold text-blue-400">{optics.focal_length}</span>
+                                        <span className="px-2 py-1 rounded bg-black text-[10px] font-bold text-blue-400">{optics.aperture}</span>
+                                    </div>
+                                </div>
+                                <div className="col-span-2 p-6 bg-zinc-900/50 border border-white/5 rounded-3xl space-y-4">
+                                    <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Compression Rule</label>
+                                    <p className="text-xs text-zinc-400 leading-relaxed italic">
+                                        "{optics.compression_rule}"
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
