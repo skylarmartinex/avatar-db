@@ -1,0 +1,30 @@
+{
+  "mock": "data",
+  "body_components": {
+    "enabled": true,
+    "test_mode": {
+      "single_component_only": true,
+      "active_component": "abs"
+    },
+    "components": {
+      "abs": {
+        "enabled": true,
+        "emphasis": "High",
+        "definition": "Shredded",
+        "size": "Athletic",
+        "shape": "Deep 6-pack",
+        "notes": "highly symmetric"
+      }
+    }
+  },
+  "metadata": {
+    "rendered_prompt": "Body components: abs: competition-lean abs with deep etched separations, sharply visible obliques and serratus lines; no smoothness, no softness Hair: Minimal Chic, pin-straight, glass-smooth; consistent hair identity across shots.",
+    "clauses": {
+      "skin_tone": null,
+      "hair_structure": "Hair: Minimal Chic, pin-straight, glass-smooth; consistent hair identity across shots.",
+      "hair_color": null,
+      "age_profile": null,
+      "body": "Body components: abs: competition-lean abs with deep etched separations, sharply visible obliques and serratus lines; no smoothness, no softness"
+    }
+  }
+}

@@ -67,16 +67,20 @@ function renderBodyComponentsClause(bc: any): string | null {
         const shape = comp.shape || "";
         const notes = comp.notes || "";
         
-        const c_parts = [];
-        c_parts.push(`${emphasis.toLowerCase()} emphasis`);
-        c_parts.push(definition.toLowerCase());
-        c_parts.push(`${size.toLowerCase()} size`);
-        if (shape) c_parts.push(shape.toLowerCase());
-        if (notes) {
-            c_parts.push(`(${notes.toLowerCase()})`);
+        let comp_str = "";
+        if (k === "abs" && definition === "Shredded" && emphasis === "High") {
+            comp_str = `${k}: competition-lean abs with deep etched separations, sharply visible obliques and serratus lines; no smoothness, no softness`;
+        } else {
+            const c_parts = [];
+            c_parts.push(`${emphasis.toLowerCase()} emphasis`);
+            c_parts.push(definition.toLowerCase());
+            c_parts.push(`${size.toLowerCase()} size`);
+            if (shape) c_parts.push(shape.toLowerCase());
+            if (notes) {
+                c_parts.push(`(${notes.toLowerCase()})`);
+            }
+            comp_str = `${k}: ${c_parts.join(", ")}`;
         }
-        
-        let comp_str = `${k}: ${c_parts.join(", ")}`;
         
         if (safetyMap[k]) {
             comp_str += `; ${safetyMap[k]}`;
@@ -381,3 +385,4 @@ function readComponent(componentsDir: string, dimension: string, code: string): 
     const content = fs.readFileSync(filePath, 'utf-8');
     return JSON.parse(content);
 }
+

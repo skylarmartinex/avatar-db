@@ -91,17 +91,20 @@ def render_body_components_clause(bc: Dict[str, Any]) -> Optional[str]:
         shape = comp.get("shape", "")
         notes = comp.get("notes", "")
         
-        # Build component string: glutes—high emphasis, defined, athletic size, round lifted (athletic) (notes)
-        c_parts = []
-        c_parts.append(f"{emphasis.lower()} emphasis")
-        c_parts.append(definition.lower())
-        c_parts.append(f"{size.lower()} size")
-        if shape:
-            c_parts.append(shape.lower())
-        if notes:
-            c_parts.append(f"({notes.lower()})")
-            
-        comp_str = f"{k}: {', '.join(c_parts)}"
+        # Build component string
+        if k == "abs" and definition == "Shredded" and emphasis == "High":
+            comp_str = f"{k}: competition-lean abs with deep etched separations, sharply visible obliques and serratus lines; no smoothness, no softness"
+        else:
+            c_parts = []
+            c_parts.append(f"{emphasis.lower()} emphasis")
+            c_parts.append(definition.lower())
+            c_parts.append(f"{size.lower()} size")
+            if shape:
+                c_parts.append(shape.lower())
+            if notes:
+                c_parts.append(f"({notes.lower()})")
+                
+            comp_str = f"{k}: {', '.join(c_parts)}"
         
         # Add safety constraints for specific parts
         if k in safety_map:
