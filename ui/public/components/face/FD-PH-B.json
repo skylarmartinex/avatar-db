@@ -1,0 +1,18 @@
+{
+    "subject": {
+        "face_anchor": "FD-PH-B-ANCHOR",
+        "do_not_change": [
+            "eye color",
+            "athletic features",
+            "bone structure"
+        ],
+        "facial_features": {
+            "eyes": "sharp almond eyes with competitive edge, intense dark brown irises, boldly defined brows",
+            "nose": "athletic straight nose with strong bridge and defined tip",
+            "lips": "firm medium lips with athletic definition and natural tone",
+            "cheekbones": "sharply defined cheekbones with visible muscle definition and athletic contour",
+            "jawline": "powerful square-oval jawline with athletic strength and prominent chin",
+            "overall": "powerful fitness beauty with competition-ready definition, bold refined features, naturally strong and commanding"
+        }
+    }
+}

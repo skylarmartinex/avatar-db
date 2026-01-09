@@ -1,0 +1,136 @@
+{
+  "BASE": {
+    "BASE": {
+      "code": "BASE",
+      "label": "Gold Standard Base",
+      "description": "Locked technical foundation (camera, lighting, quality)",
+      "status": "active"
+    }
+  },
+  "SUBJECT_TYPE": {
+    "TYPE": {
+      "code": "TYPE",
+      "label": "Adult Woman",
+      "description": "Subject type (locked)",
+      "status": "active"
+    }
+  },
+  "FACE": {
+    "GOLD": {
+      "code": "GOLD",
+      "label": "Soft Goddess Face",
+      "description": "Gold standard facial features (locked)",
+      "status": "active"
+    }
+  },
+  "BODY": {
+    "GOLD": {
+      "code": "GOLD",
+      "label": "Ripped Athletic Build",
+      "description": "Gold standard body (locked)",
+      "status": "active"
+    }
+  },
+  "HAIR": {
+    "GOLD": {
+      "code": "GOLD",
+      "label": "Long Black Hair",
+      "description": "Gold standard hair (locked)",
+      "status": "active"
+    }
+  },
+  "ETHNICITY": {
+    "GOLD": {
+      "code": "GOLD",
+      "label": "Filipino",
+      "description": "Gold standard ethnicity (locked)",
+      "status": "active"
+    }
+  },
+  "SKIN": {
+    "GOLD": {
+      "code": "GOLD",
+      "label": "Golden Tan Skin",
+      "description": "Gold standard skin (locked)",
+      "status": "active"
+    }
+  },
+  "OUTFIT": {
+    "TRIBAL_BIKINI": {
+      "code": "TRIBAL_BIKINI",
+      "label": "Tribal Editorial Bikini",
+      "description": "Indigenous-inspired fantasy meets elite fitness editorial (control)",
+      "status": "active"
+    },
+    "LUXURY_SPORTS": {
+      "code": "LUXURY_SPORTS",
+      "label": "Luxury Sports Bikini",
+      "description": "Elite fitness editorial with modern sensuality",
+      "status": "active"
+    },
+    "TUBE_CROP_SHORTS": {
+      "code": "TUBE_CROP_SHORTS",
+      "label": "Tube Crop + Short Shorts",
+      "description": "Confident, sexy, modern lifestyle editorial",
+      "status": "active"
+    },
+    "VS_RUNWAY_BIKINI": {
+      "code": "VS_RUNWAY_BIKINI",
+      "label": "VS Runway Bikini",
+      "description": "Luxury lingerie runway meets high-end editorial fitness",
+      "status": "active"
+    },
+    "MEDIA_DAY_ATHLETIC": {
+      "code": "MEDIA_DAY_ATHLETIC",
+      "label": "Media Day Athletic",
+      "description": "Confident, sexy, professional media-day editorial",
+      "status": "active"
+    }
+  },
+  "POSE": {
+    "GOLD": {
+      "code": "GOLD",
+      "label": "Confident Power Pose",
+      "description": "Gold standard pose (locked)",
+      "status": "active"
+    }
+  },
+  "BACKGROUND": {
+    "DOORWAY_GOLD": {
+      "code": "DOORWAY_GOLD",
+      "label": "Doorway (Gold Standard)",
+      "description": "Original gold standard background",
+      "status": "active"
+    },
+    "BEACH_PH": {
+      "code": "BEACH_PH",
+      "label": "Tropical Beach",
+      "description": "White sand beach with turquoise water",
+      "status": "active"
+    },
+    "JUNGLE_PH": {
+      "code": "JUNGLE_PH",
+      "label": "Tropical Jungle",
+      "description": "Lush jungle with filtered sunlight",
+      "status": "active"
+    },
+    "STUDIO": {
+      "code": "STUDIO",
+      "label": "Studio Gradient",
+      "description": "Minimal studio backdrop",
+      "status": "active"
+    },
+    "RESORT": {
+      "code": "RESORT",
+      "label": "Luxury Resort",
+      "description": "Upscale resort exterior",
+      "status": "active"
+    },
+    "MEDIA_DAY_STUDIO": {
+      "code": "MEDIA_DAY_STUDIO",
+      "label": "Media Day Studio",
+      "description": "Bright studio portrait with soft gradient backdrop",
+      "status": "active"
+    }
+  }
+}

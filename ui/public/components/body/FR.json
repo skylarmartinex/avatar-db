@@ -1,0 +1,21 @@
+{
+  "subject": {
+    "body": {
+      "build": "extremely lean, athletic, stage-ready physique",
+      "definition": {
+        "abs": "deeply defined six-pack with visible obliques",
+        "upper_body": "clear muscle separation in shoulders and arms",
+        "lower_body": "strong, toned legs with athletic curves"
+      },
+      "proportions": {
+        "waist": "razor-thin",
+        "contrast": "strong waist-to-hip and waist-to-bust contrast"
+      },
+      "guardrails": [
+        "no bulky bodybuilding look",
+        "no soft or undefined physique"
+      ],
+      "overall": "fitness ripped editorial physique, competition-ready definition, luxury fitness photography aesthetic"
+    }
+  }
+}

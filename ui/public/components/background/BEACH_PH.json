@@ -1,0 +1,15 @@
+{
+  "background_scene": {
+    "type": "Editorial beach",
+    "description": "Minimalist beach environment with soft white sand and distant turquoise ocean horizon, palm trees in soft focus",
+    "lighting_behavior": "Warm natural light, clean highlights, no harsh shadows",
+    "mood_guardrails": [
+      "sensual",
+      "clean",
+      "editorial",
+      "luxury",
+      "never tourist",
+      "never casual"
+    ]
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "clothing": {
+    "outfit_type": "Media day athletic editorial set",
+    "top": {
+      "style": "Sleeveless cropped jersey with V-neck",
+      "material": "Smooth performance mesh or satin-finish athletic fabric",
+      "color": "Team-bright or bold solid (hot pink, electric yellow, black, white)",
+      "fit": "High-rise crop that shows midriff; V-neck designed to reveal tasteful cleavage",
+      "design_details": [
+        "Clean front number or wordmark",
+        "No shoulder pads",
+        "Modern athletic cut"
+      ]
+    },
+    "bottom": {
+      "style": "Low-waisted athletic short shorts",
+      "material": "Stretch performance fabric",
+      "color": "Coordinated with top",
+      "fit": "Low-rise cut sitting on hips; snug fit; leg openings cut to avoid riding up",
+      "length": "Short and bold, but stable during pose"
+    },
+    "overall_vibe": "Confident, sexy, professional media-day editorial",
+    "explicit_exclusions": [
+      "no bodysuits",
+      "no dresses",
+      "no polka dots",
+      "no costumes",
+      "no casual loungewear",
+      "no oversized or baggy fits"
+    ]
+  }
+}

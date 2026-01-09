@@ -1,0 +1,46 @@
+{
+    "subject": {
+        "type": "Adult woman",
+        "ethnicity": "Filipino",
+        "build": "Extremely lean, ripped physique with remarkably low body fat, a deeply chiseled six-pack with anatomical clarity, prominent obliques, and visible upper-body muscle separation",
+        "body_proportions": "Striking contrast between a razor-thin waist, deeply defined core, and very large, full breasts",
+        "hair": {
+            "enabled": true,
+            "gender_presentation": "female",
+            "preset": "Sleek Power Woman",
+            "texture": "Pin-straight, glass-smooth",
+            "length": "Medium",
+            "style_mode": "Down",
+            "part": "Center part",
+            "bangs": "None",
+            "finish": "High-shine editorial",
+            "constraints": [
+                "No flyaways",
+                "Razor-sharp edges",
+                "Consistent hair identity across shots"
+            ]
+        }
+    },
+    "appearance": {
+        "hair_color": {
+            "enabled": true,
+            "base_color": "Espresso brunette",
+            "tone": "Neutral",
+            "depth_level": "Dark",
+            "highlights": {
+                "enabled": true,
+                "color": "Caramel",
+                "placement": "Face-framing",
+                "intensity": "Subtle"
+            },
+            "roots": {
+                "enabled": false
+            },
+            "gradient": {
+                "enabled": false
+            },
+            "gray_percentage": "None",
+            "constraints": []
+        }
+    }
+}

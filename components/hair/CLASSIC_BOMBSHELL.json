@@ -1,0 +1,22 @@
+{
+    "subject": {
+        "hair": {
+            "enabled": true,
+            "gender_presentation": "female",
+            "preset": "Classic Bombshell",
+            "texture": "Loose beach waves",
+            "length": "Long",
+            "style_mode": "Down",
+            "part": "Side part",
+            "bangs": "None",
+            "finish": "Fresh salon blowout",
+            "color": "Honey blonde",
+            "highlights": "Sun-kissed dimensional highlights",
+            "constraints": [
+                "No flyaways",
+                "No hair covering eyes",
+                "Consistent hair identity across shots"
+            ]
+        }
+    }
+}

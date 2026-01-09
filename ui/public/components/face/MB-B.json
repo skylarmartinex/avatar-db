@@ -1,0 +1,18 @@
+{
+    "subject": {
+        "face_anchor": "MB-B-ANCHOR",
+        "do_not_change": [
+            "eye color",
+            "bone structure",
+            "facial proportions"
+        ],
+        "facial_features": {
+            "eyes": "large expressive eyes with dramatic lashes, arched statement brows",
+            "nose": "sculpted nose with refined contours",
+            "lips": "plump glossy lips with pronounced cupid's bow",
+            "cheekbones": "prominent high cheekbones with bold definition",
+            "jawline": "strong defined jawline with confident angles",
+            "overall": "modern bombshell beauty with bold features, magnetic presence, editorial glamour"
+        }
+    }
+}

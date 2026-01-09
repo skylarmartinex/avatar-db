@@ -1,0 +1,15 @@
+{
+  "background_scene": {
+    "type": "Studio gradient",
+    "description": "Seamless professional studio backdrop with smooth neutral gradient, perfectly clean and minimal",
+    "lighting_behavior": "Even diffusion, no harsh shadows, pure studio control",
+    "mood_guardrails": [
+      "clean",
+      "luxury",
+      "editorial",
+      "minimal",
+      "never gritty",
+      "never horror"
+    ]
+  }
+}

@@ -1,0 +1,18 @@
+{
+    "subject": {
+        "face_anchor": "FD-B-ANCHOR",
+        "do_not_change": [
+            "eye color",
+            "bone structure",
+            "facial proportions"
+        ],
+        "facial_features": {
+            "eyes": "intense focused eyes with competitive fire, bold strong brows",
+            "nose": "powerful straight nose with athletic definition",
+            "lips": "firm sculpted lips with athletic precision",
+            "cheekbones": "sharp athletic cheekbones with competition-level definition",
+            "jawline": "powerful square jawline with strong chin and competition structure",
+            "overall": "fitness defined beauty with powerful features, peak athletic condition, championship presence"
+        }
+    }
+}

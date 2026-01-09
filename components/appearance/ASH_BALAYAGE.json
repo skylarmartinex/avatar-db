@@ -1,0 +1,25 @@
+{
+    "appearance": {
+        "hair_color": {
+            "enabled": true,
+            "base_color": "Ash blonde",
+            "tone": "Cool",
+            "depth_level": "Light",
+            "highlights": {
+                "enabled": false
+            },
+            "roots": {
+                "enabled": false
+            },
+            "gradient": {
+                "enabled": true,
+                "style": "Balayage",
+                "from_color": "Ash blonde",
+                "to_color": "Platinum blonde",
+                "blend": "Soft blend"
+            },
+            "gray_percentage": "None",
+            "constraints": []
+        }
+    }
+}

@@ -1,0 +1,15 @@
+{
+  "background_scene": {
+    "type": "Luxury resort",
+    "description": "Upscale resort exterior with polished stone or marble surfaces, modern high-end architecture in soft focus",
+    "lighting_behavior": "Warm natural light with elegant architectural shadows",
+    "mood_guardrails": [
+      "luxury",
+      "editorial",
+      "upscale",
+      "confident",
+      "never casual",
+      "never tourist"
+    ]
+  }
+}

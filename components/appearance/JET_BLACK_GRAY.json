@@ -1,0 +1,21 @@
+{
+    "appearance": {
+        "hair_color": {
+            "enabled": true,
+            "base_color": "Jet black",
+            "tone": "Neutral",
+            "depth_level": "Jet",
+            "highlights": {
+                "enabled": false
+            },
+            "roots": {
+                "enabled": false
+            },
+            "gradient": {
+                "enabled": false
+            },
+            "gray_percentage": "Trace",
+            "constraints": []
+        }
+    }
+}

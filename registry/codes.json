@@ -37,6 +37,54 @@
       "label": "Long Black Hair",
       "description": "Gold standard hair (locked)",
       "status": "active"
+    },
+    "CLASSIC_BOMBSHELL": {
+      "code": "CLASSIC_BOMBSHELL",
+      "label": "Classic Bombshell",
+      "description": "Voluminous beach waves, honey blonde, fresh salon finish",
+      "status": "active"
+    },
+    "SLEEK_POWER_WOMAN": {
+      "code": "SLEEK_POWER_WOMAN",
+      "label": "Sleek Power Woman",
+      "description": "Pin-straight glass-smooth bob/lob, high-shine editorial",
+      "status": "active"
+    },
+    "NATURAL_CURL_QUEEN": {
+      "code": "NATURAL_CURL_QUEEN",
+      "label": "Natural Curl Queen",
+      "description": "Long spiral curls (3B-3C), defined ringlets, matte natural",
+      "status": "active"
+    },
+    "PROTECTIVE_ROYALTY": {
+      "code": "PROTECTIVE_ROYALTY",
+      "label": "Protective Royalty",
+      "description": "Long knotless box braids, neat scalp sections, soft sheen",
+      "status": "active"
+    },
+    "SOFT_GIRL_AESTHETIC": {
+      "code": "SOFT_GIRL_AESTHETIC",
+      "label": "Soft Girl Aesthetic",
+      "description": "Medium beach waves, curtain bangs, half-up, day-two texture",
+      "status": "active"
+    },
+    "EDITORIAL_WET_LOOK": {
+      "code": "EDITORIAL_WET_LOOK",
+      "label": "Editorial Wet Look",
+      "description": "Long wet-look strands, slick-back ponytail, high-shine",
+      "status": "active"
+    },
+    "PLAYFUL_YOUTH": {
+      "code": "PLAYFUL_YOUTH",
+      "label": "Playful Youth",
+      "description": "Medium beach waves, high ponytail, wind-swept natural",
+      "status": "active"
+    },
+    "MINIMAL_CHIC": {
+      "code": "MINIMAL_CHIC",
+      "label": "Minimal Chic",
+      "description": "Short pin-straight, clean lines, matte natural",
+      "status": "active"
     }
   },
   "ETHNICITY": {
@@ -130,6 +178,32 @@
       "code": "MEDIA_DAY_STUDIO",
       "label": "Media Day Studio",
       "description": "Bright studio portrait with soft gradient backdrop",
+      "status": "active"
+    }
+  },
+  "APPEARANCE": {
+    "ESPRESSO_CARAMEL": {
+      "code": "ESPRESSO_CARAMEL",
+      "label": "Espresso Brunette + Caramel Highlights",
+      "description": "Dark espresso brunette with subtle caramel face-framing highlights",
+      "status": "active"
+    },
+    "ASH_BALAYAGE": {
+      "code": "ASH_BALAYAGE",
+      "label": "Ash Blonde Balayage",
+      "description": "Light ash blonde with balayage gradient to platinum blonde",
+      "status": "active"
+    },
+    "JET_BLACK_GRAY": {
+      "code": "JET_BLACK_GRAY",
+      "label": "Jet Black + Trace Gray",
+      "description": "Jet black with trace gray, no highlights",
+      "status": "active"
+    },
+    "COPPER_MONEY_PIECE": {
+      "code": "COPPER_MONEY_PIECE",
+      "label": "Copper + Money Piece",
+      "description": "Medium copper with bold platinum money piece and sharp roots",
       "status": "active"
     }
   }

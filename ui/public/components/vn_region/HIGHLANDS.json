@@ -1,0 +1,27 @@
+{
+    "subject": {
+        "regional_modifier": "Northern Highlands",
+        "facial_nuance": {
+            "skin": {
+                "tone_adjustment": "light tan with warm peachy undertones",
+                "texture": "smooth with natural healthy glow"
+            },
+            "facial_structure": {
+                "face_shape": "round to oval with soft contours",
+                "cheekbones": "moderately high with gentle roundness",
+                "jawline": "softly defined with natural curves",
+                "forehead": "balanced with gentle slope"
+            },
+            "features": {
+                "eyes": "round to almond with warm expressive quality, often monolid",
+                "nose": "soft bridge with rounded tip",
+                "lips": "full and naturally soft"
+            },
+            "hair": {
+                "texture_bias": "straight to slightly wavy with natural body",
+                "color_tendency": "deep black with warm undertones"
+            }
+        },
+        "scope": "facial features, skin nuance, and hair texture only - does not affect body, posture, mood, camera, lighting, or outfit"
+    }
+}

@@ -1,0 +1,15 @@
+{
+  "background_scene": {
+    "type": "Media day studio portrait",
+    "description": "Seamless studio backdrop with soft gradient (warm pink to peach or neutral gray), clean high-key environment",
+    "lighting_behavior": "Even, bright studio lighting that keeps full attention on the subject",
+    "mood_guardrails": [
+      "professional",
+      "clean",
+      "bright",
+      "editorial",
+      "never casual",
+      "never gritty"
+    ]
+  }
+}

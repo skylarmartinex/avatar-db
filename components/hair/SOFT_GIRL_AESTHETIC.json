@@ -1,0 +1,22 @@
+{
+    "subject": {
+        "hair": {
+            "enabled": true,
+            "gender_presentation": "female",
+            "preset": "Soft Girl Aesthetic",
+            "texture": "Loose beach waves",
+            "length": "Medium",
+            "style_mode": "Half-up",
+            "part": "Center part",
+            "bangs": "Curtain bangs",
+            "finish": "Day-two texture",
+            "color": "Honey blonde",
+            "highlights": "Face-framing highlights",
+            "constraints": [
+                "Soft, effortless look",
+                "No harsh edges",
+                "Consistent hair identity across shots"
+            ]
+        }
+    }
+}

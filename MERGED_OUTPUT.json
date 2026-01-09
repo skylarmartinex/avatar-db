@@ -1,0 +1,119 @@
+{
+  "setting": {
+    "location_type": "Outdoor residential or urban entryway",
+    "environment": "Exterior doorway with textured stone or natural concrete wall and a dark painted wooden door",
+    "time_of_day": "Late afternoon or early evening",
+    "weather_conditions": "Clear, dry conditions",
+    "atmosphere": "Warm, sensual, high-end editorial lifestyle aesthetic with subtle tribal influence"
+  },
+  "viewing_angle": {
+    "camera_height": "Approximately chest height of the subject",
+    "camera_distance": "Medium shot (upper thighs to head)",
+    "angle": "Straight-on with a subtle downward tilt",
+    "perspective_effect": "Natural human-eye perspective with flattering compression, no distortion"
+  },
+  "lighting": {
+    "primary_light_source": "Natural sunlight",
+    "direction": "Strong side lighting from camera-left",
+    "quality": "Hard, directional light",
+    "shadow_characteristics": "High-contrast shadows carving out muscle definition, abs, and facial structure",
+    "color_temperature": "Warm golden tones"
+  },
+  "aspect_ratio": {
+    "format": "Portrait",
+    "ratio": "3:4",
+    "orientation": "Vertical"
+  },
+  "composition": {
+    "framing": "Subject centered with slight headroom",
+    "rule_of_thirds": "Face and upper torso aligned near center",
+    "visual_balance": "Balanced between illuminated subject and darker background",
+    "depth": "Moderate depth created primarily through lighting contrast",
+    "leading_elements": "Door frame and wall subtly guide attention toward the subject"
+  },
+  "image_quality": {
+    "resolution_target": "Ultra-high resolution, photorealistic",
+    "sharpness": "Extreme sharpness on face, bust, and abdominal definition",
+    "noise_level": "Minimal noise",
+    "dynamic_range": "Wide dynamic range preserving highlights and deep shadows",
+    "overall_style": "Luxury Instagram fitness and tribal-inspired editorial photography"
+  },
+  "overall_mood": {
+    "tone": "Fierce, confident, and intensely striking",
+    "aesthetic": "Indigenous-inspired fantasy meets elite fitness editorial",
+    "visual_focus": "Powerful emphasis on facial beauty, extreme body definition, and curves"
+  },
+  "subject": {
+    "facial_features": {
+      "face_shape": "Soft oval-to-heart hybrid face with gentle tapering toward the chin, avoiding sharp angles",
+      "jawline": "Smooth, elegant jawline with subtle definition—feminine and refined rather than angular or severe",
+      "cheekbones": "High, softly rounded cheekbones that catch light naturally without appearing sharp or hollow",
+      "eyes": {
+        "shape": "Large, expressive almond-shaped eyes with a slight upward outer tilt",
+        "eye_lids": "Subtle epicanthic fold with softly hooded upper lids",
+        "irises": "Deep warm brown with golden undertones",
+        "lashes": "Long, thick lashes creating a naturally sultry frame"
+      },
+      "eyebrows": "Softly arched brows with a natural thickness, enhancing expression without harsh angles",
+      "nose": {
+        "structure": "Small-to-medium size with a smooth bridge",
+        "tip": "Softly rounded, slightly upturned tip—delicate and feminine",
+        "overall_character": "Refined but natural, not overly sharp or narrow"
+      },
+      "lips": {
+        "shape": "Full, pillowy lips with a well-defined cupid's bow",
+        "balance": "Slightly fuller bottom lip for softness and sensuality",
+        "texture": "Naturally plush with a hydrated sheen"
+      },
+      "skin_details": {
+        "complexion": "Flawless golden complexion with subtle natural variations",
+        "features": "Very faint beauty marks or skin texture for realism"
+      }
+    },
+    "facial_expression": "Calm, magnetic expression—soft confidence with a hint of mystery and warmth",
+    "gaze_direction": "Direct but gentle eye contact, inviting rather than confrontational",
+    "makeup": "Luxury editorial glam emphasizing glowing skin, softly contoured cheeks, luminous eyes, and glossy nude lips",
+    "build": "Extremely lean, ripped physique with very low body fat, sharply defined abs, obliques, and visible upper-body muscle separation",
+    "body_proportions": "Striking contrast between a razor-thin waist, deeply defined core, and very large, full breasts",
+    "hair": {
+      "color": "Deep black",
+      "length": "Long",
+      "style": "Thick, glossy hair worn loose with subtle natural texture, lightly windswept"
+    },
+    "ethnicity": "Filipino"
+  },
+  "clothing": {
+    "outfit_type": "Pocahontas-inspired tribal fashion bikini",
+    "top": {
+      "style": "Minimal leather-and-suede-inspired bikini top with triangular panels",
+      "color": "Earth tones (warm tan, muted turquoise accents)",
+      "design_details": "Fringe elements, subtle beadwork, and natural-texture stitching",
+      "fit": "Very minimal coverage designed to accentuate a full, prominent bust",
+      "interaction": "Lightly held at the straps by both hands, emphasizing chest and posture"
+    },
+    "bottom": {
+      "style": "Low-rise tribal bikini bottom",
+      "color": "Matching earth tones with turquoise bead accents",
+      "design_details": "Fringe and asymmetrical cut inspired by indigenous fantasy fashion",
+      "fit": "Minimal coverage sitting low on the hips, highlighting obliques and V-cut abs"
+    },
+    "accessories": "Optional subtle tribal-inspired armband or feather accent, no modern jewelry"
+  },
+  "pose": {
+    "stance": "Strong, confident stance with relaxed dominance",
+    "leg_position": "Weight shifted to one hip to emphasize curves and muscular legs",
+    "arm_position": "Both arms raised with elbows bent, hands holding bikini straps",
+    "torso_orientation": "Facing the camera with a slight torso twist to maximize waist-to-bust contrast",
+    "head_position": "Slight tilt adding softness to an otherwise powerful pose",
+    "pose_intent": "Fierce, seductive, and empowered high-fashion fitness pose"
+  },
+  "surrounding": {
+    "background_elements": [
+      "Dark painted wooden door",
+      "Light-colored textured stone or concrete wall"
+    ],
+    "background_focus": "Softly blurred but architecturally recognizable",
+    "color_contrast": "Strong contrast between earth-toned bikini, golden skin, and dark background",
+    "environmental_clutter": "Minimal, clean composition"
+  }
+}

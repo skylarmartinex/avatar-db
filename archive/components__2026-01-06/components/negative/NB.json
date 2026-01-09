@@ -1,0 +1,93 @@
+{
+  "negative_prompt": {
+    "quality_exclusions": [
+      "low quality",
+      "low resolution",
+      "blurry",
+      "out of focus",
+      "grainy",
+      "pixelated",
+      "jpeg artifacts",
+      "watermark",
+      "text",
+      "signature"
+    ],
+    "anatomy_exclusions": [
+      "bad anatomy",
+      "bad proportions",
+      "deformed",
+      "disfigured",
+      "mutated",
+      "extra limbs",
+      "missing limbs",
+      "fused fingers",
+      "too many fingers",
+      "malformed hands",
+      "poorly drawn hands",
+      "poorly drawn face"
+    ],
+    "expression_exclusions": [
+      "horror",
+      "scared expression",
+      "fearful",
+      "terrified",
+      "shocked",
+      "surprised",
+      "screaming",
+      "crying",
+      "distressed",
+      "haunted vibes",
+      "dark mood",
+      "sinister"
+    ],
+    "clothing_exclusions": [
+      "costume",
+      "costumes",
+      "dress",
+      "dresses",
+      "polka dots",
+      "polka dot pattern",
+      "full coverage clothing",
+      "modern casual clothing",
+      "random fashion elements",
+      "halloween costume",
+      "theatrical costume"
+    ],
+    "style_exclusions": [
+      "cartoon",
+      "anime",
+      "illustration",
+      "painting",
+      "drawing",
+      "sketch",
+      "3d render",
+      "cgi",
+      "artificial",
+      "stylized",
+      "whimsical",
+      "fantasy"
+    ],
+    "pose_exclusions": [
+      "running",
+      "walking",
+      "jumping",
+      "lounging",
+      "sitting",
+      "crouching",
+      "kneeling",
+      "lying down",
+      "exaggerated motion",
+      "dynamic action",
+      "candid movement"
+    ],
+    "environment_exclusions": [
+      "cluttered background",
+      "busy background",
+      "distracting elements",
+      "props in hands",
+      "environmental clutter intersecting body",
+      "chaotic composition",
+      "wide scenic emphasis"
+    ]
+  }
+}

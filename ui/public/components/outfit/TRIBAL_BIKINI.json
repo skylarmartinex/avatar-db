@@ -1,0 +1,25 @@
+{
+  "clothing": {
+    "outfit_name": "Tribal Editorial Bikini",
+    "intent": "Indigenous-inspired fantasy meets elite fitness editorial",
+    "design": {
+      "style": "Pocahontas-inspired tribal fashion bikini",
+      "materials": ["leather-inspired textures", "suede finishes"],
+      "colors": ["warm tan", "muted turquoise accents"],
+      "details": ["fringe elements", "subtle beadwork", "natural-texture stitching"],
+      "fit": "Minimal coverage, editorial silhouette designed to accentuate bust and core"
+    },
+    "interaction": {
+      "top": "Lightly held at the straps by both hands to emphasize posture and chest",
+      "bottom": "Low-rise cut highlighting obliques and V-cut abs"
+    },
+    "exclusions": [
+      "no dresses",
+      "no polka dots",
+      "no modern casual clothing",
+      "no costumes",
+      "no cosplay",
+      "no cartoon styling"
+    ]
+  }
+}

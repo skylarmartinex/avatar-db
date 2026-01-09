@@ -1,0 +1,20 @@
+{
+    "setting": "tropical beach",
+    "surrounding": {
+        "environment_style": "clean, minimal, editorial",
+        "mood": "serene, luxurious, editorial with natural sunlight enhancing subject",
+        "elements": [
+            "soft sand",
+            "distant ocean",
+            "low horizon line"
+        ],
+        "visual_priority": "background remains secondary to subject",
+        "guardrails": [
+            "no props",
+            "no walking or candid movement",
+            "no wide scenic emphasis",
+            "background visually secondary",
+            "subject clearly separated from environment"
+        ]
+    }
+}

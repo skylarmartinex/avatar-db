@@ -17,3 +17,25 @@ Deterministic parametric avatar prompt database.
 1. Add the code to `registry/codes.json`.
 2. Add the corresponding JSON file to the correct dimension folder in `components/`.
 3. Run `python -m src.cli lint` to verify.
+
+## Women's Hair System
+The Avatar-DB now includes a comprehensive women's hair system with 8 curated presets (Classic Bombshell, Sleek Power Woman, Natural Curl Queen, etc.) and granular control over texture, length, style, and finish.
+
+📖 **[Read the full Hair System documentation](docs/HAIR_SYSTEM.md)**
+
+Example usage:
+```bash
+python -m src.cli build --FA SG-PH-A --BT FR --ET PH --HR SLEEK_POWER_WOMAN --SC DOOR --ST POCA --v 01 --r 01
+```
+
+## Hair Color System
+The Avatar-DB now includes a dedicated **hair color system** that's separate from hair structure. This allows you to swap colors (base, highlights, gradients, roots, gray) without changing hair identity. The color system is lighting-agnostic and provides stable, consistent color tokens.
+
+📖 **[Read the full Hair Color System documentation](docs/HAIR_COLOR_SYSTEM.md)**
+
+Example usage:
+```bash
+# Hair color components can be used with the APPEARANCE dimension
+python -m src.cli build --FA SG-PH-A --BT FR --ET PH --HR SLEEK_POWER_WOMAN --AP ESPRESSO_CARAMEL --SC DOOR --ST POCA --v 01 --r 01
+```
+

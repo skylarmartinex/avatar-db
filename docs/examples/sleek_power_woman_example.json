@@ -1,0 +1,128 @@
+{
+    "setting": {
+        "location_type": "Editorial photoshoot environment",
+        "environment": "Controlled high-end photography setting",
+        "time_of_day": "Late afternoon or early evening",
+        "weather_conditions": "Clear, dry conditions",
+        "atmosphere": "Warm, sensual, high-end editorial lifestyle aesthetic"
+    },
+    "viewing_angle": {
+        "camera_height": "Approximately chest height of the subject",
+        "camera_distance": "Medium shot (upper thighs to head)",
+        "angle": "Straight-on with a subtle downward tilt",
+        "perspective_effect": "Natural human-eye perspective with flattering compression, no distortion"
+    },
+    "subject": {
+        "type": "Adult woman",
+        "ethnicity": "Filipino",
+        "build": "Extremely lean, ripped physique with remarkably low body fat, a deeply chiseled six-pack with anatomical clarity, prominent obliques, and visible upper-body muscle separation",
+        "body_proportions": "Striking contrast between a razor-thin waist, deeply defined core, and very large, full breasts",
+        "hair": {
+            "enabled": true,
+            "gender_presentation": "female",
+            "preset": "Sleek Power Woman",
+            "texture": "Pin-straight, glass-smooth",
+            "length": "Medium",
+            "style_mode": "Down",
+            "part": "Center part",
+            "bangs": "None",
+            "finish": "High-shine editorial",
+            "color": "Deep brunette",
+            "highlights": null,
+            "constraints": [
+                "No flyaways",
+                "Razor-sharp edges",
+                "Consistent hair identity across shots"
+            ]
+        },
+        "facial_features": {
+            "face_shape": "Soft oval-to-heart hybrid face with gentle tapering toward the chin",
+            "jawline": "Smooth, elegant jawline with subtle definition",
+            "cheekbones": "High, softly rounded cheekbones that catch light naturally",
+            "eyes": {
+                "shape": "Large, expressive almond-shaped eyes with a slight upward outer tilt",
+                "eye_lids": "Subtle epicanthic fold with softly hooded upper lids",
+                "irises": "Deep warm brown with golden undertones",
+                "lashes": "Long, thick lashes creating a naturally sultry frame"
+            },
+            "eyebrows": "Softly arched brows with a natural thickness",
+            "nose": {
+                "structure": "Small-to-medium size with a smooth bridge",
+                "tip": "Softly rounded, slightly upturned tip—delicate and feminine",
+                "overall_character": "Refined but natural"
+            },
+            "lips": {
+                "shape": "Full, pillowy lips with a well-defined cupid's bow",
+                "balance": "Slightly fuller bottom lip for softness and sensuality",
+                "texture": "Naturally plush with a hydrated sheen"
+            },
+            "skin_details": {
+                "complexion": "Flawless golden complexion with subtle natural variations",
+                "features": "Very faint beauty marks or skin texture for realism"
+            }
+        },
+        "facial_expression": "Calm, magnetic expression—soft confidence with a hint of mystery and warmth",
+        "gaze_direction": "Direct but gentle eye contact, inviting rather than confrontational",
+        "makeup": "Luxury editorial glam emphasizing glowing skin, softly contoured cheeks, luminous eyes, and glossy nude lips"
+    },
+    "lighting": {
+        "primary_light_source": "Natural sunlight",
+        "direction": "Strong side lighting from camera-left",
+        "quality": "Hard, directional light",
+        "shadow_characteristics": "Dramatic, high-contrast shadows that create deep relief and carve out the contours of the abdominal muscles and obliques, emphasizing a three-dimensional sculpted look",
+        "color_temperature": "Warm golden tones"
+    },
+    "skin": {
+        "tone": "Golden tan",
+        "undertone": "Warm",
+        "texture": "Smooth, taut skin stretched over extreme muscle definition, visibly showing the contours of the abs, shoulders, and arms",
+        "finish": "Sun-kissed glow with subtle natural sheen",
+        "detail_visibility": "Ultra-high clarity emphasizing veins, muscle separations, and contours"
+    },
+    "clothing": {
+        "outfit_type": "Luxury sports bikini",
+        "top": {
+            "style": "Minimal athletic bikini top",
+            "color": "Black with metallic gold accents",
+            "design_details": "High-end performance fabric with subtle logo details",
+            "fit": "Supportive yet minimal coverage designed to accentuate a full, prominent bust"
+        },
+        "bottom": {
+            "style": "Low-rise athletic bikini bottom",
+            "color": "Matching black with gold accents",
+            "design_details": "Clean lines with performance fabric",
+            "fit": "Minimal coverage sitting low on the hips, highlighting obliques and V-cut abs"
+        }
+    },
+    "pose": {
+        "stance": "Strong, confident stance with relaxed dominance",
+        "leg_position": "Weight shifted to one hip to emphasize curves and muscular legs",
+        "arm_position": "Both arms raised with elbows bent, hands behind head",
+        "torso_orientation": "Facing the camera with a slight torso twist to maximize waist-to-bust contrast",
+        "head_position": "Slight tilt adding softness to an otherwise powerful pose",
+        "pose_intent": "Fierce, seductive, and empowered high-fashion fitness pose"
+    },
+    "aspect_ratio": {
+        "format": "Portrait",
+        "ratio": "3:4",
+        "orientation": "Vertical"
+    },
+    "composition": {
+        "framing": "Subject centered with slight headroom",
+        "rule_of_thirds": "Face and upper torso aligned near center",
+        "visual_balance": "Balanced between illuminated subject and background",
+        "depth": "Moderate depth created primarily through lighting contrast"
+    },
+    "image_quality": {
+        "resolution_target": "Ultra-high resolution, photorealistic",
+        "sharpness": "Extreme sharpness on face, bust, and abdominal definition",
+        "noise_level": "Minimal noise",
+        "dynamic_range": "Wide dynamic range preserving highlights and deep shadows",
+        "overall_style": "Luxury Instagram fitness and editorial photography"
+    },
+    "overall_mood": {
+        "tone": "Fierce, confident, and intensely striking",
+        "aesthetic": "Elite fitness editorial with high-end production value",
+        "visual_focus": "Powerful emphasis on facial beauty, extreme body definition, and curves"
+    }
+}

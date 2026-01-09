@@ -1,0 +1,22 @@
+{
+    "subject": {
+        "hair": {
+            "enabled": true,
+            "gender_presentation": "female",
+            "preset": "Sleek Power Woman",
+            "texture": "Pin-straight, glass-smooth",
+            "length": "Medium",
+            "style_mode": "Down",
+            "part": "Center part",
+            "bangs": "None",
+            "finish": "High-shine editorial",
+            "color": "Deep brunette",
+            "highlights": null,
+            "constraints": [
+                "No flyaways",
+                "Razor-sharp edges",
+                "Consistent hair identity across shots"
+            ]
+        }
+    }
+}

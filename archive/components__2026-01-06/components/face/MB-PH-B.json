@@ -1,0 +1,12 @@
+{
+  "subject": {
+    "face_anchor": "MB-PH-B-ANCHOR",
+    "do_not_change": [
+      "eye color"
+    ],
+    "facial_features": {
+      "eyes": "wide",
+      "nose": "broad"
+    }
+  }
+}

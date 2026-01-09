@@ -1,0 +1,45 @@
+{
+  "setting": {
+    "location_type": "Editorial photoshoot environment",
+    "environment": "Controlled high-end photography setting",
+    "time_of_day": "Late afternoon or early evening",
+    "weather_conditions": "Clear, dry conditions",
+    "atmosphere": "Warm, sensual, high-end editorial lifestyle aesthetic"
+  },
+  "viewing_angle": {
+    "camera_height": "Approximately chest height of the subject",
+    "camera_distance": "Medium shot (upper thighs to head)",
+    "angle": "Straight-on with a subtle downward tilt",
+    "perspective_effect": "Natural human-eye perspective with flattering compression, no distortion"
+  },
+  "lighting": {
+    "primary_light_source": "Natural sunlight",
+    "direction": "Strong side lighting from camera-left",
+    "quality": "Hard, directional light",
+    "shadow_characteristics": "High-contrast shadows carving out muscle definition, abs, and facial structure",
+    "color_temperature": "Warm golden tones"
+  },
+  "aspect_ratio": {
+    "format": "Portrait",
+    "ratio": "3:4",
+    "orientation": "Vertical"
+  },
+  "composition": {
+    "framing": "Subject centered with slight headroom",
+    "rule_of_thirds": "Face and upper torso aligned near center",
+    "visual_balance": "Balanced between illuminated subject and background",
+    "depth": "Moderate depth created primarily through lighting contrast"
+  },
+  "image_quality": {
+    "resolution_target": "Ultra-high resolution, photorealistic",
+    "sharpness": "Extreme sharpness on face, bust, and abdominal definition",
+    "noise_level": "Minimal noise",
+    "dynamic_range": "Wide dynamic range preserving highlights and deep shadows",
+    "overall_style": "Luxury Instagram fitness and editorial photography"
+  },
+  "overall_mood": {
+    "tone": "Fierce, confident, and intensely striking",
+    "aesthetic": "Elite fitness editorial with high-end production value",
+    "visual_focus": "Powerful emphasis on facial beauty, extreme body definition, and curves"
+  }
+}

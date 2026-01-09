@@ -1,0 +1,450 @@
+{
+    "PH_REGION": {
+        "ILOCOS": {
+            "label": "Ilocos & Cordillera",
+            "short_label": "Ilocos",
+            "description": "Northern Luzon - slightly lighter tan, angular features, high cheekbones",
+            "region": "Northern Luzon",
+            "status": "active"
+        },
+        "TAGALOG": {
+            "label": "Tagalog",
+            "short_label": "Tagalog",
+            "description": "Central Luzon & Metro Manila - medium golden tan, balanced oval features",
+            "region": "Central Luzon",
+            "status": "active"
+        },
+        "BICOL": {
+            "label": "Bicol",
+            "short_label": "Bicol",
+            "description": "Southeastern Luzon - warm golden tan, heart-shaped face, expressive eyes",
+            "region": "Southeastern Luzon",
+            "status": "active"
+        },
+        "VISAYAS": {
+            "label": "Visayas",
+            "short_label": "Visayas",
+            "description": "Central Philippines - honey tan, soft oval features, warm inviting gaze",
+            "region": "Central Philippines",
+            "status": "active"
+        },
+        "MINDANAO": {
+            "label": "Mindanao Lowland",
+            "short_label": "Mindanao",
+            "description": "Southern Philippines - rich golden tan, balanced proportions, natural warmth",
+            "region": "Southern Philippines",
+            "status": "active"
+        },
+        "BANGSAMORO": {
+            "label": "Bangsamoro",
+            "short_label": "Bangsamoro",
+            "description": "Southwestern Mindanao - deep golden tan, refined features, elegant structure",
+            "region": "Southwestern Mindanao",
+            "status": "active"
+        }
+    },
+    "VN_REGION": {
+        "NORTHERN": {
+            "label": "Northern Vietnam",
+            "short_label": "Northern",
+            "description": "Hanoi / Red River Delta - fair to light golden, refined oval features, porcelain-like skin",
+            "region": "Northern Vietnam",
+            "status": "active"
+        },
+        "HIGHLANDS": {
+            "label": "Northern Highlands",
+            "short_label": "Highlands",
+            "description": "Mountainous regions - light tan with peachy undertones, soft round features",
+            "region": "Northern Highlands",
+            "status": "active"
+        },
+        "CENTRAL": {
+            "label": "Central Vietnam",
+            "short_label": "Central",
+            "description": "Coastal central - medium golden tan, balanced oval, sun-kissed luminosity",
+            "region": "Central Vietnam",
+            "status": "active"
+        },
+        "SOUTHERN": {
+            "label": "Southern Vietnam",
+            "short_label": "Southern",
+            "description": "Urban HCMC/Saigon - warm golden tan, heart-shaped face, expressive eyes",
+            "region": "Southern Vietnam",
+            "status": "active"
+        },
+        "MEKONG": {
+            "label": "Mekong Delta",
+            "short_label": "Mekong",
+            "description": "Rural south - honey tan with bronze undertones, soft natural features",
+            "region": "Mekong Delta",
+            "status": "active"
+        }
+    },
+    "FA": {
+        "SG-A": {
+            "label": "Soft Goddess (A)",
+            "short_label": "Soft Goddess A",
+            "description": "Soft, feminine goddess-like beauty with warm expressive features and gentle harmony",
+            "archetype": "Soft Goddess",
+            "status": "active"
+        },
+        "SG-B": {
+            "label": "Soft Goddess (B)",
+            "short_label": "Soft Goddess B",
+            "description": "Alternative soft goddess with rounder features",
+            "archetype": "Soft Goddess",
+            "status": "active"
+        },
+        "MB-A": {
+            "label": "Modern Bombshell (A)",
+            "short_label": "Modern Bombshell A",
+            "description": "Sexy, confident modern glam with sultry eyes and balanced feminine structure",
+            "archetype": "Modern Bombshell",
+            "status": "active"
+        },
+        "MB-B": {
+            "label": "Modern Bombshell (B)",
+            "short_label": "Modern Bombshell B",
+            "description": "Sultry look with broader features",
+            "archetype": "Modern Bombshell",
+            "status": "active"
+        },
+        "EM-A": {
+            "label": "Editorial Model (A)",
+            "short_label": "Editorial Model A",
+            "description": "Refined high-fashion beauty with harmonious editorial proportions",
+            "archetype": "Editorial Model",
+            "status": "active"
+        },
+        "EM-B": {
+            "label": "Editorial Model (B)",
+            "short_label": "Editorial Model B",
+            "description": "Striking editorial beauty with bold angular features",
+            "archetype": "Editorial Model",
+            "status": "active"
+        },
+        "RS-A": {
+            "label": "Romantic Sweet (A)",
+            "short_label": "Romantic Sweet A",
+            "description": "Fresh romantic sweetness with approachable natural beauty",
+            "archetype": "Romantic Sweet",
+            "status": "active"
+        },
+        "RS-B": {
+            "label": "Romantic Sweet (B)",
+            "short_label": "Romantic Sweet B",
+            "description": "Sweet romantic beauty with youthful innocent features",
+            "archetype": "Romantic Sweet",
+            "status": "active"
+        },
+        "FD-A": {
+            "label": "Fitness Defined (A)",
+            "short_label": "Fitness Defined A",
+            "description": "Athletic fitness beauty with strong defined features",
+            "archetype": "Fitness Defined",
+            "status": "active"
+        },
+        "FD-B": {
+            "label": "Fitness Defined (B)",
+            "short_label": "Fitness Defined B",
+            "description": "Powerful competition-ready fitness beauty",
+            "archetype": "Fitness Defined",
+            "status": "active"
+        },
+        "SG-PH-A": {
+            "label": "Soft Goddess (A-Alt)",
+            "short_label": "Soft Goddess A-Alt",
+            "description": "Alternative soft goddess beauty with gentle harmony",
+            "archetype": "Soft Goddess",
+            "status": "deprecated"
+        },
+        "SG-PH-B": {
+            "label": "Soft Goddess (B-Alt)",
+            "short_label": "Soft Goddess B-Alt",
+            "description": "Alternative soft goddess with rounder features",
+            "archetype": "Soft Goddess",
+            "status": "deprecated"
+        },
+        "MB-PH-A": {
+            "label": "Modern Bombshell (A-Alt)",
+            "short_label": "Modern Bombshell A-Alt",
+            "description": "Alternative modern glam with sultry eyes",
+            "archetype": "Modern Bombshell",
+            "status": "deprecated"
+        },
+        "MB-PH-B": {
+            "label": "Modern Bombshell (B-Alt)",
+            "short_label": "Modern Bombshell B-Alt",
+            "description": "Alternative sultry look with broader features",
+            "archetype": "Modern Bombshell",
+            "status": "deprecated"
+        },
+        "EM-PH-A": {
+            "label": "Editorial Model (A-Alt)",
+            "short_label": "Editorial Model A-Alt",
+            "description": "Alternative refined high-fashion beauty",
+            "archetype": "Editorial Model",
+            "status": "deprecated"
+        },
+        "EM-PH-B": {
+            "label": "Editorial Model (B-Alt)",
+            "short_label": "Editorial Model B-Alt",
+            "description": "Alternative striking editorial beauty",
+            "archetype": "Editorial Model",
+            "status": "deprecated"
+        },
+        "RS-PH-A": {
+            "label": "Romantic Sweet (A-Alt)",
+            "short_label": "Romantic Sweet A-Alt",
+            "description": "Alternative fresh romantic sweetness",
+            "archetype": "Romantic Sweet",
+            "status": "deprecated"
+        },
+        "RS-PH-B": {
+            "label": "Romantic Sweet (B-Alt)",
+            "short_label": "Romantic Sweet B-Alt",
+            "description": "Alternative sweet romantic beauty",
+            "archetype": "Romantic Sweet",
+            "status": "deprecated"
+        },
+        "FD-PH-A": {
+            "label": "Fitness Defined (A-Alt)",
+            "short_label": "Fitness Defined A-Alt",
+            "description": "Alternative athletic fitness beauty",
+            "archetype": "Fitness Defined",
+            "status": "deprecated"
+        },
+        "FD-PH-B": {
+            "label": "Fitness Defined (B-Alt)",
+            "short_label": "Fitness Defined B-Alt",
+            "description": "Alternative powerful competition-ready fitness beauty",
+            "archetype": "Fitness Defined",
+            "status": "deprecated"
+        }
+    },
+    "BT": {
+        "FR": {
+            "label": "Fitness Ripped",
+            "short_label": "Ripped",
+            "description": "Extremely lean, stage-ready physique with sharply defined abs and muscle separation",
+            "tags": [
+                "athletic",
+                "lean",
+                "competition"
+            ]
+        },
+        "AL": {
+            "label": "Athletic Lean",
+            "short_label": "Athletic",
+            "description": "Lean athletic build with visible tone but softer overall definition",
+            "tags": [
+                "athletic",
+                "toned",
+                "balanced"
+            ]
+        },
+        "CF": {
+            "label": "Curvy Fit",
+            "short_label": "Curvy Fit",
+            "description": "Athletic curvy feminine physique with balanced hourglass proportions",
+            "tags": [
+                "curvy",
+                "athletic",
+                "hourglass"
+            ]
+        },
+        "SM": {
+            "label": "Slender Model",
+            "short_label": "Slender",
+            "description": "Slender model physique with elongated runway-ready proportions",
+            "tags": [
+                "slender",
+                "model",
+                "runway"
+            ]
+        },
+        "SC": {
+            "label": "Soft Curvy",
+            "short_label": "Soft Curvy",
+            "description": "Soft curvy feminine physique with voluptuous proportions",
+            "tags": [
+                "curvy",
+                "voluptuous",
+                "feminine"
+            ]
+        }
+    },
+    "ET": {
+        "PH": {
+            "label": "Filipina",
+            "short_label": "Filipina",
+            "description": "Warm tan skin tones and Southeast Asian features",
+            "tags": [
+                "Southeast Asian",
+                "warm"
+            ]
+        },
+        "VN": {
+            "label": "Vietnamese",
+            "short_label": "Vietnamese",
+            "description": "Vietnamese features with warm golden to light tan skin tones",
+            "tags": [
+                "Southeast Asian",
+                "Vietnamese",
+                "warm"
+            ]
+        },
+        "LA": {
+            "label": "Latina",
+            "short_label": "Latina",
+            "description": "Warm olive to tan skin tones and Latin American features",
+            "tags": [
+                "Latin American",
+                "warm"
+            ]
+        },
+        "ME": {
+            "label": "Middle Eastern",
+            "short_label": "Middle Eastern",
+            "description": "Warm golden skin tones and Middle Eastern features",
+            "tags": [
+                "Middle Eastern",
+                "golden"
+            ]
+        },
+        "NE": {
+            "label": "Northern European",
+            "short_label": "Northern European",
+            "description": "Fair porcelain skin tones and Northern European features",
+            "tags": [
+                "European",
+                "fair"
+            ]
+        }
+    },
+    "HR": {
+        "ST": {
+            "label": "Straight Hair",
+            "short_label": "Straight",
+            "description": "Mostly straight, smooth hair with natural body and gloss",
+            "tags": [
+                "straight",
+                "sleek"
+            ]
+        },
+        "WV": {
+            "label": "Soft Waves",
+            "short_label": "Waves",
+            "description": "Loose, natural waves with movement and softness",
+            "tags": [
+                "wavy",
+                "natural"
+            ]
+        },
+        "PK": {
+            "label": "Ponytail",
+            "short_label": "Ponytail",
+            "description": "Playful high ponytail with sleek styling and volume",
+            "tags": [
+                "ponytail",
+                "sporty",
+                "playful"
+            ]
+        }
+    },
+    "SC": {
+        "DOOR": {
+            "label": "Doorway Editorial",
+            "short_label": "Doorway",
+            "description": "Outdoor residential or urban doorway with textured stone and dark wooden door",
+            "tags": [
+                "editorial",
+                "urban",
+                "architectural"
+            ]
+        },
+        "BEACH": {
+            "label": "Tropical Beach",
+            "short_label": "Beach",
+            "description": "Pristine tropical beach with turquoise water and white sand",
+            "tags": [
+                "beach",
+                "tropical",
+                "outdoor"
+            ]
+        },
+        "JUNGLE": {
+            "label": "Tropical Jungle",
+            "short_label": "Jungle",
+            "description": "Lush tropical jungle clearing with dense green foliage",
+            "tags": [
+                "jungle",
+                "tropical",
+                "nature"
+            ]
+        }
+    },
+    "ST": {
+        "POCA": {
+            "label": "Pocahontas-Inspired Tribal Bikini",
+            "short_label": "Tribal Bikini",
+            "description": "Earth-toned tribal fashion bikini with fringe and beadwork",
+            "tags": [
+                "tribal",
+                "bikini",
+                "bohemian"
+            ]
+        },
+        "SPORT": {
+            "label": "Athletic Sportswear",
+            "short_label": "Sportswear",
+            "description": "Athletic sportswear set with sports bra and leggings",
+            "tags": [
+                "athletic",
+                "sporty",
+                "fitness"
+            ]
+        },
+        "STREET": {
+            "label": "Casual Streetwear",
+            "short_label": "Streetwear",
+            "description": "Casual urban streetwear with cropped tee and denim shorts",
+            "tags": [
+                "casual",
+                "urban",
+                "street"
+            ]
+        },
+        "RESORT": {
+            "label": "Elegant Resort Wear",
+            "short_label": "Resort",
+            "description": "Elegant resort wear with flowing dress or sophisticated cover-up",
+            "tags": [
+                "elegant",
+                "resort",
+                "vacation"
+            ]
+        },
+        "ACTIVE": {
+            "label": "Performance Activewear",
+            "short_label": "Activewear",
+            "description": "Performance activewear with fitted tank and athletic shorts",
+            "tags": [
+                "active",
+                "performance",
+                "workout"
+            ]
+        }
+    },
+    "NB": {
+        "NB": {
+            "label": "Negative Baseline",
+            "short_label": "Negative",
+            "description": "Comprehensive quality-focused negative prompt for image generation",
+            "tags": [
+                "quality",
+                "baseline"
+            ]
+        }
+    }
+}

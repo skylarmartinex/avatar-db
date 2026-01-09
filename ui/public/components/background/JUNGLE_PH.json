@@ -1,0 +1,16 @@
+{
+  "background_scene": {
+    "type": "Editorial jungle",
+    "description": "Controlled tropical jungle setting with lush greenery and filtered sunlight through dense canopy, exotic plants in soft focus",
+    "lighting_behavior": "Cinematic but clean, filtered natural light, no chaotic shadows",
+    "mood_guardrails": [
+      "luxury",
+      "editorial",
+      "confident",
+      "sensual",
+      "never survival",
+      "never fear",
+      "never horror"
+    ]
+  }
+}

@@ -1,0 +1,22 @@
+{
+    "subject": {
+        "hair": {
+            "enabled": true,
+            "gender_presentation": "female",
+            "preset": "Natural Curl Queen",
+            "texture": "Spiral curls (3B–3C)",
+            "length": "Long",
+            "style_mode": "Down",
+            "part": "No visible part",
+            "bangs": "None",
+            "finish": "Matte natural",
+            "color": "Deep brunette",
+            "highlights": null,
+            "constraints": [
+                "Curls remain defined",
+                "Soft volume",
+                "Consistent hair identity across shots"
+            ]
+        }
+    }
+}

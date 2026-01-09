@@ -1,0 +1,23 @@
+{
+    "subject": {
+        "regional_modifier": "Bangsamoro (Southwestern Mindanao)",
+        "facial_nuance": {
+            "skin": {
+                "tone_adjustment": "deep golden tan with warm olive undertones",
+                "texture": "smooth with rich warmth and natural depth"
+            },
+            "facial_structure": {
+                "face_shape": "oval with refined proportions and subtle angularity",
+                "cheekbones": "high and defined with elegant structure",
+                "jawline": "softly defined with graceful contours",
+                "forehead": "balanced with smooth lines"
+            },
+            "features": {
+                "eyes": "almond-shaped with deep expressive gaze and natural intensity",
+                "nose": "refined bridge with elegant definition",
+                "lips": "full with natural definition and warm tone"
+            }
+        },
+        "scope": "facial features and skin nuance only - does not affect body, posture, mood, camera, lighting, or outfit"
+    }
+}

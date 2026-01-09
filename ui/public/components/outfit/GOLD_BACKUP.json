@@ -1,0 +1,19 @@
+{
+  "clothing": {
+    "outfit_type": "Pocahontas-inspired tribal fashion bikini",
+    "top": {
+      "style": "Minimal leather-and-suede-inspired bikini top with triangular panels",
+      "color": "Earth tones (warm tan, muted turquoise accents)",
+      "design_details": "Fringe elements, subtle beadwork, and natural-texture stitching",
+      "fit": "Very minimal coverage designed to accentuate a full, prominent bust",
+      "interaction": "Lightly held at the straps by both hands, emphasizing chest and posture"
+    },
+    "bottom": {
+      "style": "Low-rise tribal bikini bottom",
+      "color": "Matching earth tones with turquoise bead accents",
+      "design_details": "Fringe and asymmetrical cut inspired by indigenous fantasy fashion",
+      "fit": "Minimal coverage sitting low on the hips, highlighting obliques and V-cut abs"
+    },
+    "accessories": "Optional subtle tribal-inspired armband or feather accent, no modern jewelry"
+  }
+}

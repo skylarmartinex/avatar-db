@@ -1,0 +1,33 @@
+{
+  "subject": {
+   "facial_features": {
+  "face_shape": "Soft oval-to-heart hybrid face with gentle tapering toward the chin, avoiding sharp angles",
+  "jawline": "Smooth, elegant jawline with subtle definition—feminine and refined rather than angular or severe",
+  "cheekbones": "High, softly rounded cheekbones that catch light naturally without appearing sharp or hollow",
+  "eyes": {
+    "shape": "Large, expressive almond-shaped eyes with a slight upward outer tilt",
+    "eye_lids": "Subtle epicanthic fold with softly hooded upper lids",
+    "irises": "Deep warm brown with golden undertones",
+    "lashes": "Long, thick lashes creating a naturally sultry frame"
+  },
+  "eyebrows": "Softly arched brows with a natural thickness, enhancing expression without harsh angles",
+  "nose": {
+    "structure": "Small-to-medium size with a smooth bridge",
+    "tip": "Softly rounded, slightly upturned tip—delicate and feminine",
+    "overall_character": "Refined but natural, not overly sharp or narrow"
+  },
+  "lips": {
+    "shape": "Full, pillowy lips with a well-defined cupid's bow",
+    "balance": "Slightly fuller bottom lip for softness and sensuality",
+    "texture": "Naturally plush with a hydrated sheen"
+  },
+  "skin_details": {
+    "complexion": "Flawless golden complexion with subtle natural variations",
+    "features": "Very faint beauty marks or skin texture for realism"
+  }
+},
+"facial_expression": "Calm, magnetic expression—soft confidence with a hint of mystery and warmth",
+"gaze_direction": "Direct but gentle eye contact, inviting rather than confrontational",
+"makeup": "Luxury editorial glam emphasizing glowing skin, softly contoured cheeks, luminous eyes, and glossy nude lips"
+  }
+}

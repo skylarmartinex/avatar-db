@@ -1,0 +1,22 @@
+{
+    "subject": {
+        "hair": {
+            "enabled": true,
+            "gender_presentation": "female",
+            "preset": "Playful Youth",
+            "texture": "Loose beach waves",
+            "length": "Medium",
+            "style_mode": "High ponytail",
+            "part": "Center part",
+            "bangs": "None",
+            "finish": "Wind-swept natural",
+            "color": "Honey blonde",
+            "highlights": "Sun-kissed highlights",
+            "constraints": [
+                "Bouncy, energetic movement",
+                "Natural texture",
+                "Consistent hair identity across shots"
+            ]
+        }
+    }
+}
