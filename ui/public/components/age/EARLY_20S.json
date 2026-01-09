@@ -3,11 +3,12 @@
         "age_profile": "Early 20s",
         "age_cues": {
             "enabled": true,
-            "face_youthfulness": "Soft oval face with youthful fullness; gently tapered chin; avoid hollow cheeks",
+            "face_youthfulness": "firm, youthful skin; subtle mid-cheek volume only; maintain cheekbone definition; no round baby-face cheeks",
             "eye_area": "Bright, alert eyes; smooth under-eye area with minimal shadowing (no tired look)",
             "skin_texture_policy": "Natural texture",
             "age_markers": "No pronounced fine lines; no prominent nasolabial folds",
-            "anti_gaunt_guard": "Even with very lean body, maintain fresh healthy facial fullness (avoid gaunt or hollowed look)"
+            "anti_gaunt_guard": "avoid hollow cheeks or sunken temples; keep healthy and fresh without added cheek fat",
+            "constraints": "No chubby cheeks, no exaggerated baby fat, no overly round face"
         }
     }
 }

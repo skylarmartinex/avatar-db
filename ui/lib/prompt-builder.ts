@@ -36,6 +36,54 @@ const DIMENSION_FOLDERS: Record<string, string> = {
 };
 
 /**
+ * Renders the body clause.
+ */
+function renderBodyClause(bodyData: any): string | null {
+    if (!bodyData) return null;
+    
+    const profile = bodyData.profile || "Ripped Athletic";
+    const g = bodyData.global || {};
+    const regions = bodyData.regions || {};
+    
+    const clauses: string[] = [];
+    
+    // 1. Global clause
+    const globalParts = [`Body profile: ${profile}`];
+    if (g.leanness) globalParts.push(`${g.leanness} leanness`);
+    if (g.muscle_definition) globalParts.push(`${g.muscle_definition} muscle definition`);
+    if (g.vascularity) globalParts.push(`${g.vascularity} vascularity`);
+    if (g.softness_policy) globalParts.push(g.softness_policy);
+    
+    clauses.push(globalParts.join("; "));
+    
+    // 2. Regional clauses
+    for (const [regionName, r] of Object.entries(regions) as [string, any][]) {
+        if (r.enabled) {
+            const size = r.size || "Medium";
+            const definition = r.definition || "Toned";
+            const shape = r.shape_cue || "";
+            const constraints = r.constraints || [];
+            
+            let regStr = `${regionName.charAt(0).toUpperCase() + regionName.slice(1)}: ${size}, ${definition}`;
+            if (shape) regStr += `, ${shape}`;
+            
+            if (constraints && constraints.length > 0) {
+                if (Array.isArray(constraints)) {
+                    regStr += `; ${constraints.join(", ")}`;
+                } else {
+                    regStr += `; ${constraints}`;
+                }
+            }
+            
+            clauses.push(regStr);
+        }
+    }
+    
+    if (clauses.length === 0) return null;
+    return clauses.join(". ") + ".";
+}
+
+/**
  * Renders the youth profile clause.
  */
 function renderAgeClause(subjectData: any): string | null {
@@ -65,6 +113,10 @@ function renderAgeClause(subjectData: any): string | null {
     
     if (cues.anti_gaunt_guard) {
         res += `; ${cues.anti_gaunt_guard.toLowerCase()}`;
+    }
+
+    if (cues.constraints) {
+        res += `; constraints: ${cues.constraints.toLowerCase()}`;
     }
     
     return res;
@@ -146,9 +198,15 @@ export async function buildPrompt(params: BuildParams) {
         // Simple JS rendering of clauses (mirrors Python logic)
         const clauses: string[] = [];
         
-        // Add Physique/Build
-        if (mergedPrompt.subject?.build) {
-            clauses.push(mergedPrompt.subject.build);
+        // Add Body Blueprint
+        const bodyClause = renderBodyClause(mergedPrompt.body);
+        if (bodyClause) {
+            clauses.push(bodyClause);
+        } else {
+            // Fallback to old build field
+            if (mergedPrompt.subject?.build) {
+                clauses.push(mergedPrompt.subject.build);
+            }
         }
 
         // Add Age Profile

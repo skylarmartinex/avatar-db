@@ -1,8 +1,7 @@
-from typing import Dict, Any, Optional
-from .hair_renderer import render_hair_clause
 from .hair_color_renderer import render_hair_color_from_appearance
 from .skin_tone_renderer import render_skin_tone_from_appearance
 from .age_renderer import render_age_clause
+from .body_renderer import render_body_clause
 
 def render_final_prompt(prompt_json: Dict[str, Any]) -> str:
     """
@@ -12,13 +11,20 @@ def render_final_prompt(prompt_json: Dict[str, Any]) -> str:
     """
     clauses = []
     
-    # 1. Foundation (Base description)
-    subject = prompt_json.get("subject", {})
-    build = subject.get("build", "")
-    if build:
-        clauses.append(build)
+    # 1. Body Blueprint (Newly Added)
+    body_data = prompt_json.get("body", {})
+    body_clause = render_body_clause(body_data)
+    if body_clause:
+        clauses.append(body_clause)
+    else:
+        # Fallback to old build field if new body system not used
+        subject = prompt_json.get("subject", {})
+        build = subject.get("build", "")
+        if build:
+            clauses.append(build)
         
-    # 2. Age Profile (Newly Added)
+    # 2. Age Profile
+    subject = prompt_json.get("subject", {})
     age_clause = render_age_clause(subject)
     if age_clause:
         clauses.append(age_clause)
@@ -72,7 +78,8 @@ def enrich_prompt_with_renderings(prompt_json: Dict[str, Any]) -> Dict[str, Any]
         "skin_tone": render_skin_tone_from_appearance(appearance),
         "hair_structure": render_hair_clause(subject.get("hair", {})),
         "hair_color": render_hair_color_from_appearance(appearance),
-        "age_profile": render_age_clause(subject)
+        "age_profile": render_age_clause(subject),
+        "body": render_body_clause(enriched.get("body", {}))
     }
     
     return enriched

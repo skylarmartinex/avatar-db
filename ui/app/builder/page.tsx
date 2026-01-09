@@ -29,6 +29,20 @@ export default function BuilderPage() {
     const [hairBaseColor, setHairBaseColor] = useState('Espresso brunette');
     const [highlightsEnabled, setHighlightsEnabled] = useState(true);
 
+    const [bodyProfile, setBodyProfile] = useState('Ripped Athletic');
+    const [bodyLeanness, setBodyLeanness] = useState('High');
+    const [bodyMuscleDefinition, setBodyMuscleDefinition] = useState('Defined');
+    const [testRegion, setTestRegion] = useState('abs');
+    const [regionOverrides, setRegionOverrides] = useState<any>({
+        abs: { enabled: false, size: 'Medium', definition: 'Toned', shape_cue: '' },
+        arms: { enabled: false, size: 'Medium', definition: 'Toned', shape_cue: '' },
+        back: { enabled: false, size: 'Medium', definition: 'Toned', shape_cue: '' },
+        quads: { enabled: false, size: 'Medium', definition: 'Toned', shape_cue: '' },
+        hamstrings: { enabled: false, size: 'Medium', definition: 'Toned', shape_cue: '' },
+        glutes: { enabled: false, size: 'Medium', definition: 'Toned', shape_cue: '' },
+        breasts: { enabled: false, size: 'Medium', definition: 'Toned', shape_cue: '', constraints: ['natural proportions, no exaggerated cleavage'] }
+    });
+
     const [result, setResult] = useState<any>(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -64,13 +78,19 @@ export default function BuilderPage() {
                     v: '01',
                     r: '01',
                     overrides: {
+                        body: {
+                            profile: bodyProfile,
+                            global: {
+                                leanness: bodyLeanness,
+                                muscle_definition: bodyMuscleDefinition
+                            },
+                            regions: regionOverrides
+                        },
                         subject: {
                             hair: {
                                 texture: hairTexture,
                                 length: hairLength,
                                 style_mode: hairStyleMode,
-                                part: hairPart,
-                                bangs: hairBangs,
                                 finish: hairFinish
                             }
                         },
@@ -82,7 +102,9 @@ export default function BuilderPage() {
                             },
                             hair_color: {
                                 base_color: hairBaseColor,
-                                highlights: { enabled: highlightsEnabled }
+                                highlights: {
+                                    enabled: highlightsEnabled
+                                }
                             }
                         }
                     }
@@ -235,7 +257,12 @@ export default function BuilderPage() {
         skinBases: ["Porcelain", "Ivory", "Fair", "Light", "Light-medium", "Medium", "Medium-tan", "Tan", "Deep"],
         undertones: ["Warm", "Cool", "Neutral", "Olive", "Golden"],
         skinFinishes: ["Matte", "Natural", "Dewy"],
-        hairColors: ["Jet black", "Soft black", "Espresso brunette", "Honey brown", "Auburn", "Copper", "Honey blonde", "Ash blonde", "Platinum blonde"]
+        hairColors: ["Jet black", "Soft black", "Espresso brunette", "Honey brown", "Auburn", "Copper", "Honey blonde", "Ash blonde", "Platinum blonde"],
+        bodyProfiles: ["Ripped Athletic", "Lean Fashion", "Soft Athletic", "Slim"],
+        bodyLeanness: ["Low", "Natural", "Medium", "High", "Extreme"],
+        bodyDefinition: ["Soft", "Toned", "Defined", "Shredded"],
+        bodySizes: ["Small", "Medium", "Athletic", "Full"],
+        regions: ["abs", "arms", "back", "quads", "hamstrings", "glutes", "breasts"]
     };
 
     return (
@@ -428,6 +455,119 @@ export default function BuilderPage() {
                                     >
                                         {highlightsEnabled ? "Highlights ON" : "Highlights OFF"}
                                     </Button>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Body Blueprint */}
+                        <div className="p-8 bg-black/40 border border-white/5 rounded-[2.5rem] space-y-10">
+                            <div className="flex items-center gap-3">
+                                <div className="w-2 h-8 bg-red-500 rounded-full" />
+                                <h3 className="text-xl font-black uppercase tracking-widest text-white">Body Blueprint</h3>
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-8">
+                                <div className="space-y-4">
+                                    <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-1">Profile</label>
+                                    <select
+                                        className="w-full bg-zinc-900 border border-white/5 px-6 py-4 rounded-2xl text-sm font-bold text-white outline-none focus:border-red-500/50 transition-all"
+                                        value={bodyProfile}
+                                        onChange={e => setBodyProfile(e.target.value)}
+                                    >
+                                        {ENUMS.bodyProfiles.map(p => <option key={p} value={p}>{p}</option>)}
+                                    </select>
+                                </div>
+                                <div className="space-y-4">
+                                    <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-1">Leanness</label>
+                                    <select
+                                        className="w-full bg-zinc-900 border border-white/5 px-6 py-4 rounded-2xl text-sm font-bold text-white outline-none focus:border-red-500/50 transition-all"
+                                        value={bodyLeanness}
+                                        onChange={e => setBodyLeanness(e.target.value)}
+                                    >
+                                        {ENUMS.bodyLeanness.map(l => <option key={l} value={l}>{l}</option>)}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div className="p-8 bg-zinc-900/30 border border-white/5 rounded-[2rem] space-y-8">
+                                <div className="flex items-center justify-between">
+                                    <div className="space-y-1">
+                                        <h4 className="text-sm font-black uppercase tracking-widest text-white">Regional Overrides</h4>
+                                        <p className="text-[10px] text-zinc-500 uppercase tracking-tight">Test one muscle group at a time</p>
+                                    </div>
+                                    <select
+                                        className="bg-black border border-white/10 px-4 py-2 rounded-xl text-xs font-bold text-white outline-none"
+                                        value={testRegion}
+                                        onChange={e => setTestRegion(e.target.value)}
+                                    >
+                                        {ENUMS.regions.map(r => <option key={r} value={r}>{r.toUpperCase()}</option>)}
+                                    </select>
+                                </div>
+
+                                <div className="space-y-6">
+                                    <div className="flex items-center justify-between px-2">
+                                        <label className="text-xs font-bold text-zinc-400 capitalize">Enable {testRegion} Override</label>
+                                        <Button
+                                            variant="ghost"
+                                            size="sm"
+                                            className={cn(
+                                                "rounded-lg text-[10px] font-black uppercase tracking-widest",
+                                                regionOverrides[testRegion].enabled ? "bg-red-500/10 text-red-400" : "bg-white/5 text-zinc-600"
+                                            )}
+                                            onClick={() => setRegionOverrides({
+                                                ...regionOverrides,
+                                                [testRegion]: { ...regionOverrides[testRegion], enabled: !regionOverrides[testRegion].enabled }
+                                            })}
+                                        >
+                                            {regionOverrides[testRegion].enabled ? "ACTIVE" : "INACTIVE"}
+                                        </Button>
+                                    </div>
+
+                                    <div className="grid grid-cols-2 gap-6">
+                                        <div className="space-y-4">
+                                            <label className="text-[10px] font-black uppercase tracking-widest text-zinc-600 ml-1 text-center block">Size</label>
+                                            <select
+                                                className="w-full bg-black border border-white/5 px-4 py-3 rounded-xl text-xs font-bold text-white outline-none"
+                                                value={regionOverrides[testRegion].size}
+                                                onChange={e => setRegionOverrides({
+                                                    ...regionOverrides,
+                                                    [testRegion]: { ...regionOverrides[testRegion], size: e.target.value }
+                                                })}
+                                                disabled={!regionOverrides[testRegion].enabled}
+                                            >
+                                                {ENUMS.bodySizes.map(s => <option key={s} value={s}>{s}</option>)}
+                                            </select>
+                                        </div>
+                                        <div className="space-y-4">
+                                            <label className="text-[10px] font-black uppercase tracking-widest text-zinc-600 ml-1 text-center block">Definition</label>
+                                            <select
+                                                className="w-full bg-black border border-white/5 px-4 py-3 rounded-xl text-xs font-bold text-white outline-none"
+                                                value={regionOverrides[testRegion].definition}
+                                                onChange={e => setRegionOverrides({
+                                                    ...regionOverrides,
+                                                    [testRegion]: { ...regionOverrides[testRegion], definition: e.target.value }
+                                                })}
+                                                disabled={!regionOverrides[testRegion].enabled}
+                                            >
+                                                {ENUMS.bodyDefinition.map(d => <option key={d} value={d}>{d}</option>)}
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div className="space-y-4">
+                                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-600 ml-1 block">Shape Cue / Enhancement</label>
+                                        <input
+                                            type="text"
+                                            className="w-full bg-black border border-white/5 px-6 py-4 rounded-xl text-sm text-white placeholder:text-zinc-700 outline-none focus:border-red-500/30 transition-all font-medium"
+                                            placeholder="e.g. Sculpted peak, deep separation..."
+                                            value={regionOverrides[testRegion].shape_cue}
+                                            onChange={e => setRegionOverrides({
+                                                ...regionOverrides,
+                                                [testRegion]: { ...regionOverrides[testRegion], shape_cue: e.target.value }
+                                            })}
+                                            disabled={!regionOverrides[testRegion].enabled}
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </div>
