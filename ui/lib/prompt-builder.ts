@@ -10,6 +10,7 @@ interface BuildParams {
     ETHNICITY: string;
     SKIN: string;
     APPEARANCE: string;
+    AGE?: string;
     OUTFIT: string;
     POSE: string;
     BACKGROUND: string;
@@ -28,17 +29,53 @@ const DIMENSION_FOLDERS: Record<string, string> = {
     'ETHNICITY': 'ethnicity',
     'SKIN': 'skin',
     'APPEARANCE': 'appearance',
+    'AGE': 'age',
     'OUTFIT': 'outfit',
     'POSE': 'pose',
     'BACKGROUND': 'background'
 };
 
 /**
+ * Renders the youth profile clause.
+ */
+function renderAgeClause(subjectData: any): string | null {
+    if (!subjectData || !subjectData.age_profile) {
+        return null;
+    }
+    
+    const age_profile = subjectData.age_profile;
+    const cues = subjectData.age_cues || {};
+    
+    if (cues.enabled === false) {
+        return null;
+    }
+    
+    let res = `Youth profile: ${age_profile.toLowerCase()}; `;
+    const sub_parts = [];
+    
+    if (cues.face_youthfulness) sub_parts.push(cues.face_youthfulness.toLowerCase());
+    if (cues.eye_area) sub_parts.push(cues.eye_area.toLowerCase());
+    if (cues.age_markers) sub_parts.push(cues.age_markers.toLowerCase());
+    
+    res += sub_parts.join(', ');
+    
+    if (cues.skin_texture_policy) {
+        res += `; ${cues.skin_texture_policy.toLowerCase()}`;
+    }
+    
+    if (cues.anti_gaunt_guard) {
+        res += `; ${cues.anti_gaunt_guard.toLowerCase()}`;
+    }
+    
+    return res;
+}
+
+/**
  * Build a prompt by reading component files and merging them
  * This is a pure JavaScript implementation that works on Netlify
  */
 export async function buildPrompt(params: BuildParams) {
-    const { BASE, SUBJECT_TYPE, FACE, BODY, HAIR, ETHNICITY, SKIN, APPEARANCE, OUTFIT, POSE, BACKGROUND, v, r, overrides } = params;
+    const { BASE, SUBJECT_TYPE, FACE, BODY, HAIR, ETHNICITY, SKIN, APPEARANCE, AGE, OUTFIT, POSE, BACKGROUND, v, r, overrides } = params;
     
     // Read from public/components (synced at build time)
     const componentsDir = path.join(process.cwd(), 'public/components');
@@ -53,6 +90,7 @@ export async function buildPrompt(params: BuildParams) {
         const ethnicityComponent = readComponent(componentsDir, 'ETHNICITY', ETHNICITY);
         const skinComponent = readComponent(componentsDir, 'SKIN', SKIN);
         const appearanceComponent = readComponent(componentsDir, 'APPEARANCE', APPEARANCE);
+        const ageComponent = AGE ? readComponent(componentsDir, 'AGE', AGE) : {};
         const outfitComponent = readComponent(componentsDir, 'OUTFIT', OUTFIT);
         const poseComponent = readComponent(componentsDir, 'POSE', POSE);
         const backgroundComponent = readComponent(componentsDir, 'BACKGROUND', BACKGROUND);
@@ -69,6 +107,7 @@ export async function buildPrompt(params: BuildParams) {
             ethnicityComponent,      // Ethnicity
             skinComponent,           // Skin foundation
             appearanceComponent,     // Color and tone
+            ageComponent,            // Age profile
             outfitComponent,         // Clothing
             poseComponent,           // Pose
             backgroundComponent      // Background/surrounding
@@ -85,14 +124,19 @@ export async function buildPrompt(params: BuildParams) {
             `FACE-${FACE}`,
             `BODY-${BODY}`,
             `HAIR-${HAIR}`,
-            `APPEARANCE-${APPEARANCE}`,
+            `APPEARANCE-${APPEARANCE}`
+        ];
+        
+        if (AGE) idParts.push(`AGE-${AGE}`);
+        
+        idParts.push(
             `ETHNICITY-${ETHNICITY}`,
             `SKIN-${SKIN}`,
             `OUTFIT-${OUTFIT}`,
             `POSE-${POSE}`,
             `BACKGROUND-${BACKGROUND}`,
             `v${v}`
-        ];
+        );
         
         const canonical_id = idParts.join('__');
         
@@ -105,6 +149,12 @@ export async function buildPrompt(params: BuildParams) {
         // Add Physique/Build
         if (mergedPrompt.subject?.build) {
             clauses.push(mergedPrompt.subject.build);
+        }
+
+        // Add Age Profile
+        const ageClause = renderAgeClause(mergedPrompt.subject);
+        if (ageClause) {
+            clauses.push(ageClause);
         }
         
         // Add Skin Tone
@@ -145,7 +195,7 @@ export async function buildPrompt(params: BuildParams) {
             canonical_id,
             title,
             prompt: mergedPrompt,
-            dims: { BASE, SUBJECT_TYPE, FACE, BODY, HAIR, ETHNICITY, SKIN, APPEARANCE, OUTFIT, POSE, BACKGROUND, v, r }
+            dims: { BASE, SUBJECT_TYPE, FACE, BODY, HAIR, ETHNICITY, SKIN, APPEARANCE, AGE, OUTFIT, POSE, BACKGROUND, v, r }
         };
         
     } catch (error: any) {

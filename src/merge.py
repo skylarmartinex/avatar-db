@@ -17,7 +17,7 @@ def merge_prompts(base: Dict[str, Any], component_list: List[Dict[str, Any]], di
     order = [
         "BASE", "PF", "SC", "ET", 
         "PH_REGION", "VN_REGION", 
-        "FA", "BT", "HR", "APPEARANCE", "ST", "NB"
+        "FA", "BT", "HR", "ST", "NB", "APPEARANCE", "AGE"
     ]
     
     for dim in order:

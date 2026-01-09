@@ -4,7 +4,7 @@ import { buildPrompt } from '@/lib/prompt-builder';
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json();
-        const { BASE, SUBJECT_TYPE, FACE, BODY, HAIR, ETHNICITY, SKIN, APPEARANCE, OUTFIT, POSE, BACKGROUND, v, r, overrides } = body;
+        const { BASE, SUBJECT_TYPE, FACE, BODY, HAIR, ETHNICITY, SKIN, APPEARANCE, AGE, OUTFIT, POSE, BACKGROUND, v, r, overrides } = body;
 
         // Validate required parameters
         if (!BASE || !SUBJECT_TYPE || !FACE || !BODY || !HAIR || !ETHNICITY || !SKIN || !OUTFIT || !POSE || !BACKGROUND) {
@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
 
         // Build the prompt using JavaScript (no Python required)
         const result = await buildPrompt({
-            BASE, SUBJECT_TYPE, FACE, BODY, HAIR, ETHNICITY, SKIN, APPEARANCE, OUTFIT, POSE, BACKGROUND,
+            BASE, SUBJECT_TYPE, FACE, BODY, HAIR, ETHNICITY, SKIN, APPEARANCE, AGE, OUTFIT, POSE, BACKGROUND,
             v: v || '01',
             r: r || '01',
             overrides

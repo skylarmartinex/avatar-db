@@ -24,7 +24,9 @@ def get_component_path(dim: str, code: str) -> str:
         "HR": "hair",
         "SC": "scene",
         "ST": "outfit",
-        "NB": "negative"
+        "NB": "negative",
+        "APPEARANCE": "appearance",
+        "AGE": "age"
     }
     folder = folder_map.get(dim)
     if not folder:

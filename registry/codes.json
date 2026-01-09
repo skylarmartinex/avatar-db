@@ -230,5 +230,25 @@
       "description": "Deep skin with neutral undertone, natural finish, realistic detail",
       "status": "active"
     }
+  },
+  "AGE": {
+    "EARLY_20S": {
+      "code": "EARLY_20S",
+      "label": "Early 20s",
+      "description": "Youthful profile (20-23); soft fullness, minimal markers",
+      "status": "active"
+    },
+    "MID_20S": {
+      "code": "MID_20S",
+      "label": "Mid 20s",
+      "description": "Young adult profile (24-26); balanced fullness",
+      "status": "active"
+    },
+    "LATE_20S": {
+      "code": "LATE_20S",
+      "label": "Late 20s",
+      "description": "Mature young adult (27-29); defined structure",
+      "status": "active"
+    }
   }
 }

@@ -1,0 +1,13 @@
+{
+    "subject": {
+        "age_profile": "Mid 20s",
+        "age_cues": {
+            "enabled": true,
+            "face_youthfulness": "Balanced facial fullness; defined but soft jawline",
+            "eye_area": "Bright eyes; smooth under-eye area",
+            "skin_texture_policy": "Natural texture",
+            "age_markers": "Nominal character lines; fresh appearance",
+            "anti_gaunt_guard": "Maintain healthy facial volume"
+        }
+    }
+}

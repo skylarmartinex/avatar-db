@@ -11,6 +11,7 @@ export default function BuilderPage() {
     const [selectedBackground, setSelectedBackground] = useState('DOORWAY_GOLD');
     const [selectedOutfit, setSelectedOutfit] = useState('TRIBAL_BIKINI');
     const [selectedHair, setSelectedHair] = useState('GOLD');
+    const [selectedAge, setSelectedAge] = useState('EARLY_20S');
     const [selectedAppearance, setSelectedAppearance] = useState('MEDIUM_TAN_OLIVE');
 
     // Granular Controls
@@ -56,6 +57,7 @@ export default function BuilderPage() {
                     ETHNICITY: 'GOLD',
                     SKIN: 'GOLD',
                     APPEARANCE: selectedAppearance,
+                    AGE: selectedAge,
                     OUTFIT: selectedOutfit,
                     POSE: 'GOLD',
                     BACKGROUND: selectedBackground,
@@ -214,6 +216,11 @@ export default function BuilderPage() {
         : [];
 
     const appearancePresets = registry.APPEARANCE ? Object.entries(registry.APPEARANCE)
+        .filter(([, data]: [string, any]) => data.status === 'active')
+        .map(([code, data]: [string, any]) => ({ code, label: data.label, description: data.description }))
+        : [];
+
+    const agePresets = registry.AGE ? Object.entries(registry.AGE)
         .filter(([, data]: [string, any]) => data.status === 'active')
         .map(([code, data]: [string, any]) => ({ code, label: data.label, description: data.description }))
         : [];
@@ -445,6 +452,19 @@ export default function BuilderPage() {
 
                             <div className="grid grid-cols-2 gap-8">
                                 <div className="space-y-8 col-span-2">
+                                    <div className="p-6 bg-zinc-900/50 border border-white/5 rounded-3xl space-y-6">
+                                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Age Profile</label>
+                                        <select
+                                            className="w-full bg-black border border-white/10 px-4 py-3 rounded-xl text-xs font-bold text-white outline-none"
+                                            value={selectedAge}
+                                            onChange={e => setSelectedAge(e.target.value)}
+                                        >
+                                            {agePresets.map(({ code, label }) => (
+                                                <option key={code} value={code}>{label}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+
                                     <div className="p-6 bg-zinc-900/50 border border-white/5 rounded-3xl space-y-6">
                                         <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Skin Properties</label>
                                         <div className="grid grid-cols-3 gap-6">

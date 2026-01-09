@@ -10,6 +10,8 @@ def build_prompt(
     fa: str, bt: str, et: str, hr: str, sc: str, st: str, v: str, r: str,
     ph_region: Optional[str] = None,
     vn_region: Optional[str] = None,
+    appearance_code: str = "PORCELAIN_COOL", # Default from original logic
+    age_code: Optional[str] = None,
     base_code: str = "BASE",
     pf_code: str = "POSTURE_FRAMING",
     nb: str = "NB",
@@ -28,15 +30,20 @@ def build_prompt(
     if vn_region:
         segments.append(f"VN_REGION-{vn_region}")
         
-    appearance_code = overrides.pop("APPEARANCE", "PORCELAIN_COOL") if overrides and "APPEARANCE" in overrides else "PORCELAIN_COOL"
+    # appearance_code is now a direct parameter, no need to pop from overrides
+    # appearance_code = overrides.pop("APPEARANCE", "PORCELAIN_COOL") if overrides and "APPEARANCE" in overrides else "PORCELAIN_COOL"
 
     segments.extend([
         f"HR-{hr}",
-        f"APPEARANCE-{appearance_code}",
         f"SC-{sc}",
         f"ST-{st}",
-        f"v{v}"
+        f"APPEARANCE-{appearance_code}"
     ])
+    
+    if age_code:
+        segments.append(f"AGE-{age_code}")
+
+    segments.append(f"v{v}")
     
     canonical_id = "__".join(segments)
     run_id = f"{canonical_id}__r{r}"
@@ -51,8 +58,9 @@ def build_prompt(
     # 7. BT (body)
     # 8. HR (hair)
     # 9. APPEARANCE (color/skin)
-    # 10. ST (outfit)
-    # 11. NB (negative)
+    # 10. AGE (optional)
+    # 11. ST (outfit)
+    # 12. NB (negative)
     
     dims = []
     codes = []
@@ -81,18 +89,31 @@ def build_prompt(
         dims.append("VN_REGION")
         codes.append(vn_region)
         
-    # 6-11. Rest
-    dims.extend(["FA", "BT", "HR", "APPEARANCE", "ST", "NB"])
-    # We'll need to pass 'appearance' code to build_prompt or handle it as optional
-    # For now, let's update the signature or handle as kwarg
-    codes.extend([fa, bt, hr, appearance_code, st, nb])
+    # 6. Rest of dimensions
+    rest_dims = ["FA", "BT", "HR"]
+    rest_codes = [fa, bt, hr]
+    
+    # 9. Appearance
+    rest_dims.append("APPEARANCE")
+    rest_codes.append(appearance_code)
+    
+    # 10. Age (Optional)
+    if age_code:
+        rest_dims.append("AGE")
+        rest_codes.append(age_code)
+        
+    # 11-12. Outfit and Negative
+    rest_dims.extend(["ST", "NB"])
+    rest_codes.extend([st, nb])
+    
+    dims.extend(rest_dims)
+    codes.extend(rest_codes)
     
     component_contents = []
     for dim, code in zip(dims, codes):
         path = get_component_path(dim, code)
         component_contents.append(load_json(path))
     
-    # Use empty dict for merge start instead of templates/base.json (which is deprecated by BASE.json component)
     final_prompt = merge_prompts({}, component_contents, dims)
     
     if overrides:
