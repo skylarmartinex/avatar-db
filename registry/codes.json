@@ -205,6 +205,30 @@
       "label": "Copper + Money Piece",
       "description": "Medium copper with bold platinum money piece and sharp roots",
       "status": "active"
+    },
+    "LIGHT_MEDIUM_WARM": {
+      "code": "LIGHT_MEDIUM_WARM",
+      "label": "Light-Medium Warm Skin",
+      "description": "Light-medium skin with warm undertone, natural finish, minimal blemishes",
+      "status": "active"
+    },
+    "MEDIUM_TAN_OLIVE": {
+      "code": "MEDIUM_TAN_OLIVE",
+      "label": "Medium-Tan Olive Skin",
+      "description": "Medium-tan skin with olive undertone, dewy finish",
+      "status": "active"
+    },
+    "PORCELAIN_COOL": {
+      "code": "PORCELAIN_COOL",
+      "label": "Porcelain Cool Skin",
+      "description": "Very fair porcelain skin with cool undertone, matte finish, sparse freckles",
+      "status": "active"
+    },
+    "DEEP_NEUTRAL": {
+      "code": "DEEP_NEUTRAL",
+      "label": "Deep Neutral Skin",
+      "description": "Deep skin with neutral undertone, natural finish, realistic detail",
+      "status": "active"
     }
   }
 }

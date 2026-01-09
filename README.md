@@ -39,3 +39,14 @@ Example usage:
 python -m src.cli build --FA SG-PH-A --BT FR --ET PH --HR SLEEK_POWER_WOMAN --AP ESPRESSO_CARAMEL --SC DOOR --ST POCA --v 01 --r 01
 ```
 
+## Skin Tone System
+The Avatar-DB now includes a dedicated **skin tone system** that's separate from body/physique, hair structure, and hair color. This provides stable, consistent skin tone rendering that remains unchanged across different lighting conditions. The system uses ethnicity-neutral photographic descriptors.
+
+📖 **[Read the full Skin Tone System documentation](docs/SKIN_TONE_SYSTEM.md)**
+
+Example usage:
+```bash
+# Skin tone components can be used with the APPEARANCE dimension
+python -m src.cli build --FA SG-PH-A --BT FR --ET PH --HR SLEEK_POWER_WOMAN --AP MEDIUM_TAN_OLIVE --SC DOOR --ST POCA --v 01 --r 01
+```
+

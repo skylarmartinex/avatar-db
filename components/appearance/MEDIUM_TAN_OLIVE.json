@@ -1,0 +1,21 @@
+{
+    "appearance": {
+        "skin_tone": {
+            "enabled": true,
+            "base": "Medium-tan",
+            "undertone": "Olive",
+            "depth_level": "Tan",
+            "tanning": "None",
+            "freckles": {
+                "enabled": false
+            },
+            "complexion_finish": "Dewy",
+            "blemish_policy": "Minimal",
+            "consistency_guards": {
+                "lock_skin_tone": true,
+                "avoid_color_shift_from_lighting": true
+            },
+            "constraints": []
+        }
+    }
+}

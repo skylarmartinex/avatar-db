@@ -1,0 +1,23 @@
+{
+    "appearance": {
+        "skin_tone": {
+            "enabled": true,
+            "base": "Porcelain",
+            "undertone": "Cool",
+            "depth_level": "Very fair",
+            "tanning": "None",
+            "freckles": {
+                "enabled": true,
+                "density": "Sparse",
+                "visibility": "Subtle"
+            },
+            "complexion_finish": "Matte",
+            "blemish_policy": "Minimal",
+            "consistency_guards": {
+                "lock_skin_tone": true,
+                "avoid_color_shift_from_lighting": true
+            },
+            "constraints": []
+        }
+    }
+}

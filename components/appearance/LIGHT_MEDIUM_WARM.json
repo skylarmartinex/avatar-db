@@ -1,0 +1,23 @@
+{
+    "appearance": {
+        "skin_tone": {
+            "enabled": true,
+            "base": "Light-medium",
+            "undertone": "Warm",
+            "depth_level": "Light",
+            "tanning": "None",
+            "freckles": {
+                "enabled": false
+            },
+            "complexion_finish": "Natural",
+            "blemish_policy": "Minimal",
+            "consistency_guards": {
+                "lock_skin_tone": true,
+                "avoid_color_shift_from_lighting": true
+            },
+            "constraints": [
+                "Avoid unnatural orange tint"
+            ]
+        }
+    }
+}
