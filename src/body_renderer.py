@@ -3,7 +3,7 @@ from typing import Dict, Any, Optional, List
 def render_body_clause(body_data: Dict[str, Any]) -> Optional[str]:
     """
     Renders the body clause based on body.profile, body.global and body.regions.
-    (Body Blueprint system)
+    (Body Blueprint system - Legacy/Internal)
     """
     if not body_data:
         return None
@@ -51,42 +51,58 @@ def render_body_clause(body_data: Dict[str, Any]) -> Optional[str]:
 
 def render_body_components_clause(bc: Dict[str, Any]) -> Optional[str]:
     """
-    Renders the body composition clause based on body_components.
-    (Body Components system)
+    Renders the Body Components clause (Pure Components architecture).
+    Composes body part attributes without archetypes or presets.
     """
-    if not bc or bc.get("mode") != "components":
+    if not bc or not bc.get("enabled", False):
         return None
         
-    baseline = bc.get("baseline_profile", "Ripped Athletic")
     test_mode = bc.get("test_mode", {})
     single_only = test_mode.get("single_component_only", True)
-    active_comp = test_mode.get("active_component")
+    active_comp = test_mode.get("active_component", "glutes")
     components = bc.get("components", {})
-    
-    parts = [f"Body: {baseline.lower()}"]
+    constraints = bc.get("constraints", [])
     
     comp_clauses = []
     
-    # Decide which components to render
+    # Render ONLY enabled components (or only active in single_only mode)
     target_keys = [active_comp] if (single_only and active_comp) else components.keys()
     
     for k in target_keys:
         comp = components.get(k)
-        if comp and comp.get("enabled"):
-            preset = comp.get("preset")
-            intensity = comp.get("intensity", "Standard")
-            constraints = comp.get("constraints", [])
+        if not comp:
+            continue
             
-            if preset:
-                c_str = f"{k}—{preset.lower()}, {intensity.lower()} intensity"
-                if constraints:
-                    if isinstance(constraints, list):
-                        c_str += f"; {', '.join(constraints).lower()}"
-                    else:
-                        c_str += f"; {constraints.lower()}"
-                comp_clauses.append(c_str)
-                
-    if comp_clauses:
-        parts.append(f"components: {', '.join(comp_clauses)}")
+        emphasis = comp.get("emphasis", "Off")
+        if emphasis == "Off" and not (single_only and k == active_comp): 
+            # In non-single mode, "Off" means don't render. 
+            # In single mode, we render the active one even if "Off" to show it's selected, 
+            # but usually it'll be enabled.
+            continue
+            
+        definition = comp.get("definition", "Defined")
+        size = comp.get("size", "Athletic")
+        notes = comp.get("notes", "")
         
-    return "; ".join(parts)
+        # Build component string: glutes—high emphasis, defined, athletic size (round/lifted; natural proportions)
+        c_parts = []
+        c_parts.append(f"{emphasis.lower()} emphasis")
+        c_parts.append(definition.lower())
+        c_parts.append(f"{size.lower()} size")
+        if notes:
+            c_parts.append(f"({notes.lower()})")
+            
+        comp_clauses.append(f"{k}—{', '.join(c_parts)}")
+                
+    if not comp_clauses:
+        return None
+        
+    res = f"Body components: {', '.join(comp_clauses)}"
+    
+    if constraints:
+        if isinstance(constraints, list):
+            res += f". {'; '.join(constraints)}."
+        else:
+            res += f". {constraints}."
+            
+    return res

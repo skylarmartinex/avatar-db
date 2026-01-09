@@ -29,40 +29,18 @@ export default function BuilderPage() {
     const [hairBaseColor, setHairBaseColor] = useState('Espresso brunette');
     const [highlightsEnabled, setHighlightsEnabled] = useState(true);
 
-    const [bodyProfile, setBodyProfile] = useState('Ripped Athletic');
-    const [bodyLeanness, setBodyLeanness] = useState('High');
-    const [bodyMuscleDefinition, setBodyMuscleDefinition] = useState('Defined');
-    const [testRegion, setTestRegion] = useState('abs');
-    const [regionOverrides, setRegionOverrides] = useState<any>({
-        abs: { enabled: false, size: 'Medium', definition: 'Toned', shape_cue: '' },
-        arms: { enabled: false, size: 'Medium', definition: 'Toned', shape_cue: '' },
-        back: { enabled: false, size: 'Medium', definition: 'Toned', shape_cue: '' },
-        quads: { enabled: false, size: 'Medium', definition: 'Toned', shape_cue: '' },
-        hamstrings: { enabled: false, size: 'Medium', definition: 'Toned', shape_cue: '' },
-        glutes: { enabled: false, size: 'Medium', definition: 'Toned', shape_cue: '' },
-        breasts: { enabled: false, size: 'Medium', definition: 'Toned', shape_cue: '', constraints: ['natural proportions, no exaggerated cleavage'] }
-    });
-
-    // Body Components System
+    // Body Components System (Pure Components Architecture)
+    const [bodyComponentsEnabled, setBodyComponentsEnabled] = useState(false);
+    const [singleComponentOnly, setSingleComponentOnly] = useState(true);
     const [activeBodyComponent, setActiveBodyComponent] = useState('glutes');
     const [bodyComponents, setBodyComponents] = useState<any>({
-        abs: { enabled: false, preset: 'Deeply chiseled six-pack', intensity: 'Standard' },
-        arms: { enabled: false, preset: 'Toned athletic arms', intensity: 'Standard' },
-        back: { enabled: false, preset: 'Defined back with subtle V-taper', intensity: 'Standard' },
-        quads: { enabled: false, preset: 'Athletic quads with clean sweep', intensity: 'Standard' },
-        hamstrings: { enabled: false, preset: 'Lean defined hamstrings', intensity: 'Standard' },
-        glutes: {
-            enabled: false,
-            preset: 'Round lifted athletic glutes',
-            intensity: 'Standard',
-            constraints: ["No exaggerated BBL proportions", "No cartoon curves"]
-        },
-        breasts: {
-            enabled: false,
-            preset: 'Natural athletic proportions',
-            intensity: 'Standard',
-            constraints: ["Natural proportions", "No exaggerated cleavage"]
-        }
+        abs: { emphasis: 'Off', definition: 'Defined', size: 'Athletic', notes: '' },
+        arms: { emphasis: 'Off', definition: 'Toned', size: 'Athletic', notes: '' },
+        back: { emphasis: 'Off', definition: 'Defined', size: 'Athletic', notes: '' },
+        quads: { emphasis: 'Off', definition: 'Defined', size: 'Athletic', notes: '' },
+        hamstrings: { emphasis: 'Off', definition: 'Defined', size: 'Athletic', notes: '' },
+        glutes: { emphasis: 'Off', definition: 'Defined', size: 'Athletic', notes: '' },
+        breasts: { emphasis: 'Off', definition: 'Toned', size: 'Medium', notes: '' }
     });
 
     const [result, setResult] = useState<any>(null);
@@ -88,7 +66,7 @@ export default function BuilderPage() {
                     BASE: 'BASE',
                     SUBJECT_TYPE: 'TYPE',
                     FACE: 'GOLD',
-                    BODY: 'GOLD',
+                    BODY: 'Ripped Athletic',
                     HAIR: selectedHair,
                     ETHNICITY: 'GOLD',
                     SKIN: 'GOLD',
@@ -101,21 +79,16 @@ export default function BuilderPage() {
                     r: '01',
                     overrides: {
                         body_components: {
-                            mode: 'components',
-                            baseline_profile: 'Ripped Athletic',
+                            enabled: bodyComponentsEnabled,
                             test_mode: {
-                                single_component_only: true,
+                                single_component_only: singleComponentOnly,
                                 active_component: activeBodyComponent
                             },
-                            components: bodyComponents
-                        },
-                        body: {
-                            profile: bodyProfile,
-                            global: {
-                                leanness: bodyLeanness,
-                                muscle_definition: bodyMuscleDefinition
-                            },
-                            regions: regionOverrides
+                            components: bodyComponents,
+                            constraints: [
+                                "Skip calves and extremities",
+                                "No exaggerated proportions"
+                            ]
                         },
                         subject: {
                             hair: {
@@ -289,21 +262,10 @@ export default function BuilderPage() {
         undertones: ["Warm", "Cool", "Neutral", "Olive", "Golden"],
         skinFinishes: ["Matte", "Natural", "Dewy"],
         hairColors: ["Jet black", "Soft black", "Espresso brunette", "Honey brown", "Auburn", "Copper", "Honey blonde", "Ash blonde", "Platinum blonde"],
-        bodyProfiles: ["Ripped Athletic", "Lean Fashion", "Soft Athletic", "Slim"],
-        bodyLeanness: ["Low", "Natural", "Medium", "High", "Extreme"],
-        bodyDefinition: ["Soft", "Toned", "Defined", "Shredded"],
-        bodySizes: ["Small", "Medium", "Athletic", "Full"],
         regions: ["abs", "arms", "back", "quads", "hamstrings", "glutes", "breasts"],
-        bodyIntensities: ["Subtle", "Standard", "Strong"],
-        componentPresets: {
-            abs: ["Deeply chiseled six-pack", "Defined abs (moderate)", "Subtle ab definition"],
-            arms: ["Toned athletic arms", "Defined biceps/triceps separation", "Lean arms, minimal bulk"],
-            back: ["Defined back with subtle V-taper", "Athletic back definition", "Soft back definition (minimal)"],
-            quads: ["Athletic quads with clean sweep", "Power quads (thicker)", "Runner quads (lean)"],
-            hamstrings: ["Lean defined hamstrings", "Athletic hamstrings (moderate)", "Minimal hamstring emphasis"],
-            glutes: ["Round lifted athletic glutes", "Compact high glute shelf", "Fuller glutes, natural proportions"],
-            breasts: ["Natural athletic proportions", "Small and perky (natural)", "Fuller but natural (no exaggerated cleavage)"]
-        }
+        bodyEmphases: ["Off", "Low", "Medium", "High"],
+        bodyDefinition: ["Soft", "Toned", "Defined", "Shredded"],
+        bodySizes: ["Small", "Medium", "Athletic", "Full"]
     };
 
     return (
@@ -500,131 +462,40 @@ export default function BuilderPage() {
                             </div>
                         </div>
 
-                        {/* Body Blueprint */}
+                        {/* Body Components */}
                         <div className="p-8 bg-black/40 border border-white/5 rounded-[2.5rem] space-y-10">
-                            <div className="flex items-center gap-3">
-                                <div className="w-2 h-8 bg-red-500 rounded-full" />
-                                <h3 className="text-xl font-black uppercase tracking-widest text-white">Body Blueprint</h3>
-                            </div>
-
-                            <div className="grid grid-cols-2 gap-8">
-                                <div className="space-y-4">
-                                    <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-1">Profile</label>
-                                    <select
-                                        className="w-full bg-zinc-900 border border-white/5 px-6 py-4 rounded-2xl text-sm font-bold text-white outline-none focus:border-red-500/50 transition-all"
-                                        value={bodyProfile}
-                                        onChange={e => setBodyProfile(e.target.value)}
-                                    >
-                                        {ENUMS.bodyProfiles.map(p => <option key={p} value={p}>{p}</option>)}
-                                    </select>
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-3">
+                                    <div className="w-2 h-8 bg-red-500 rounded-full" />
+                                    <h3 className="text-xl font-black uppercase tracking-widest text-white">Body Components</h3>
                                 </div>
-                                <div className="space-y-4">
-                                    <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-1">Leanness</label>
-                                    <select
-                                        className="w-full bg-zinc-900 border border-white/5 px-6 py-4 rounded-2xl text-sm font-bold text-white outline-none focus:border-red-500/50 transition-all"
-                                        value={bodyLeanness}
-                                        onChange={e => setBodyLeanness(e.target.value)}
-                                    >
-                                        {ENUMS.bodyLeanness.map(l => <option key={l} value={l}>{l}</option>)}
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div className="p-8 bg-zinc-900/30 border border-white/5 rounded-[2rem] space-y-8">
-                                <div className="flex items-center justify-between">
-                                    <div className="space-y-1">
-                                        <h4 className="text-sm font-black uppercase tracking-widest text-white">Regional Overrides</h4>
-                                        <p className="text-[10px] text-zinc-500 uppercase tracking-tight">Test one muscle group at a time</p>
-                                    </div>
-                                    <select
-                                        className="bg-black border border-white/10 px-4 py-2 rounded-xl text-xs font-bold text-white outline-none"
-                                        value={testRegion}
-                                        onChange={e => setTestRegion(e.target.value)}
-                                    >
-                                        {ENUMS.regions.map(r => <option key={r} value={r}>{r.toUpperCase()}</option>)}
-                                    </select>
-                                </div>
-
-                                <div className="space-y-6">
-                                    <div className="flex items-center justify-between px-2">
-                                        <label className="text-xs font-bold text-zinc-400 capitalize">Enable {testRegion} Override</label>
-                                        <Button
-                                            variant="ghost"
-                                            size="sm"
-                                            className={cn(
-                                                "rounded-lg text-[10px] font-black uppercase tracking-widest",
-                                                regionOverrides[testRegion].enabled ? "bg-red-500/10 text-red-400" : "bg-white/5 text-zinc-600"
-                                            )}
-                                            onClick={() => setRegionOverrides({
-                                                ...regionOverrides,
-                                                [testRegion]: { ...regionOverrides[testRegion], enabled: !regionOverrides[testRegion].enabled }
-                                            })}
-                                        >
-                                            {regionOverrides[testRegion].enabled ? "ACTIVE" : "INACTIVE"}
-                                        </Button>
-                                    </div>
-
-                                    <div className="grid grid-cols-2 gap-6">
-                                        <div className="space-y-4">
-                                            <label className="text-[10px] font-black uppercase tracking-widest text-zinc-600 ml-1 text-center block">Size</label>
-                                            <select
-                                                className="w-full bg-black border border-white/5 px-4 py-3 rounded-xl text-xs font-bold text-white outline-none"
-                                                value={regionOverrides[testRegion].size}
-                                                onChange={e => setRegionOverrides({
-                                                    ...regionOverrides,
-                                                    [testRegion]: { ...regionOverrides[testRegion], size: e.target.value }
-                                                })}
-                                                disabled={!regionOverrides[testRegion].enabled}
-                                            >
-                                                {ENUMS.bodySizes.map(s => <option key={s} value={s}>{s}</option>)}
-                                            </select>
-                                        </div>
-                                        <div className="space-y-4">
-                                            <label className="text-[10px] font-black uppercase tracking-widest text-zinc-600 ml-1 text-center block">Definition</label>
-                                            <select
-                                                className="w-full bg-black border border-white/5 px-4 py-3 rounded-xl text-xs font-bold text-white outline-none"
-                                                value={regionOverrides[testRegion].definition}
-                                                onChange={e => setRegionOverrides({
-                                                    ...regionOverrides,
-                                                    [testRegion]: { ...regionOverrides[testRegion], definition: e.target.value }
-                                                })}
-                                                disabled={!regionOverrides[testRegion].enabled}
-                                            >
-                                                {ENUMS.bodyDefinition.map(d => <option key={d} value={d}>{d}</option>)}
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div className="space-y-4">
-                                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-600 ml-1 block">Shape Cue / Enhancement</label>
+                                <div className="flex items-center gap-4">
+                                    <div className="flex items-center gap-2 bg-zinc-900 px-3 py-1.5 rounded-xl border border-white/5">
+                                        <label className="text-[9px] font-black uppercase tracking-tighter text-zinc-500">Enable System</label>
                                         <input
-                                            type="text"
-                                            className="w-full bg-black border border-white/5 px-6 py-4 rounded-xl text-sm text-white placeholder:text-zinc-700 outline-none focus:border-red-500/30 transition-all font-medium"
-                                            placeholder="e.g. Sculpted peak, deep separation..."
-                                            value={regionOverrides[testRegion].shape_cue}
-                                            onChange={e => setRegionOverrides({
-                                                ...regionOverrides,
-                                                [testRegion]: { ...regionOverrides[testRegion], shape_cue: e.target.value }
-                                            })}
-                                            disabled={!regionOverrides[testRegion].enabled}
+                                            type="checkbox"
+                                            checked={bodyComponentsEnabled}
+                                            onChange={e => setBodyComponentsEnabled(e.target.checked)}
+                                            className="w-4 h-4 rounded border-white/10 bg-black checked:bg-red-500"
+                                        />
+                                    </div>
+                                    <div className="flex items-center gap-2 bg-zinc-900 px-3 py-1.5 rounded-xl border border-white/5">
+                                        <label className="text-[9px] font-black uppercase tracking-tighter text-zinc-500">Single Test Mode</label>
+                                        <input
+                                            type="checkbox"
+                                            checked={singleComponentOnly}
+                                            onChange={e => setSingleComponentOnly(e.target.checked)}
+                                            className="w-4 h-4 rounded border-white/10 bg-black checked:bg-red-500"
                                         />
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-
-                        {/* Body Components */}
-                        <div className="p-8 bg-black/40 border border-white/5 rounded-[2.5rem] space-y-10">
-                            <div className="flex items-center gap-3">
-                                <div className="w-2 h-8 bg-rose-500 rounded-full" />
-                                <h3 className="text-xl font-black uppercase tracking-widest text-white">Body Components</h3>
                             </div>
 
                             <div className="p-8 bg-zinc-900/30 border border-white/5 rounded-[2rem] space-y-8">
                                 <div className="flex items-center justify-between">
                                     <div className="space-y-1">
                                         <h4 className="text-sm font-black uppercase tracking-widest text-white">Active Component</h4>
-                                        <p className="text-[10px] text-zinc-500 uppercase tracking-tight">One-at-a-time compositional testing</p>
+                                        <p className="text-[10px] text-zinc-500 uppercase tracking-tight">Granular part description</p>
                                     </div>
                                     <select
                                         className="bg-black border border-white/10 px-4 py-2 rounded-xl text-xs font-bold text-white outline-none"
@@ -636,78 +507,70 @@ export default function BuilderPage() {
                                 </div>
 
                                 <div className="space-y-6">
-                                    <div className="flex items-center justify-between px-2">
-                                        <label className="text-xs font-bold text-zinc-400 capitalize">Enable {activeBodyComponent}</label>
-                                        <Button
-                                            variant="ghost"
-                                            size="sm"
-                                            className={cn(
-                                                "rounded-lg text-[10px] font-black uppercase tracking-widest",
-                                                bodyComponents[activeBodyComponent].enabled ? "bg-rose-500/10 text-rose-400" : "bg-white/5 text-zinc-600"
-                                            )}
-                                            onClick={() => {
-                                                const currentEnabled = bodyComponents[activeBodyComponent].enabled;
-                                                const newComponents = { ...bodyComponents };
-
-                                                // Disable all for single-test mode
-                                                Object.keys(newComponents).forEach(k => {
-                                                    newComponents[k] = { ...newComponents[k], enabled: false };
-                                                });
-
-                                                // Toggle current
-                                                newComponents[activeBodyComponent].enabled = !currentEnabled;
-                                                setBodyComponents(newComponents);
-                                            }}
-                                        >
-                                            {bodyComponents[activeBodyComponent].enabled ? "ACTIVE" : "INACTIVE"}
-                                        </Button>
-                                    </div>
-
-                                    <div className="grid grid-cols-2 gap-6">
+                                    <div className="grid grid-cols-2 lg:grid-cols-3 gap-6">
                                         <div className="space-y-4">
-                                            <label className="text-[10px] font-black uppercase tracking-widest text-zinc-600 ml-1 text-center block">Preset</label>
+                                            <label className="text-[10px] font-black uppercase tracking-widest text-zinc-600 ml-1 block text-center">Emphasis</label>
                                             <select
-                                                className="w-full bg-black border border-white/5 px-4 py-3 rounded-xl text-xs font-bold text-white outline-none"
-                                                value={bodyComponents[activeBodyComponent].preset}
+                                                className="w-full bg-black border border-white/5 px-4 py-3 rounded-xl text-xs font-bold text-white outline-none focus:border-red-500/30 transition-all"
+                                                value={bodyComponents[activeBodyComponent].emphasis}
                                                 onChange={e => setBodyComponents({
                                                     ...bodyComponents,
-                                                    [activeBodyComponent]: { ...bodyComponents[activeBodyComponent], preset: e.target.value }
+                                                    [activeBodyComponent]: { ...bodyComponents[activeBodyComponent], emphasis: e.target.value }
                                                 })}
-                                                disabled={!bodyComponents[activeBodyComponent].enabled}
+                                                disabled={!bodyComponentsEnabled}
                                             >
-                                                {(ENUMS.componentPresets as any)[activeBodyComponent].map((p: string) => (
-                                                    <option key={p} value={p}>{p}</option>
-                                                ))}
+                                                {ENUMS.bodyEmphases.map(e => <option key={e} value={e}>{e}</option>)}
                                             </select>
                                         </div>
                                         <div className="space-y-4">
-                                            <label className="text-[10px] font-black uppercase tracking-widest text-zinc-600 ml-1 text-center block">Intensity</label>
+                                            <label className="text-[10px] font-black uppercase tracking-widest text-zinc-600 ml-1 block text-center">Definition</label>
                                             <select
-                                                className="w-full bg-black border border-white/5 px-4 py-3 rounded-xl text-xs font-bold text-white outline-none"
-                                                value={bodyComponents[activeBodyComponent].intensity}
+                                                className="w-full bg-black border border-white/5 px-4 py-3 rounded-xl text-xs font-bold text-white outline-none focus:border-red-500/30 transition-all"
+                                                value={bodyComponents[activeBodyComponent].definition}
                                                 onChange={e => setBodyComponents({
                                                     ...bodyComponents,
-                                                    [activeBodyComponent]: { ...bodyComponents[activeBodyComponent], intensity: e.target.value }
+                                                    [activeBodyComponent]: { ...bodyComponents[activeBodyComponent], definition: e.target.value }
                                                 })}
-                                                disabled={!bodyComponents[activeBodyComponent].enabled}
+                                                disabled={!bodyComponentsEnabled}
                                             >
-                                                {ENUMS.bodyIntensities.map(i => <option key={i} value={i}>{i}</option>)}
+                                                {ENUMS.bodyDefinition.map(d => <option key={d} value={d}>{d}</option>)}
+                                            </select>
+                                        </div>
+                                        <div className="space-y-4 col-span-2 lg:col-span-1">
+                                            <label className="text-[10px] font-black uppercase tracking-widest text-zinc-600 ml-1 block text-center">Size</label>
+                                            <select
+                                                className="w-full bg-black border border-white/5 px-4 py-3 rounded-xl text-xs font-bold text-white outline-none focus:border-red-500/30 transition-all"
+                                                value={bodyComponents[activeBodyComponent].size}
+                                                onChange={e => setBodyComponents({
+                                                    ...bodyComponents,
+                                                    [activeBodyComponent]: { ...bodyComponents[activeBodyComponent], size: e.target.value }
+                                                })}
+                                                disabled={!bodyComponentsEnabled}
+                                            >
+                                                {ENUMS.bodySizes.map(s => <option key={s} value={s}>{s}</option>)}
                                             </select>
                                         </div>
                                     </div>
 
-                                    {bodyComponents[activeBodyComponent].constraints && (
-                                        <div className="p-4 bg-black/40 rounded-xl space-y-3">
-                                            <label className="text-[10px] font-black uppercase tracking-widest text-zinc-600 ml-1">Safety Constraints</label>
-                                            <div className="flex flex-wrap gap-2">
-                                                {bodyComponents[activeBodyComponent].constraints.map((c: string) => (
-                                                    <span key={c} className="text-[10px] text-rose-500/70 py-1 px-3 bg-rose-500/5 rounded-full border border-rose-500/10">
-                                                        {c}
-                                                    </span>
-                                                ))}
-                                            </div>
+                                    <div className="space-y-4">
+                                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-600 ml-1 block">Notes / Shape Detailing</label>
+                                        <input
+                                            type="text"
+                                            maxLength={80}
+                                            className="w-full bg-black border border-white/5 px-6 py-4 rounded-xl text-sm text-white placeholder:text-zinc-800 outline-none focus:border-red-500/30 transition-all font-medium"
+                                            placeholder="e.g. Round shelf-like silhouette, glute-ham tie-in definition..."
+                                            value={bodyComponents[activeBodyComponent].notes}
+                                            onChange={e => setBodyComponents({
+                                                ...bodyComponents,
+                                                [activeBodyComponent]: { ...bodyComponents[activeBodyComponent], notes: e.target.value }
+                                            })}
+                                            disabled={!bodyComponentsEnabled}
+                                        />
+                                        <div className="flex justify-between items-center px-1">
+                                            <p className="text-[9px] text-zinc-500 uppercase tracking-widest">Additive detailing for target part</p>
+                                            <p className="text-[9px] text-zinc-700">{bodyComponents[activeBodyComponent].notes.length}/80</p>
                                         </div>
-                                    )}
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -36,44 +36,46 @@ const DIMENSION_FOLDERS: Record<string, string> = {
 };
 
 /**
- * Renders the body components clause.
+ * Renders the body components clause (Pure Components architecture).
  */
 function renderBodyComponentsClause(bc: any): string | null {
-    if (!bc || bc.mode !== 'components') return null;
+    if (!bc || bc.enabled === false) return null;
     
-    const baseline = bc.baseline_profile || "Ripped Athletic";
     const test_mode = bc.test_mode || {};
     const single_only = test_mode.single_component_only !== false;
-    const active_comp = test_mode.active_component;
+    const active_comp = test_mode.active_component || "glutes";
     const components = bc.components || {};
+    const constraints = bc.constraints || [];
     
-    const parts = [`Body: ${baseline.toLowerCase()}`];
     const comp_clauses: string[] = [];
-    
-    const target_keys = (single_only && active_comp) ? [active_comp] : Object.keys(components);
+    const target_keys = single_only ? [active_comp] : Object.keys(components);
     
     for (const k of target_keys) {
         const comp = components[k];
-        if (comp && comp.enabled) {
-            const preset = comp.preset;
-            const intensity = comp.intensity || "Standard";
-            const constraints = comp.constraints || [];
-            
-            if (preset) {
-                let c_str = `${k}—${preset.toLowerCase()}, ${intensity.toLowerCase()} intensity`;
-                if (constraints && constraints.length > 0) {
-                    c_str += `; ${constraints.join(", ").toLowerCase()}`;
-                }
-                comp_clauses.push(c_str);
-            }
+        if (!comp) continue;
+        
+        const emphasis = comp.emphasis || "Off";
+        if (emphasis === "Off" && !single_only) continue;
+        
+        const definition = comp.definition || "Defined";
+        const size = comp.size || "Athletic";
+        const notes = comp.notes || "";
+        
+        let c_str = `${k}—${emphasis.toLowerCase()} emphasis, ${definition.toLowerCase()}, ${size.toLowerCase()} size`;
+        if (notes) {
+            c_str += ` (${notes.toLowerCase()})`;
         }
+        comp_clauses.push(c_str);
     }
     
-    if (comp_clauses.length > 0) {
-        parts.push(`components: ${comp_clauses.join(", ")}`);
+    if (comp_clauses.length === 0) return null;
+    
+    let res = `Body components: ${comp_clauses.join(", ")}`;
+    if (constraints && constraints.length > 0) {
+        res += `. ${constraints.join("; ")}.`;
     }
     
-    return parts.join("; ");
+    return res;
 }
 
 /**
@@ -240,18 +242,18 @@ export async function buildPrompt(params: BuildParams) {
         const clauses: string[] = [];
         
         // Add Body Blueprint or Components
-        let bodyClause = renderBodyComponentsClause(mergedPrompt.body_components);
-        if (!bodyClause) {
-            bodyClause = renderBodyClause(mergedPrompt.body);
-        }
+        let bodyCompClause = renderBodyComponentsClause(mergedPrompt.body_components);
+        
+        // Body Blueprint serves as fallback or companion depending on design
+        // Here we render both if available, but usually one is used
+        let bodyBlueClause = renderBodyClause(mergedPrompt.body);
 
-        if (bodyClause) {
-            clauses.push(bodyClause);
-        } else {
-            // Fallback to old build field
-            if (mergedPrompt.subject?.build) {
-                clauses.push(mergedPrompt.subject.build);
-            }
+        if (bodyBlueClause) clauses.push(bodyBlueClause);
+        if (bodyCompClause) clauses.push(bodyCompClause);
+
+        // Fallback to old build field if nothing else
+        if (!bodyBlueClause && !bodyCompClause && mergedPrompt.subject?.build) {
+            clauses.push(mergedPrompt.subject.build);
         }
 
         // Add Age Profile
