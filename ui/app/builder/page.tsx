@@ -400,6 +400,29 @@ export default function BuilderPage() {
                                     </select>
                                 </div>
                             </div>
+
+                            <div className="p-6 bg-zinc-900/50 border border-white/5 rounded-3xl space-y-6">
+                                <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Hair Color Properties</label>
+                                <div className="grid grid-cols-2 gap-6">
+                                    <select
+                                        className="bg-black border border-white/10 px-4 py-3 rounded-xl text-xs font-bold text-white outline-none"
+                                        value={hairBaseColor}
+                                        onChange={e => setHairBaseColor(e.target.value)}
+                                    >
+                                        {ENUMS.hairColors.map(c => <option key={c} value={c}>{c}</option>)}
+                                    </select>
+                                    <Button
+                                        variant="ghost"
+                                        className={cn(
+                                            "border border-white/10 rounded-xl text-xs font-black uppercase tracking-widest",
+                                            highlightsEnabled ? "bg-blue-500/10 text-blue-400 border-blue-500/20" : "text-zinc-600"
+                                        )}
+                                        onClick={() => setHighlightsEnabled(!highlightsEnabled)}
+                                    >
+                                        {highlightsEnabled ? "Highlights ON" : "Highlights OFF"}
+                                    </Button>
+                                </div>
+                            </div>
                         </div>
 
                         {/* Appearance System */}
@@ -446,29 +469,6 @@ export default function BuilderPage() {
                                             >
                                                 {ENUMS.skinFinishes.map(f => <option key={f} value={f}>{f}</option>)}
                                             </select>
-                                        </div>
-                                    </div>
-
-                                    <div className="p-6 bg-zinc-900/50 border border-white/5 rounded-3xl space-y-6">
-                                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Hair Color Properties</label>
-                                        <div className="grid grid-cols-2 gap-6">
-                                            <select
-                                                className="bg-black border border-white/10 px-4 py-3 rounded-xl text-xs font-bold text-white outline-none"
-                                                value={hairBaseColor}
-                                                onChange={e => setHairBaseColor(e.target.value)}
-                                            >
-                                                {ENUMS.hairColors.map(c => <option key={c} value={c}>{c}</option>)}
-                                            </select>
-                                            <Button
-                                                variant="ghost"
-                                                className={cn(
-                                                    "border border-white/10 rounded-xl text-xs font-black uppercase tracking-widest",
-                                                    highlightsEnabled ? "bg-blue-500/10 text-blue-400 border-blue-500/20" : "text-zinc-600"
-                                                )}
-                                                onClick={() => setHighlightsEnabled(!highlightsEnabled)}
-                                            >
-                                                {highlightsEnabled ? "Highlights ON" : "Highlights OFF"}
-                                            </Button>
                                         </div>
                                     </div>
                                 </div>
