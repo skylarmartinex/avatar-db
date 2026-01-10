@@ -52,11 +52,11 @@ def test_full_breasts_contrast_rule():
     rendered = prompt_json.get("metadata", {}).get("rendered_prompt", "")
     
     # 1. Check the local assertive clause for breasts
-    expected_breasts = "breasts: noticeably fuller bust with clear volume and projection, intentionally contrasted against the lean athletic frame; natural proportions"
+    expected_breasts = "breasts: very large, visually dominant bust with clear volume and projection, intentionally contrasted against the lean athletic frame; natural proportions"
     assert expected_breasts in rendered
     
     # 2. Check the global contrast rule
-    expected_proportions = "Body proportions: athletic lean frame with a noticeably fuller bust for strong contrast."
+    expected_proportions = "Body proportions: lean athletic frame with a deliberately oversized bust for strong contrast."
     assert expected_proportions in rendered
     
     # 3. Ensure shredded abs still render their clause (independence check)
